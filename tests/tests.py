@@ -1,5 +1,5 @@
-from unittest import TestCase
-from classes.room import Office, LivingSpace
+import unittest
+from classes.room import Room, Office, LivingSpace
 from classes.amity import Amity
 
 
