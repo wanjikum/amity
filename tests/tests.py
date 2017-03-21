@@ -8,12 +8,10 @@ class CreateRoomTestCases(unittest.TestCase):
     """A class CreateRoom that has a collection of create_room testcases"""
     def setUp(self):
         """Keeps our code dry"""
-        self.room = Room()
-        self.office = Office()
-        self.living_space = LivingSpace()
+        self.office = Office("Tsavo", "office")
+        self.living_space = LivingSpace("Tsavo", "living_space")
 
     def tearDown(self):
-        del self.room
         del self.office
         del self.living_space
 
@@ -24,10 +22,11 @@ class CreateRoomTestCases(unittest.TestCase):
 
     def test_if_the_class_livingSpace_takes_in_correct_attributes(self):
         """Tests if class LivingSpace takes in correct attributes given"""
-        self.assertListEqual(["Tsavo", "living_space", 4],
+        self.assertListEqual(["Tsavo", "living_space", 4, "no"],
                              [self.living_space.room_name,
                               self.living_space.room_type,
-                              self.living_space.room_capacity])
+                              self.living_space.room_capacity,
+                              self.living_space.accommodate])
 
     def test_if_the_class_office_takes_in_correct_attributes(self):
         """Tests if class Office takes in correct attributes given"""

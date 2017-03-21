@@ -28,6 +28,3 @@ class Fellow(Person):
     def __init__(self, person_name, person_type="fellow", accommodate='no'):
         Person.__init__(self, person_name, person_type)
         self.accommodate = accommodate
-
-# staff = Staff("millicent", "fellow", "yes")
-# print(staff.person_type, staff.accommodate)
