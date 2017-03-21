@@ -1,5 +1,6 @@
 import unittest
 from classes.room import Room, Office, LivingSpace
+from classes.person import Person, Fellow, Staff
 from classes.amity import Amity
 
 
@@ -27,8 +28,8 @@ class AddPersonTestCases(unittest.TestCase):
     def setUp(self):
         """Keeps our code dry"""
         self.person = Person()
-        self.fellow = Fellow()
-        self.staff = Staff()
+        self.fellow = Fellow("Jamhuri Linnet", "yes")
+        self.staff = Staff("Oliver")
 
     def tearDown(self):
         del self.person
@@ -37,5 +38,5 @@ class AddPersonTestCases(unittest.TestCase):
 
     def test_if_fellow_and_staff_is_instance_of_room(self):
         """Tests if fellow and staff are instances of class Person"""
-        self.assertTrue(isinstance(self.office, Room))
-        self.assertTrue(isinstance(self.living_space, Room))
+        self.assertTrue(isinstance(self.fellow, Person))
+        self.assertTrue(isinstance(self.staff, Person))
