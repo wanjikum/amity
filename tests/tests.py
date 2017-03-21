@@ -27,12 +27,10 @@ class AddPersonTestCases(unittest.TestCase):
     """A class CreateRoom that has a collection of create_room testcases"""
     def setUp(self):
         """Keeps our code dry"""
-        self.person = Person()
-        self.fellow = Fellow("Jamhuri Linnet", "yes")
+        self.fellow = Fellow("Jamhuri Linnet")
         self.staff = Staff("Oliver")
 
     def tearDown(self):
-        del self.person
         del self.fellow
         del self.staff
 
@@ -43,10 +41,13 @@ class AddPersonTestCases(unittest.TestCase):
 
     def test_if_the_class_fellow_takes_in_correct_attributes(self):
         """Tests if class fellow takes in the attributes given"""
-        self.assertListEquals(["Jamhuri Linnet", "yes"],
-                              [self.fellow.person_name,
-                               self.fellow.accommodate])
+        self.assertListEqual(["Jamhuri Linnet", "fellow", "no"],
+                             [self.fellow.person_name,
+                              self.fellow.person_type,
+                              self.fellow.accommodate])
 
     def test_class_staff_takes_in_correct_attributes(self):
         """Tests if class staff takes in the attributes given"""
-        self.assertEqual("Oliver", self.staff.person_name)
+        self.assertListEqual(["Oliver", "staff"],
+                             [self.staff.person_name,
+                              self.staff.person_type])
