@@ -22,6 +22,20 @@ class CreateRoomTestCases(unittest.TestCase):
         self.assertTrue(isinstance(self.office, Room))
         self.assertTrue(isinstance(self.living_space, Room))
 
+    def test_if_the_class_livingSpace_takes_in_correct_attributes(self):
+        """Tests if class LivingSpace takes in correct attributes given"""
+        self.assertListEqual(["Tsavo", "living_space", 4],
+                             [self.living_space.room_name,
+                              self.living_space.room_type,
+                              self.living_space.room_capacity])
+
+    def test_if_the_class_office_takes_in_correct_attributes(self):
+        """Tests if class Office takes in correct attributes given"""
+        self.assertListEqual(["Tsavo", "office", 6],
+                             [self.office.room_name,
+                              self.office.room_type,
+                              self.office.room_capacity])
+
 
 class AddPersonTestCases(unittest.TestCase):
     """A class CreateRoom that has a collection of create_room testcases"""
