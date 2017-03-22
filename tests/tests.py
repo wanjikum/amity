@@ -8,6 +8,7 @@ class CreateRoomTestCases(unittest.TestCase):
     """A class CreateRoom that has a collection of create_room testcases"""
     def setUp(self):
         """Keeps our code dry"""
+        self.amity = Amity()
         self.office = Office("Tsavo", "office")
         self.living_space = LivingSpace("Tsavo", "living_space")
 
@@ -34,6 +35,42 @@ class CreateRoomTestCases(unittest.TestCase):
                              [self.office.room_name,
                               self.office.room_type,
                               self.office.room_capacity])
+
+    def test_create_room_type_office_successfully(self):
+        """Test create a room_type office successfully"""
+        # Returns "Office *room_name* has been successfully created!"
+        pass
+
+    def test_create_room_type_living_space_successfully(self):
+        """Test create room_type living_space successfully"""
+        # Returns "LivingSpace *room_name* has been successfully created!"
+        pass
+
+    def test_create_multiple_rooms_of_type_office_successfully(self):
+        """Test create multiple rooms of type office successfully"""
+        # if two rooms of type office it should return:
+        # Returns "Office *room_name* has been successfully created!"
+        # Returns "Office *room_name* has been successfully created!"
+        pass
+
+    def test_create_multiple_rooms_of_type_livingspace_successfully(self):
+        """Test create multiple rooms of type livingspace successfully"""
+        # if two rooms of type living_space it should return:
+        # Returns "LivingSpace *room_name* has been successfully created!"
+        # Returns "LivingSpace *room_name* has been successfully created!"
+        pass
+
+    def test_create_an_existing_room(self):
+        """Test create a room which already exists"""
+        # assertEqual(self.amity.create_room(), "")
+        # Returns "Room *room_name* already exists"
+        pass
+
+    def test_invalid_room_type(self):
+        """Test create invalid room type """
+        # Returns "Invalid room type. A room can either be of type office or
+        # livingspace"
+        pass
 
 
 class AddPersonTestCases(unittest.TestCase):

@@ -12,5 +12,5 @@ class Amity(object):
 
     def add_person(self):
         """A method that is used to add a person into the system"""
-        #reject y/n for staff members
+        # reject accommodate staff y/n for staff members
         pass
