@@ -5,8 +5,9 @@ A class Amity that contains all the functionality of the app.
 
 class Amity(object):
     """Contains all functionalities of class Amity """
+    offices = []
 
-    def create_room(self):
+    def create_room(self, room_type, room_name):
         """A method that is used to create a room"""
         pass
 
