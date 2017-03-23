@@ -15,6 +15,7 @@ class CreateRoomTestCases(unittest.TestCase):
     def tearDown(self):
         del self.office
         del self.living_space
+        del self.amity
 
     def test_if_office_and_living_space_is_instance_of_class_room(self):
         """Tests if office and living space are instances of class Room"""
@@ -39,12 +40,12 @@ class CreateRoomTestCases(unittest.TestCase):
     def test_create_room_type_office_successfully(self):
         """Test create a room_type office successfully"""
         office_intial_count = len(self.amity.offices)
-        bootcamp = self.amity.create_room("office", ["Bootcamp"])
+        bootcamp = self.amity.create_room("office", "Bootcamp")
         self.assertEqual(len(self.amity.offices), office_intial_count+1)
 
     def test_create_room_type_living_space_successfully(self):
         """Test create room_type living_space successfully"""
-        bootcamp = self.amity.create_room("living_space", ["Bootcamp"])
+        bootcamp = self.amity.create_room("living_space", "Bootcamp")
         self.assertEqual(bootcamp,
                          "LivingSpace Bootcamp has been successfully created!")
 
@@ -76,7 +77,7 @@ class CreateRoomTestCases(unittest.TestCase):
 
     def test_invalid_room_type(self):
         """Test create invalid room type """
-        kitchen = self.amity.create_room("kitchen", ["hog_centre"])
+        kitchen = self.amity.create_room("kitchen", "hog_centre")
         self.assertEqual(kitchen, "Invalid room type. A room can either be of "
                          + "type office or living_space")
 
@@ -85,12 +86,14 @@ class AddPersonTestCases(unittest.TestCase):
     """A class CreateRoom that has a collection of create_room testcases"""
     def setUp(self):
         """Keeps our code dry"""
+        self.amity = Amity()
         self.fellow = Fellow("Jamhuri Linnet")
         self.staff = Staff("Oliver")
 
     def tearDown(self):
         del self.fellow
         del self.staff
+        del self.amity
 
     def test_if_fellow_and_staff_is_instance_of_class_person(self):
         """Tests if fellow and staff are instances of class Person"""
@@ -109,3 +112,31 @@ class AddPersonTestCases(unittest.TestCase):
         self.assertListEqual(["Oliver", "staff"],
                              [self.staff.person_name,
                               self.staff.person_type])
+
+    def test_add_staff_successfully(self):
+        """Test add staff successfully"""
+        kigali = self.amity.create_room("office", "kigali")
+        felistas = self.amity.add_person("felistas", "staff", "no")
+        self.assertListEqual([felistas],
+                             ["felistas has been successfully created!",
+                              "felistas has been allocated to the " +
+                              "office kigali"])
+
+    def test_add_fellow_successfully_who_requires_accomodation(self):
+        """Adds fellow successfully and is allocated room and livingspace"""
+        kigali = self.amity.create_room("office", "kigali")
+        mombasa = self.amity.create_room("living_space", "mombasa")
+        larry = self.amity.add_person("larry", "fellow", "yes")
+        self.assertListEqual([larry],
+                             ["larry has been successfully added",
+                              "larry has been allocated to the office kigali",
+                              "larry has been allocated to the " +
+                              "livingspace mombasa"])
+
+    def test_add_fellow_successfully_who_does_not_require_accomodation(self):
+        """Adds fellow successfully and is allocated room and livingspace"""
+        kigali = self.amity.create_room("office", "kigali")
+        larry = self.amity.add_person("larry", "fellow", "yes")
+        self.assertListEqual([larry],
+                             ["larry has been successfully added",
+                              "larry has been allocated to the office kigali"])
