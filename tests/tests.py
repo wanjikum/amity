@@ -122,6 +122,18 @@ class AddPersonTestCases(unittest.TestCase):
                               "felistas has been allocated to the " +
                               "office kigali"])
 
+    def test_add_staff_successfully_who_requires_accommodation(self):
+        """Test reject accommodation for staff"""
+        kigali = self.amity.create_room("office", "kigali")
+        kisumu = self.amity.create_room("living_space", "kisumu")
+        felistas = self.amity.add_person("felistas", "staff", "yes")
+        self.assertListEqual([felistas],
+                             ["felistas has been successfully created!",
+                              "felistas has been allocated to the " +
+                              "office kigali",
+                              "You can't be accommodated since you are a" +
+                              "staff member"])
+
     def test_add_fellow_successfully_who_requires_accomodation(self):
         """Adds fellow successfully and is allocated room and livingspace"""
         kigali = self.amity.create_room("office", "kigali")
@@ -134,9 +146,27 @@ class AddPersonTestCases(unittest.TestCase):
                               "livingspace mombasa"])
 
     def test_add_fellow_successfully_who_does_not_require_accomodation(self):
-        """Adds fellow successfully and is allocated room and livingspace"""
+        """Adds fellow successfully and is allocated room only"""
         kigali = self.amity.create_room("office", "kigali")
-        larry = self.amity.add_person("larry", "fellow", "yes")
+        larry = self.amity.add_person("larry", "fellow", "no")
         self.assertListEqual([larry],
                              ["larry has been successfully added",
                               "larry has been allocated to the office kigali"])
+
+    def test_reject_invalid_role(self):
+        """Rejects adding a person whose person type is not fellow/staff"""
+        alex = self.amity.add_person("alex", "techie", "no")
+        self.assertEqual(alex,
+                         "Invalid role. You can either be a fellow/staff.")
+
+    def test_if_it_accepts_string_only_in_person_name(self):
+        """Tests if it rejects names with numbers"""
+        tina = self.amity.add_person("ti67ji", "staff", "no")
+        self.assertEqual(tina, "Invalid name. Use letters only")
+
+    def test_if_it_accepts_a_registered_user(self):
+        """Tests if it rejects a registered user"""
+        george = self.amity.add_person("george kiarie", "fellow", "no")
+        george_kiarie = self.amity.add_person("george kiarie", "fellow", "no")
+        self.assertEqual(george_kiarie,
+                         "The person already exists!")
