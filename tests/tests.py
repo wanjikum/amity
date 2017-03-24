@@ -229,3 +229,18 @@ class ReallocatePersonTestCases(unittest.TestCase):
         self.assertEqual(charity_kakamega,
                          "You can't reallocate a person to the same room" +
                          "he was before")
+
+
+class ReallocatePersonTestCases(unittest.TestCase):
+    """A collection of reallocate_room testcases"""
+    def test_loads_people_from_a_txt_file_successfully(self):
+        """Tests if it loads people from a txt file successfully"""
+        pass
+
+    def test_loads_an_empty_file(self):
+        """Test if it loads people in an empty file and adds nothing"""
+        pass
+
+    def test_if_file_does_not_exist(self):
+        """Tests if the file does not exist"""
+        pass
