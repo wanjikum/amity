@@ -15,3 +15,7 @@ class Amity(object):
         """A method that is used to add a person into the system"""
         # reject accommodate staff y/n for staff members
         pass
+
+    def reallocate_person(self, person_id, room_name):
+        """A method that is used to reallocate a person"""
+        pass
