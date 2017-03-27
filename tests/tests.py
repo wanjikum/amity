@@ -231,16 +231,52 @@ class ReallocatePersonTestCases(unittest.TestCase):
                          "he was before")
 
 
-class ReallocatePersonTestCases(unittest.TestCase):
+class LoadsPeopleTestCases(unittest.TestCase):
     """A collection of reallocate_room testcases"""
+    def setUp(self):
+        self.amity = Amity()
+
+    def tearDown(self):
+        self.amity
+
     def test_loads_people_from_a_txt_file_successfully(self):
         """Tests if it loads people from a txt file successfully"""
-        pass
+        # remember to add the exten .txt
+        cohort_15 = self.amity.loads_people("cohort15")
+        self.assertEqual(cohort_15, "People added successfully")
 
     def test_loads_an_empty_file(self):
         """Test if it loads people in an empty file and adds nothing"""
-        pass
+        empty_file = self.amity.loads_people("empty.txt")
+        self.assertEqual(empty_file, "Empty file. No one has been added.")
 
     def test_if_file_does_not_exist(self):
         """Tests if the file does not exist"""
+        # Add the file path you said you wanted
+        non_existing_file = self.amity.loads_people("non_existing.txt")
+        self.assertEqual(non_existing_file, "The file does not exist.")
+
+
+class PrintAllocatedUnallocated(unittest.TestCase):
+    """A collection of print allocated and unallocated testcases"""
+    def setUp(self):
+        self.amity = Amity()
+
+    def tearDown(self):
+        self.amity
+
+    def test_print_allocated_successfully(self):
+        """Tests if it prints allocated people successfully"""
+        pass
+
+    def test_print_unallocated_successfully(self):
+        """Tests if it prints unallocated successfully"""
+        pass
+
+    def test_if_it_prints_allocated_people_successfully(self):
+        """Tests if it prints allocated people to the specified file"""
+        pass
+
+    def test_if_it_prints_unallocated_people_to_the_unspecified_file(self):
+        """Tests if prints unallocated people to the sspecified file"""
         pass
