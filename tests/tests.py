@@ -323,3 +323,17 @@ class PrintRoomTestCases(unittest.TestCase):
         """Test if it prints room empty in an empty room"""
         occupants = self.amity.print_room("right_wing")
         self.assertEqual(occupants, "The room is empty!")
+
+
+class SaveStateTestCases(unittest.TestCase):
+    """A collection of loadstate testcases"""
+
+    def setUp(self):
+        self.amity = Amity()
+
+    def tearDown(self):
+        self.amity
+
+    def test_save_state_successfully(self):
+        """Test if it saves state successfully"""
+        pass
