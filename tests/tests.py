@@ -336,4 +336,6 @@ class SaveStateTestCases(unittest.TestCase):
 
     def test_save_state_successfully(self):
         """Test if it saves state successfully"""
-        pass
+        # look at this later
+        save_state = self.amity.save_state(amity_database.py)
+        self.assertEqual(save_state, "The state has been saved successfully!")
