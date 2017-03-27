@@ -261,22 +261,35 @@ class PrintAllocatedUnallocated(unittest.TestCase):
     """A collection of print allocated and unallocated testcases"""
     def setUp(self):
         self.amity = Amity()
+        self.amity.create_room("living_space", "right_wing")
+        self.amity.add_person("Kenneth", "fellow", "yes")
+        self.amity.add_person("Gideon", "fellow", "yes")
+        self.amity.add_person("Kimokoti", "fellow", "yes")
+        self.amity.add_person("Larry", "fellow", "yes")
+        self.amity.add_person("MaryAnne", "fellow", "yes")
+        self.amity.add_person("Sarah", "fellow", "yes")
 
     def tearDown(self):
         self.amity
 
     def test_print_allocated_successfully(self):
         """Tests if it prints allocated people successfully"""
-        pass
+        allocated_people = self.amity.print_allocated()
+        self.assertEqual(allocated_people, "Data printed successfully")
 
     def test_print_unallocated_successfully(self):
         """Tests if it prints unallocated successfully"""
-        pass
+        unallocated_people = self.amity.print_unallocated()
+        self.assertEqual(unallocated_people, "Data printed successfully")
 
     def test_if_it_prints_allocated_people_successfully(self):
         """Tests if it prints allocated people to the specified file"""
-        pass
+        allocated_people = self.amity.print_allocated("allocated.txt")
+        self.assertEqual(allocated_people,
+                         "Data saved in allocated.txt successfully")
 
     def test_if_it_prints_unallocated_people_to_the_unspecified_file(self):
-        """Tests if prints unallocated people to the sspecified file"""
-        pass
+        """Tests if prints unallocated people to the specified file"""
+        unallocated_people = self.amity.print_unallocated("unallocated.txt")
+        self.assertEqual(unallocated_people,
+                         "Data saved in unallocated.txt successfully")
