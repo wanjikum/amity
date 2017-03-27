@@ -31,3 +31,7 @@ class Amity(object):
     def print_unallocated(self, file_name="none"):
         """A method that prints unallocated people"""
         pass
+
+    def print_room(self, room_name):
+        """A method that prints room occupants in a room"""
+        pass

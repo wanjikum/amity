@@ -278,7 +278,7 @@ class PrintAllocatedUnallocated(unittest.TestCase):
         self.assertEqual(allocated_people, "Data printed successfully")
 
     def test_print_unallocated_successfully(self):
-        """Tests if it prints unallocated successfully"""
+        """Tests if it prints unallocated people successfully"""
         unallocated_people = self.amity.print_unallocated()
         self.assertEqual(unallocated_people, "Data printed successfully")
 
@@ -293,3 +293,29 @@ class PrintAllocatedUnallocated(unittest.TestCase):
         unallocated_people = self.amity.print_unallocated("unallocated.txt")
         self.assertEqual(unallocated_people,
                          "Data saved in unallocated.txt successfully")
+
+
+class PrintRoomTestCases(unittest.TestCase):
+    """A collection of print_room testscases"""
+    def setUp(self):
+        self.amity = Amity()
+        self.amity.create_room("living_space", "left_wing")
+        self.amity.add_person("Kenneth", "fellow", "yes")
+        self.amity.add_person("Gideon", "fellow", "yes")
+        self.amity.add_person("Kimokoti", "fellow", "yes")
+        self.amity.add_person("Larry", "fellow", "yes")
+
+    def tearDown(self):
+        self.amity
+
+    def test_print_room_occupants_successfully(self):
+        """Test if it prints the room occupants successfully"""
+        pass
+
+    def test_reject_if_room_name_does_not_exist(self):
+        """Test if rejects printing occupants in a non existing room"""
+        pass
+
+    def test_if_it_notifies_the_user_about_room_being_empty(self):
+        """Test if it prints room empty in an empty room"""
+        pass
