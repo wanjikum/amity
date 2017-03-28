@@ -1,4 +1,5 @@
 import unittest
+import os
 from classes.room import Room, Office, LivingSpace
 from classes.person import Person, Fellow, Staff
 from classes.amity import Amity
@@ -18,6 +19,7 @@ class CreateRoomTestCases(unittest.TestCase):
         del self.amity
 
     def test_if_office_and_living_space_is_instance_of_class_room(self):
+        # a test should only one reason to fail
         """Tests if office and living space are instances of class Room"""
         self.assertTrue(isinstance(self.office, Room))
         self.assertTrue(isinstance(self.living_space, Room))
@@ -43,13 +45,17 @@ class CreateRoomTestCases(unittest.TestCase):
         bootcamp = self.amity.create_room("office", "Bootcamp")
         self.assertEqual(len(self.amity.offices), office_intial_count+1)
 
-    def test_create_room_type_living_space_successfully(self):
+    def test_create_living_space(self):
         """Test create room_type living_space successfully"""
+        # initial_room_count = len(self.amity.living_space)
         bootcamp = self.amity.create_room("living_space", "Bootcamp")
+        # new_count = len(self.amity.living_space)
+        # self.assertEqual(new_count, initial_room_count + 1)
+        # self.assertIn("Bootcamp", self.amity.living_space)
         self.assertEqual(bootcamp,
                          "LivingSpace Bootcamp has been successfully created!")
 
-    def test_create_multiple_rooms_of_type_office_successfully(self):
+    def test_create_multiple_offices(self):
         """Test create multiple rooms of type office successfully"""
         likoni_tsavo = self.amity.create_room("office", ["likoni", "tsavo"])
         self.assertListEqual([likoni_tsavo],
@@ -337,5 +343,35 @@ class SaveStateTestCases(unittest.TestCase):
     def test_save_state_successfully(self):
         """Test if it saves state successfully"""
         # look at this later
-        save_state = self.amity.save_state(amity_database.py)
+        save_state = self.amity.save_state("amity_database.db")
         self.assertEqual(save_state, "The state has been saved successfully!")
+
+    def test_if_db_exists(self):
+        """Tests if the db file exists"""
+        self.amity.save_state("amity_database")
+        file_path = os.path.abspath("amity_database.db")
+        file_status = os.path.isfile(file_path)
+        self.assertTrue(file_status)
+
+
+class LoadStateTestCases(unittest.TestCase):
+    """A collection of load state testcases"""
+
+    def setUp(self):
+        self.amity = Amity()
+
+    def tearDown(self):
+        self.amity
+
+    def test_load_state_successfully(self):
+        """Tests if load state successfully"""
+        load_database = self.amity.load_state("amity_database.db")
+        self.assertEqual(load_database,
+                         "The database has loaded successfully!")
+
+    def test_load_state_unsuccessfully(self):
+        """Test if loads state unsuccessfully"""
+        # This may be due to non existing db
+        load_database = self.amity.load_state("dee.db")
+        self.assertEqual(load_database,
+                         "The database does not exist!")
