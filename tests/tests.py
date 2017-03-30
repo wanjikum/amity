@@ -137,8 +137,7 @@ class AddPersonTestCases(unittest.TestCase):
                              ["felistas has been successfully created!",
                               "felistas has been allocated to the " +
                               "office kigali",
-                              "You can't be accommodated since you are a" +
-                              "staff member"])
+                              "Staff cannot be accommodated"])
 
     def test_add_fellow_successfully_who_requires_accomodation(self):
         """Adds fellow successfully and is allocated room and livingspace"""
@@ -167,7 +166,7 @@ class AddPersonTestCases(unittest.TestCase):
 
     def test_if_it_accepts_string_only_in_person_name(self):
         """Tests if it rejects names with numbers"""
-        tina = self.amity.add_person("ti67ji", "staff", "no")
+        tina = self.amity.add_person("ti67ji#", "staff", "no")
         self.assertEqual(tina, "Invalid name. Use letters only")
 
     def test_if_it_accepts_a_registered_user(self):
@@ -193,19 +192,19 @@ class ReallocatePersonTestCases(unittest.TestCase):
 
     def test_reallocate_a_person_successfully(self):
         """Tests if a person is successfully reallocated"""
-        charity_kisii = self.amity.reallocate_person("1", "kisii")
+        charity_kisii = self.amity.reallocate_person(1, "kisii")
         self.assertEqual(charity_kisii,
                          "charity has been reallocated from kakamega to kisii")
 
     def test_reallocate_reject_a_person_with_invalid_identifier(self):
         """Tests if it does not reallocate a person with an invalid personid"""
-        charity_kisii = self.amity.reallocate_person("78", "kisii")
+        charity_kisii = self.amity.reallocate_person(78, "kisii")
         self.assertEqual(charity_kisii,
                          "The person identifier(id) used does not exist!")
 
     def test_reallocate_reject_if_room_does_not_exist(self):
         """Tests if it rejects reallocation to a room which does not exist"""
-        charity_kisii = self.amity.reallocate_person("1", "likoni")
+        charity_kisii = self.amity.reallocate_person(1, "likoni")
         self.assertEqual(charity_kisii,
                          "The room does not exist!")
 
@@ -217,24 +216,21 @@ class ReallocatePersonTestCases(unittest.TestCase):
         self.amity.add_person("vannid", "fellow", "yes")
         self.amity.create_room("living_space", "marsabit")
         vanni = self.amity.add_person("vanni", "fellow", "yes")
-        vanni_reallocate = self.amity.reallocate_person("6", "kiambu")
+        vanni_reallocate = self.amity.reallocate_person(6, "kiambu")
         self.assertEqual(vanni_reallocate,
-                         "You cannot be reallocated to a full room!" +
-                         "Try another room.")
+                         "Room capacity full!")
 
     def test_reallocate_staff_from_office_to_living_space(self):
         """Tests rejects reallocation of staff from office to livingspace"""
-        charity_kiambu = self.amity.reallocate_person("1", "kiambu")
+        charity_kiambu = self.amity.reallocate_person(1, "kiambu")
         self.assertEqual(charity_kiambu,
-                         "You can't be accommodated since you are a" +
-                         "staff member")
+                         "Staff cannot be accomodated")
 
     def test_reallocate_rejects_reallocation_to_the_same_room(self):
         """Test rejects reallocation to the same room"""
-        charity_kakamega = self.amity.reallocate_person("1", "kakamega")
+        charity_kakamega = self.amity.reallocate_person(1, "kakamega")
         self.assertEqual(charity_kakamega,
-                         "You can't reallocate a person to the same room" +
-                         "he was before")
+                         "A person cannot be reallocated to the same room")
 
 
 class LoadsPeopleTestCases(unittest.TestCase):
@@ -253,13 +249,13 @@ class LoadsPeopleTestCases(unittest.TestCase):
 
     def test_loads_an_empty_file(self):
         """Test if it loads people in an empty file and adds nothing"""
-        empty_file = self.amity.loads_people("empty.txt")
+        empty_file = self.amity.loads_people("empty")
         self.assertEqual(empty_file, "Empty file. No one has been added.")
 
     def test_if_file_does_not_exist(self):
         """Tests if the file does not exist"""
         # Add the file path you said you wanted
-        non_existing_file = self.amity.loads_people("non_existing.txt")
+        non_existing_file = self.amity.loads_people("non_existing")
         self.assertEqual(non_existing_file, "The file does not exist.")
 
 
@@ -288,13 +284,13 @@ class PrintAllocatedUnallocated(unittest.TestCase):
         unallocated_people = self.amity.print_unallocated()
         self.assertEqual(unallocated_people, "Data printed successfully")
 
-    def test_if_it_prints_allocated_people_successfully(self):
+    def test_print_allocated_successfully_to_text_file(self):
         """Tests if it prints allocated people to the specified file"""
-        allocated_people = self.amity.print_allocated("allocated.txt")
+        allocated_people = self.amity.print_allocated("allocated")
         self.assertEqual(allocated_people,
                          "Data saved in allocated.txt successfully")
 
-    def test_if_it_prints_unallocated_people_to_the_unspecified_file(self):
+    def test_print_unallocated_successfully_to_text_file(self):
         """Tests if prints unallocated people to the specified file"""
         unallocated_people = self.amity.print_unallocated("unallocated.txt")
         self.assertEqual(unallocated_people,
@@ -325,7 +321,7 @@ class PrintRoomTestCases(unittest.TestCase):
         occupants = self.amity.print_room("kiki")
         self.assertEqual(occupants, "The room does not exist!")
 
-    def test_if_it_notifies_the_user_about_room_being_empty(self):
+    def test_if_room_is_empty(self):
         """Test if it prints room empty in an empty room"""
         occupants = self.amity.print_room("right_wing")
         self.assertEqual(occupants, "The room is empty!")
@@ -342,8 +338,8 @@ class SaveStateTestCases(unittest.TestCase):
 
     def test_save_state_successfully(self):
         """Test if it saves state successfully"""
-        # look at this later
-        save_state = self.amity.save_state("amity_database.db")
+        # look at this later and db extension
+        save_state = self.amity.save_state("amity_database")
         self.assertEqual(save_state, "The state has been saved successfully!")
 
     def test_if_db_exists(self):
@@ -365,13 +361,13 @@ class LoadStateTestCases(unittest.TestCase):
 
     def test_load_state_successfully(self):
         """Tests if load state successfully"""
-        load_database = self.amity.load_state("amity_database.db")
+        load_database = self.amity.load_state("amity_database")
         self.assertEqual(load_database,
                          "The database has loaded successfully!")
 
     def test_load_state_unsuccessfully(self):
         """Test if loads state unsuccessfully"""
         # This may be due to non existing db
-        load_database = self.amity.load_state("dee.db")
+        load_database = self.amity.load_state("dee")
         self.assertEqual(load_database,
                          "The database does not exist!")
