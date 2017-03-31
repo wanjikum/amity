@@ -9,7 +9,8 @@ class Amity(object):
 
     def create_room(self, room_type, room_names):
         """A method that is used to create a room"""
-        pass
+        print(room_type)
+        print(room_names)
 
     def add_person(self, person_name, person_type, accommodate):
         """A method that is used to add a person into the system"""

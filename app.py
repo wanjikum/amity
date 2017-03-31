@@ -3,14 +3,14 @@
 This example uses docopt with the built in cmd module to demonstrate an
 interactive command application.
 Usage:
-    app.py create_room <room_type> <room_name>...
-    app.py add_person <person_name> <FELLOW|STAFF> [wants_accommodation]
+    app.py create_room <OFFICE|LIVING_SPACE> <room_name>...
+    app.py add_person <person_name> <FELLOW|STAFF> [<wants_accommodation>]
     app.py reallocate_person <person_identifier> <new_room_name>
     app.py load_people <file_name>
-    app.py print_allocations [-o=filename]
+    app.py print_allocations [-o=<filename>]
     app.py print_unallocated [-o=filename]
     app.py print_room <room_name>
-    app.py save_state [--db=sqlite_database]
+    app.py save_state [--db=<sqlite_database>]
     app.py load_state <sqlite_database>
     app.py (-i | --interactive)
     app.py (-h | --help | --version)
@@ -19,9 +19,13 @@ Options:
     -h, --help  Show this screen and exit.
 """
 
+import os
 import sys
 import cmd
 from docopt import docopt, DocoptExit
+from classes.amity import Amity
+
+amity = Amity()
 
 
 def docopt_cmd(func):
@@ -55,17 +59,21 @@ def docopt_cmd(func):
     return fn
 
 
-class MyInteractive (cmd.Cmd):
-    intro = 'Welcome to my interactive program!' \
-        + ' (type help for a list of commands.)'
-    prompt = '(my_program) '
-    file = None
+def start():
+    os.system("clear")
+    print(__doc__)
+
+
+class MyInteractiveAmity (cmd.Cmd):
+    intro = 'Welcome to my interactive program!'
+    prompt = 'amity>>>'
 
     @docopt_cmd
-    def do_tcp(self, arg):
-        """Usage: tcp <host> <port> [--timeout=<seconds>]"""
-
-        print(arg)
+    def do_create_room(self, arg):
+        """Usage: create_room <room_type> <room_name>..."""
+        room_type = arg["<room_type>"]
+        room_names = arg["<room_name>"]
+        amity.create_room(room_type, room_names)
 
     @docopt_cmd
     def do_serial(self, arg):
@@ -85,7 +93,10 @@ Options:
 
 opt = docopt(__doc__, sys.argv[1:])
 
-if opt['--interactive']:
-    MyInteractive().cmdloop()
-
-print(opt)
+if __name__ == "__main__":
+    try:
+        start()
+        MyInteractiveAmity().cmdloop()
+    except KeyboardInterrupt:
+        os.system("clear")
+        print('Application Exiting')
