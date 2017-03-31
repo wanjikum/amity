@@ -18,13 +18,13 @@ class CreateRoomTestCases(unittest.TestCase):
         del self.living_space
         del self.amity
 
-    def test_if_office_and_living_space_is_instance_of_class_room(self):
+    def test_office_and_living_space_is_instance_of_class_room(self):
         # a test should only one reason to fail
         """Tests if office and living space are instances of class Room"""
         self.assertTrue(isinstance(self.office, Room))
         self.assertTrue(isinstance(self.living_space, Room))
 
-    def test_if_the_class_livingSpace_takes_in_correct_attributes(self):
+    def test_class_livingSpace_takes_in_correct_attributes(self):
         """Tests if class LivingSpace takes in correct attributes given"""
         self.assertListEqual(["Tsavo", "living_space", 4, "no"],
                              [self.living_space.room_names,
@@ -32,7 +32,7 @@ class CreateRoomTestCases(unittest.TestCase):
                               self.living_space.room_capacity,
                               self.living_space.accommodate])
 
-    def test_if_the_class_office_takes_in_correct_attributes(self):
+    def test_class_office_takes_in_correct_attributes(self):
         """Tests if class Office takes in correct attributes given"""
         self.assertListEqual(["Tsavo", "office", 6],
                              [self.office.room_names,
@@ -106,7 +106,7 @@ class AddPersonTestCases(unittest.TestCase):
         self.assertTrue(isinstance(self.fellow, Person))
         self.assertTrue(isinstance(self.staff, Person))
 
-    def test_if_the_class_fellow_takes_in_correct_attributes(self):
+    def test_if_class_fellow_takes_in_correct_attributes(self):
         """Tests if class fellow takes in the attributes given"""
         self.assertListEqual(["Jamhuri Linnet", "fellow", "no"],
                              [self.fellow.person_name,
