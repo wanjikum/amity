@@ -21,7 +21,8 @@ class Amity(object):
 
     def reallocate_person(self, person_id, room_name):
         """A method that is used to reallocate a person"""
-        pass
+        print(person_id)
+        print(room_name)
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
