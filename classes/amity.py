@@ -42,7 +42,7 @@ class Amity(object):
 
     def save_state(self, database_name):
         """A method that saves changes to the database"""
-        pass
+        print(database_name)
 
     def load_state(self, database_name):
         """A method that loads state of the  database"""

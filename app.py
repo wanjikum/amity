@@ -10,7 +10,7 @@ Usage:
     app.py print_allocations [--o=filename]
     app.py print_unallocated [--o=filename]
     app.py print_room <room_name>
-    app.py save_state [--db=<sqlite_database>]
+    app.py save_state [--db=sqlite_database]
     app.py load_state <sqlite_database>
     app.py (-i | --interactive)
     app.py (-h | --help | --version)
@@ -117,6 +117,13 @@ class MyInteractiveAmity (cmd.Cmd):
         """Usage: print_room <room_name>"""
         room_name = arg["<room_name>"]
         amity.print_room(room_name)
+
+    @docopt_cmd
+    def do_save_state(self, arg):
+        """Usage: save_state [--db=sqlite_database]"""
+        database_name = arg["--db"]
+        print(arg)
+        amity.save_state(database_name)
 
     def do_quit(self, arg):
         """Quits out of Interactive Mode."""
