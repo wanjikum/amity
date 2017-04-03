@@ -26,7 +26,7 @@ class Amity(object):
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
-        pass
+        print(file_name)
 
     def print_allocated(self, file_name="none"):
         """A method that prints allocated people in rooms"""

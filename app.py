@@ -95,6 +95,12 @@ class MyInteractiveAmity (cmd.Cmd):
         amity.reallocate_person(person_id, room_name)
 
     @docopt_cmd
+    def do_load_people(self, arg):
+        """Usage: load_people <file_name>"""
+        file_name = arg["<file_name>"]
+        amity.loads_people(file_name)
+
+    @docopt_cmd
     def do_serial(self, arg):
         """Usage: serial <port> [--baud=<n>] [--timeout=<seconds>]
 Options:
