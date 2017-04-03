@@ -4,7 +4,7 @@ This example uses docopt with the built in cmd module to demonstrate an
 interactive command application.
 Usage:
     app.py create_room <OFFICE|LIVING_SPACE> <room_name>...
-    app.py add_person <person_name> <FELLOW|STAFF> [<wants_accommodation>]
+    app.py add_person <first_name> <last_name> <role> [<--wants_accommodation=no>]
     app.py reallocate_person <person_identifier> <new_room_name>
     app.py load_people <file_name>
     app.py print_allocations [-o=<filename>]
@@ -74,6 +74,18 @@ class MyInteractiveAmity (cmd.Cmd):
         room_type = arg["<room_type>"]
         room_names = arg["<room_name>"]
         amity.create_room(room_type, room_names)
+
+    @docopt_cmd
+    def do_add_person(self, arg):
+        """Usage: add_person <first_name> <last_name> <role> [<accommodate>]"""
+        # the role should either be a fellow or a staff
+        # the accomadation should either be yes or no
+        # hoe to use pipe and how to pass arguments in it
+        # join first name and second name inorder to fit in my persons name arg
+        person_name = arg["<first_name>"] + " " + arg["<last_name>"]
+        person_type = arg["<role>"]
+        accommodate = arg["<accommodate>"]
+        amity.add_person(person_name, person_type, accommodate)
 
     @docopt_cmd
     def do_serial(self, arg):
