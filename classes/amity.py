@@ -38,7 +38,7 @@ class Amity(object):
 
     def print_room(self, room_name):
         """A method that prints room occupants in a room"""
-        pass
+        print(room_name)
 
     def save_state(self, database_name):
         """A method that saves changes to the database"""

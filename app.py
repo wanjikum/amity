@@ -112,6 +112,12 @@ class MyInteractiveAmity (cmd.Cmd):
         file_name = arg["--o"]
         amity.print_unallocated(file_name)
 
+    @docopt_cmd
+    def do_print_room(self, arg):
+        """Usage: print_room <room_name>"""
+        room_name = arg["<room_name>"]
+        amity.print_room(room_name)
+
     def do_quit(self, arg):
         """Quits out of Interactive Mode."""
 
