@@ -292,7 +292,7 @@ class PrintAllocatedUnallocated(unittest.TestCase):
 
     def test_print_unallocated_successfully_to_text_file(self):
         """Tests if prints unallocated people to the specified file"""
-        unallocated_people = self.amity.print_unallocated("unallocated.txt")
+        unallocated_people = self.amity.print_unallocated("unallocated")
         self.assertEqual(unallocated_people,
                          "Data saved in unallocated.txt successfully")
 

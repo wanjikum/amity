@@ -7,7 +7,7 @@ Usage:
     app.py add_person <first_name> <last_name> <role> [<accommodate>]
     app.py reallocate_person <person_identifier> <new_room_name>
     app.py load_people <file_name>
-    app.py print_allocations [-o=<filename>]
+    app.py print_allocations [--o=filename]
     app.py print_unallocated [-o=filename]
     app.py print_room <room_name>
     app.py save_state [--db=<sqlite_database>]
@@ -101,13 +101,10 @@ class MyInteractiveAmity (cmd.Cmd):
         amity.loads_people(file_name)
 
     @docopt_cmd
-    def do_serial(self, arg):
-        """Usage: serial <port> [--baud=<n>] [--timeout=<seconds>]
-Options:
-    --baud=<n>  Baudrate [default: 9600]
-        """
-
-        print(arg)
+    def do_print_allocations(self, arg):
+        """Usage: print_allocations [--o=filename]"""
+        file_name = arg["--o"]
+        amity.print_allocated(file_name)
 
     def do_quit(self, arg):
         """Quits out of Interactive Mode."""

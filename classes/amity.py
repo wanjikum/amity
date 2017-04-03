@@ -28,11 +28,11 @@ class Amity(object):
         """A method that adds people from a text file"""
         print(file_name)
 
-    def print_allocated(self, file_name="none"):
+    def print_allocated(self, file_name=None):
         """A method that prints allocated people in rooms"""
-        pass
+        print(file_name)
 
-    def print_unallocated(self, file_name="none"):
+    def print_unallocated(self, file_name=None):
         """A method that prints unallocated people"""
         pass
 
