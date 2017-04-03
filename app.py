@@ -8,7 +8,7 @@ Usage:
     app.py reallocate_person <person_identifier> <new_room_name>
     app.py load_people <file_name>
     app.py print_allocations [--o=filename]
-    app.py print_unallocated [-o=filename]
+    app.py print_unallocated [--o=filename]
     app.py print_room <room_name>
     app.py save_state [--db=<sqlite_database>]
     app.py load_state <sqlite_database>
@@ -105,6 +105,12 @@ class MyInteractiveAmity (cmd.Cmd):
         """Usage: print_allocations [--o=filename]"""
         file_name = arg["--o"]
         amity.print_allocated(file_name)
+
+    @docopt_cmd
+    def do_print_unallocated(self, arg):
+        """Usage: print_unallocated [--o=filename]"""
+        file_name = arg["--o"]
+        amity.print_unallocated(file_name)
 
     def do_quit(self, arg):
         """Quits out of Interactive Mode."""
