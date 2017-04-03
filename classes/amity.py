@@ -46,4 +46,4 @@ class Amity(object):
 
     def load_state(self, database_name):
         """A method that loads state of the  database"""
-        pass
+        print(database_name)
