@@ -20,9 +20,9 @@ class CreateRoomTestCases(unittest.TestCase):
         office_intial_count = len(self.amity.offices)
         self.assertEqual(len(self.amity.offices), office_intial_count+1)
 
-    def test_create_multiple_rooms(self):
+    def test_create_multiple_rooms_of_type_livingspace_successfully(self):
         """Test create multiple rooms of type office successfully"""
-        likoni_tsavo = self.amity.create_room("office", ["likoni", "tsavo"])
+        likoni_tsavo = self.amity.create_room("livingspace", ["likoni", "tsavo"])
         self.assertListEqual(likoni_tsavo,
                              ["Rooms added successfully!"])
 
