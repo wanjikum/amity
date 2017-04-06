@@ -10,82 +10,32 @@ class CreateRoomTestCases(unittest.TestCase):
     def setUp(self):
         """Keeps our code dry"""
         self.amity = Amity()
-        self.office = Office("office", "Tsavo")
-        self.living_space = LivingSpace("livingspace", "Tsavo")
+        bootcamp = bootcamp = self.amity.create_room("office", ["Bootcamp"])
 
     def tearDown(self):
-        del self.office
-        del self.living_space
         del self.amity
-
-    def test_office_and_living_space_is_instance_of_class_room(self):
-        # a test should only one reason to fail
-        """Tests if office and living space are instances of class Room"""
-        self.assertTrue(isinstance(self.office, Room))
-        self.assertTrue(isinstance(self.living_space, Room))
-
-    def test_class_livingSpace_takes_in_correct_attributes(self):
-        """Tests if class LivingSpace takes in correct attributes given"""
-        self.assertListEqual(["Tsavo", "living_space", 4, "no"],
-                             [self.living_space.room_names,
-                              self.living_space.room_type,
-                              self.living_space.room_capacity,
-                              self.living_space.accommodate])
-
-    def test_class_office_takes_in_correct_attributes(self):
-        """Tests if class Office takes in correct attributes given"""
-        self.assertListEqual(["Tsavo", "office", 6],
-                             [self.office.room_names,
-                              self.office.room_type,
-                              self.office.room_capacity])
 
     def test_create_room_type_office_successfully(self):
         """Test create a room_type office successfully"""
         office_intial_count = len(self.amity.offices)
-        bootcamp = self.amity.create_room("office", "Bootcamp")
         self.assertEqual(len(self.amity.offices), office_intial_count+1)
 
-    def test_create_living_space(self):
-        """Test create room_type living_space successfully"""
-        # initial_room_count = len(self.amity.living_space)
-        bootcamp = self.amity.create_room("living_space", "Bootcamp")
-        # new_count = len(self.amity.living_space)
-        # self.assertEqual(new_count, initial_room_count + 1)
-        # self.assertIn("Bootcamp", self.amity.living_space)
-        self.assertEqual(bootcamp,
-                         "LivingSpace Bootcamp has been successfully created!")
-
-    def test_create_multiple_offices(self):
+    def test_create_multiple_rooms(self):
         """Test create multiple rooms of type office successfully"""
         likoni_tsavo = self.amity.create_room("office", ["likoni", "tsavo"])
-        self.assertListEqual([likoni_tsavo],
-                             ["Office likoni has been successfully created!",
-                              "Office tsavo has been successfully created!"])
+        self.assertListEqual(likoni_tsavo,
+                             ["Rooms added successfully!"])
 
-    def test_create_multiple_rooms_of_type_livingspace_successfully(self):
-        """Test create multiple rooms of type livingspace successfully"""
-        kigali_nairobi = self.amity.create_room("living_space",
-                                                ["kigali", "nairobi"])
-        self.assertListEqual([kigali_nairobi],
-                             ["LivingSpace kigali has been" +
-                              " successfully created!",
-                              "LivingSpace nairobi has been" +
-                              "successfully created!"])
-
-    def test_duplicate_room(self):
+    def test_create_duplicate_room(self):
         """Test an existing room is not recreated"""
-        kigali_kigali = self.amity.create_room("living_space",
-                                               ["kigali", "kigali"])
-        self.assertListEqual([kigali_kigali],
-                             ["LivingSpace kigali has been" +
-                              " successfully created!",
-                              "LivingSpace kigali already exists!"])
+        bootcamp = bootcamp = self.amity.create_room("office", ["Bootcamp"])
+        self.assertListEqual(bootcamp, "Room already exists!")
 
     def test_invalid_room_type(self):
         """Test create invalid room type """
-        kitchen = self.amity.create_room("kitchen", "hog_centre")
-        self.assertEqual(kitchen, "Invalid room type. A room can either be of "
-                         + "type office or living_space")
+        kitchen = self.amity.create_room("kitchen", ["hog_centre"])
+        self.assertEqual(kitchen, ["Invalid room type. A room can either be of"
+                         + " type office or living_space"])
 
 
 class AddPersonTestCases(unittest.TestCase):
@@ -93,70 +43,33 @@ class AddPersonTestCases(unittest.TestCase):
     def setUp(self):
         """Keeps our code dry"""
         self.amity = Amity()
-        self.fellow = Fellow("Jamhuri Linnet")
-        self.staff = Staff("Oliver")
+        kigali = self.amity.create_room("office", "kigali")
+        kisumu = self.amity.create_room("living_space", "kisumu")
+        george = self.amity.add_person("george kiarie", "fellow", "no")
 
     def tearDown(self):
-        del self.fellow
-        del self.staff
         del self.amity
-
-    def test_if_fellow_and_staff_is_instance_of_class_person(self):
-        """Tests if fellow and staff are instances of class Person"""
-        self.assertTrue(isinstance(self.fellow, Person))
-        self.assertTrue(isinstance(self.staff, Person))
-
-    def test_if_class_fellow_takes_in_correct_attributes(self):
-        """Tests if class fellow takes in the attributes given"""
-        self.assertListEqual(["Jamhuri Linnet", "fellow", "no"],
-                             [self.fellow.person_name,
-                              self.fellow.person_type,
-                              self.fellow.accommodate])
-
-    def test_class_staff_takes_in_correct_attributes(self):
-        """Tests if class staff takes in the attributes given"""
-        self.assertListEqual(["Oliver", "staff"],
-                             [self.staff.person_name,
-                              self.staff.person_type])
 
     def test_add_staff_successfully(self):
         """Test add staff successfully"""
-        kigali = self.amity.create_room("office", "kigali")
         felistas = self.amity.add_person("felistas", "staff", "no")
-        self.assertListEqual([felistas],
-                             ["felistas has been successfully created!",
-                              "felistas has been allocated to the " +
-                              "office kigali"])
+        self.assertEqual(felistas, "Felistas has been successfully added")
 
     def test_add_staff_successfully_who_requires_accommodation(self):
         """Test reject accommodation for staff"""
-        kigali = self.amity.create_room("office", "kigali")
-        kisumu = self.amity.create_room("living_space", "kisumu")
         felistas = self.amity.add_person("felistas", "staff", "yes")
-        self.assertListEqual([felistas],
-                             ["felistas has been successfully created!",
-                              "felistas has been allocated to the " +
-                              "office kigali",
-                              "Staff cannot be accommodated"])
+        self.assertEqual(felistas, "staff cannot be accomodated!")
 
     def test_add_fellow_successfully_who_requires_accomodation(self):
         """Adds fellow successfully and is allocated room and livingspace"""
-        kigali = self.amity.create_room("office", "kigali")
-        mombasa = self.amity.create_room("living_space", "mombasa")
         larry = self.amity.add_person("larry", "fellow", "yes")
-        self.assertListEqual([larry],
-                             ["larry has been successfully added",
-                              "larry has been allocated to the office kigali",
-                              "larry has been allocated to the " +
-                              "livingspace mombasa"])
+        self.assertListEqual(larry,
+                             "larry has successfully been added, allocated office and accommodated")
 
     def test_add_fellow_successfully_who_does_not_require_accomodation(self):
         """Adds fellow successfully and is allocated room only"""
-        kigali = self.amity.create_room("office", "kigali")
         larry = self.amity.add_person("larry", "fellow", "no")
-        self.assertListEqual([larry],
-                             ["larry has been successfully added",
-                              "larry has been allocated to the office kigali"])
+        self.assertListEqual(larry, "larry has been successfully added and allocated office")
 
     def test_reject_invalid_role(self):
         """Rejects adding a person whose person type is not fellow/staff"""
@@ -172,9 +85,7 @@ class AddPersonTestCases(unittest.TestCase):
     def test_if_it_accepts_a_registered_user(self):
         """Tests if it rejects a registered user"""
         george = self.amity.add_person("george kiarie", "fellow", "no")
-        george_kiarie = self.amity.add_person("george kiarie", "fellow", "no")
-        self.assertEqual(george_kiarie,
-                         "The person already exists!")
+        self.assertEqual(george, "The person already exists!")
 
 
 class ReallocatePersonTestCases(unittest.TestCase):
@@ -208,8 +119,9 @@ class ReallocatePersonTestCases(unittest.TestCase):
         self.assertEqual(charity_kisii,
                          "The room does not exist!")
 
-    def test_reallocate_reject_if_a_room_which_is_full(self):
+    def test_reallocate_reject_if_a_room_is_full(self):
         """Tests if rejects reallocate person to a room which is full"""
+        # use factory boy and model mummy
         self.amity.add_person("vannidiah", "fellow", "yes")
         self.amity.add_person("vannidia", "fellow", "yes")
         self.amity.add_person("vannidi", "fellow", "yes")
