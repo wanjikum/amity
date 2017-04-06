@@ -17,14 +17,15 @@ class CreateRoomTestCases(unittest.TestCase):
 
     def test_create_room_type_office_successfully(self):
         """Test create a room_type office successfully"""
-        office_intial_count = len(self.amity.offices)
-        self.assertEqual(len(self.amity.offices), office_intial_count+1)
+        self.assertEqual(bootcamp, "Bootcamp added successfully!")
 
     def test_create_multiple_rooms_of_type_livingspace_successfully(self):
         """Test create multiple rooms of type office successfully"""
-        likoni_tsavo = self.amity.create_room("livingspace", ["likoni", "tsavo"])
-        self.assertListEqual(likoni_tsavo,
-                             ["Rooms added successfully!"])
+        likoni_tsavo = self.amity.create_room("livingspace",
+                                              ["likoni", "tsavo"])
+        livingspace_intial_count = len(self.amity.livingspace)
+        self.assertEqual(len(self.amity.livingspace),
+                         livingspace_intial_count+2)
 
     def test_create_duplicate_room(self):
         """Test an existing room is not recreated"""
@@ -53,23 +54,19 @@ class AddPersonTestCases(unittest.TestCase):
     def test_add_staff_successfully(self):
         """Test add staff successfully"""
         felistas = self.amity.add_person("felistas", "staff", "no")
-        self.assertEqual(felistas, "Felistas has been successfully added")
+        self.assertEqual(felistas, "Felistas added successfully!")
 
     def test_add_staff_successfully_who_requires_accommodation(self):
         """Test reject accommodation for staff"""
         felistas = self.amity.add_person("felistas", "staff", "yes")
-        self.assertEqual(felistas, "staff cannot be accomodated!")
-
-    def test_add_fellow_successfully_who_requires_accomodation(self):
-        """Adds fellow successfully and is allocated room and livingspace"""
-        larry = self.amity.add_person("larry", "fellow", "yes")
-        self.assertListEqual(larry,
-                             "larry has successfully been added, allocated office and accommodated")
+        self.assertEqual(felistas, "Sta
+        ff cannot be accomodated!")
 
     def test_add_fellow_successfully_who_does_not_require_accomodation(self):
         """Adds fellow successfully and is allocated room only"""
         larry = self.amity.add_person("larry", "fellow", "no")
-        self.assertListEqual(larry, "larry has been successfully added and allocated office")
+        self.assertListEqual(larry, "larry has been successfully added \
+                              and allocated office")
 
     def test_reject_invalid_role(self):
         """Rejects adding a person whose person type is not fellow/staff"""
@@ -82,10 +79,25 @@ class AddPersonTestCases(unittest.TestCase):
         tina = self.amity.add_person("ti67ji#", "staff", "no")
         self.assertEqual(tina, "Invalid name. Use letters only")
 
-    def test_if_it_accepts_a_registered_user(self):
-        """Tests if it rejects a registered user"""
+    def test_if_it_accepts_an_existing_person(self):
+        """Tests if it rejects an existing person"""
         george = self.amity.add_person("george kiarie", "fellow", "no")
         self.assertEqual(george, "The person already exists!")
+
+
+class AllocateRoomTestcases(unittest.TestCase):
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_add_fellow_successfully_who_requires_accomodation(self):
+        """Adds fellow successfully and is allocated room and livingspace"""
+        larry = self.amity.add_person("larry", "fellow", "yes")
+        self.assertEqual(larry,
+                         "larry has successfully been added, \
+                           allocated office and accommodated")
 
 
 class ReallocatePersonTestCases(unittest.TestCase):
