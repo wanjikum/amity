@@ -73,7 +73,9 @@ class MyInteractiveAmity (cmd.Cmd):
         """Usage: create_room <room_type> <room_name>..."""
         room_type = arg["<room_type>"]
         room_names = arg["<room_name>"]
-        amity.create_room(room_type, room_names)
+        message = amity.create_room(room_type, room_names)
+        for msg in message:
+            print(msg)
 
     @docopt_cmd
     def do_add_person(self, arg):
