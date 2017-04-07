@@ -18,26 +18,27 @@ class CreateRoomTestCases(unittest.TestCase):
 
     def test_create_room_type_office_successfully(self):
         """Test create a room_type office successfully"""
-        self.assertEqual(self.bootcamp, "Bootcamp added successfully!")
+        asmara = self.amity.create_room("office", ["asmara"])
+        self.assertEqual(asmara, "asmara added successfully!\n")
 
     def test_create_multiple_rooms_of_type_livingspace_successfully(self):
         """Test create multiple rooms of type office successfully"""
+        livingspace_intial_count = len(self.amity.livingspaces)
         likoni_tsavo = self.amity.create_room("livingspace",
                                               ["likoni", "tsavo"])
-        livingspace_intial_count = len(self.amity.livingspace)
-        self.assertEqual(len(self.amity.livingspace),
+        self.assertEqual(len(self.amity.livingspaces),
                          livingspace_intial_count+2)
 
     def test_create_duplicate_room(self):
         """Test an existing room is not recreated"""
         bootcamp = self.amity.create_room("office", ["Bootcamp"])
-        self.assertEqual(bootcamp, "Room already exists!")
+        self.assertEqual(bootcamp, "Room Bootcamp already exists!\n")
 
     def test_invalid_room_type(self):
         """Test create invalid room type """
         kitchen = self.amity.create_room("kitchen", ["hog_centre"])
-        self.assertEqual(kitchen, ["Invalid room type. A room can either be of"
-                         + " type office or living_space"])
+        self.assertEqual(kitchen, "Invalid room type. A room can either be of"
+                         + " type office or living_space!\n")
 
 
 class AddPersonTestCases(unittest.TestCase):
@@ -74,7 +75,6 @@ class AddPersonTestCases(unittest.TestCase):
         """Tests if it rejects an existing person"""
         george = self.amity.add_person("george kiarie", "fellow", "no")
         self.assertEqual(george, "The person already exists!")
-
 
     def test_add_fellow_successfully_who_requires_accomodation(self):
         """Adds fellow successfully and is allocated room and livingspace"""
