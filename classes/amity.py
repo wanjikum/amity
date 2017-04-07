@@ -1,34 +1,37 @@
 """
 A class Amity that contains all the functionality of the app.
 """
-
+from classes.room import LivingSpace, Office
 
 class Amity(object):
     """Contains all functionalities of class Amity """
     offices = []
-    livingspace = []
+    livingspaces = []
+    rooms = []
+    existing_rooms = []
 
     def create_room(self, room_type, room_names):
         """A method that is used to create a room"""
         room_type = room_type.lower()
-        message = []
-        if room_type == "office":
-            for room_name in room_names:
-                if room_name in self.offices:
-                    message.append("Office {} already exists!".format(room_name))
-                self.offices.append(room_name)
-                message.append("Office {} has been successfully created!".format(room_name))
-
-        elif room_type == "living_space" or room_type == "livingspace":
-            for room_name in room_names:
-                if room_name in self.offices:
-                    message.append("Office {} already exists!".format(room_name))
-                    break
-                self.livingspace.append(room_name)
-                message.append("LivingSpace {} has been successfully created!".format(room_name))
-
-        else:
-            message.append("Invalid room type. A room can either be of type office or living_space")
+        message = ""
+        for room_name in room_names:
+            if room_name not in self.existing_rooms:
+                if room_type == "office":
+                    new_office = Office(room_name)
+                    self.offices.append(new_office)
+                    self.rooms.append(new_office)
+                    self.existing_rooms.append(room_name)
+                    message += "{} added successfully!\n".format(room_name)
+                elif room_type in ["living_space", "livingspace"]:
+                    new_living_space = LivingSpace(room_name)
+                    self.livingspaces.append(new_living_space)
+                    self.rooms.append(new_living_space)
+                    self.existing_rooms.append(room_name)
+                    message += "{} added successfully!\n".format(room_name)
+                else:
+                    message += "Invalid room type. A room can either be of type office or living_space!\n"
+            else:
+                message += "Room {} already exists!\n".format(room_name)
         return message
 
     def add_person(self, person_name, person_type, accommodate):
