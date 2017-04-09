@@ -13,7 +13,10 @@ class Amity(object):
     livingspaces = []
     fellows = []
     staffs = []
-    waiting_list = []
+    waiting_list = {
+        "office": [],
+        "livingspace": []
+    }
 
     def create_room(self, room_type, room_names):
         """A method that is used to create a room"""
@@ -94,12 +97,12 @@ class Amity(object):
             new_person.office = random_office
             return "Allocated office: {}\n".format(random_office.room_name)
         else:
-            self.waiting_list.append(new_person)
+            self.waiting_list["office"].append(new_person)
+            print(self.waiting_list["office"])
             return "No available offices. Added to the office waiting list\n"
 
     def allocate_living_space(self, new_person):
         """A method that allocates a living space"""
-        livingspace_with_space = []
         livingspace_with_space = []
         for livingspace in self.livingspaces:
             if len(livingspace.occupants) < livingspace.room_capacity:
@@ -111,7 +114,8 @@ class Amity(object):
             return "Allocated livingspace: {} \n". \
                 format(random_livingspace.room_name)
         else:
-            self.waiting_list.append(new_person)
+            self.waiting_list["livingspace"].append(new_person)
+            print(self.waiting_list["livingspace"])
             return "No available livingspaces. " + \
                 "Added to the livingspaces waiting list\n"
 
