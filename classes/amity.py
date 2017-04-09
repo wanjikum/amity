@@ -67,14 +67,15 @@ class Amity(object):
                 new_person = Staff(person_name)
                 self.staffs.append(new_person)
                 new_person.person_id = "SOO" + str(len(self.staffs))
-                print(new_person.person_id)
-                print(" {} added successfully!\n".format(person_name))
+                print(" {} added successfully!".format(person_name))
+                print("Staff ID: {}" .format(new_person.person_id))
                 return self.allocate_office(new_person)
         else:
             new_person = Fellow(person_name, wants_accommodation)
             self.fellows.append(new_person)
             new_person.person_id = "FOO" + str(len(self.fellows))
-            print(" {} added successfully!\n".format(person_name))
+            print(" {} added successfully!".format(person_name))
+            print("Fellow ID: {}" .format(new_person.person_id))
             if wants_accommodation in ["no", "n"]:
                 return self.allocate_office(new_person)
             else:
@@ -83,8 +84,18 @@ class Amity(object):
 
     def allocate_office(self, new_person):
         """A method that allocates an office"""
-        print(new_person)
-        pass
+        office_with_space = []
+        for office in self.offices:
+            if len(office.occupants) < office.room_capacity:
+                office_with_space.append(office)
+        if office_with_space:
+            random_office = choice(office_with_space)
+            random_office.occupants.append(new_person.person_name)
+            new_person.office = random_office
+            return "Allocated office: {}\n".format(random_office.room_name)
+        else:
+            self.waiting_list.append(new_person)
+            return "No available offices. Added to the office waiting list\n"
 
     def allocate_living_space(self, new_person):
         """A method that allocates a living space"""
