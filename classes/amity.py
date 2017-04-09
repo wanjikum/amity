@@ -2,6 +2,7 @@
 A class Amity that contains all the functionality of the app.
 """
 import itertools
+from random import choice
 from classes.room import LivingSpace, Office
 from classes.person import Staff, Fellow
 
@@ -12,14 +13,15 @@ class Amity(object):
     livingspaces = []
     fellows = []
     staffs = []
-    people = []
+
 
     def create_room(self, room_type, room_names):
         """A method that is used to create a room"""
         room_type = room_type.lower()
         message = ""
         for room_name in room_names:
-            if room_name not in [room.room_name for room in itertools.chain(self.offices, self.livingspaces)]:
+            if room_name not in [room.room_name \
+               for room in itertools.chain(self.offices, self.livingspaces)]:
                 if room_type == "office":
                     new_office = Office(room_name)
                     self.offices.append(new_office)
@@ -60,31 +62,37 @@ class Amity(object):
         person_name = person_name.title()
         if person_type in ["staff", "s"]:
             if wants_accommodation in ["yes", "y"]:
-                return "Staff cannot be accomodated"
+                return "Staff cannot be accomodated!"
             else:
-                new_staff = Staff(person_name)
-                self.staffs.append(new_staff)
+                new_person = Staff(person_name)
+                self.staffs.append(new_person)
+                new_person.person_id = "SOO" + str(len(self.staffs))
+                print(new_person.person_id)
                 print(" {} added successfully!\n".format(person_name))
-                return self.allocate_office(person_name)
+                return self.allocate_office(new_person)
         else:
-            new_fellow = Fellow(person_name, wants_accommodation)
-            self.fellows.append(new_fellow)
+            new_person = Fellow(person_name, wants_accommodation)
+            self.fellows.append(new_person)
+            new_person.person_id = "FOO" + str(len(self.fellows))
             print(" {} added successfully!\n".format(person_name))
             if wants_accommodation in ["no", "n"]:
-                return self.allocate_office(person_name)
+                return self.allocate_office(new_person)
             else:
-                return self.allocate_living_space(person_name)
+                return self.allocate_office(new_person) + \
+                   self.allocate_living_space(new_person)
 
-    def allocate_office(self, person_name):
-        print(person_name)
+    def allocate_office(self, new_person):
+        """A method that allocates an office"""
+        print(new_person)
+        pass
 
-    def allocate_living_space(self, person_name):
-        print(person_name)
+    def allocate_living_space(self, new_person):
+        """A method that allocates a living space"""
+        print(new_person)
+        pass
 
     def reallocate_person(self, person_id, room_name):
-        """A method that is used to reallocate a person"""
-        print(person_id)
-        print(room_name)
+        pass
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
