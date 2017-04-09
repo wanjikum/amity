@@ -2,13 +2,17 @@
 A class Amity that contains all the functionality of the app.
 """
 from classes.room import LivingSpace, Office
+from classes.person import Staff, Fellow
+
 
 class Amity(object):
     """Contains all functionalities of class Amity """
     offices = []
     livingspaces = []
-    rooms = []
     existing_rooms = []
+    fellows = []
+    staffs = []
+    people = []
 
     def create_room(self, room_type, room_names):
         """A method that is used to create a room"""
@@ -19,26 +23,56 @@ class Amity(object):
                 if room_type == "office":
                     new_office = Office(room_name)
                     self.offices.append(new_office)
-                    self.rooms.append(new_office)
                     self.existing_rooms.append(room_name)
                     message += "{} added successfully!\n".format(room_name)
                 elif room_type in ["living_space", "livingspace"]:
                     new_living_space = LivingSpace(room_name)
                     self.livingspaces.append(new_living_space)
-                    self.rooms.append(new_living_space)
                     self.existing_rooms.append(room_name)
                     message += "{} added successfully!\n".format(room_name)
                 else:
-                    message += "Invalid room type. A room can either be of type office or living_space!\n"
+                    message += "Invalid room type. " + \
+                      "A room can either be of type office or living_space!\n"
             else:
                 message += "Room {} already exists!\n".format(room_name)
         return message
 
-    def add_person(self, person_name, person_type, accommodate):
+    def add_person(self, person_name, person_type, wants_accommodation):
         """A method that is used to add a person into the system"""
+        is_digit = any(char.isdigit() for char in person_name)
+        if is_digit:
+            return "Invalid name. Use letters only"
+        else:
+            # person_name = person_name.title()
+            person_type = person_type.lower()
+            if person_type not in ["fellow", "f", "staff", "s"]:
+                return "Invalid role. You can either be a fellow/staff."
+            else:
+                wants_accommodation = (wants_accommodation.lower()
+                                       if wants_accommodation is not None
+                                       else "no")
+                if wants_accommodation not in ["yes", "y", "n", "no"]:
+                    return "Invalid accomodate option. " + \
+                     "It can either be yes or no."
+                else:
+                    return self.save_person(person_name, person_type,
+                                            wants_accommodation)
+
+    def save_person(self, person_name, person_type, wants_accommodation):
+        person_name = person_name.title()
+        if person_type in ["staff", "s"]:
+            if wants_accommodation in ["yes", "y"]:
+                return "Staff cannot be accomodated"
+            else:
+                new_staff = Staff(person_name)
+                self.staffs.append(new_staff)
+                print(" {} added successfully!".format(person_name))
+                return self.allocate_office(person_name)
+    def allocate_office(self, person_name):
         print(person_name)
-        print(person_type)
-        print(accommodate)
+
+    def allocate_living_space(self, person_name):
+        print(person_name)
 
     def reallocate_person(self, person_id, room_name):
         """A method that is used to reallocate a person"""
