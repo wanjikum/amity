@@ -13,14 +13,14 @@ class Amity(object):
     livingspaces = []
     fellows = []
     staffs = []
-
+    waiting_list = []
 
     def create_room(self, room_type, room_names):
         """A method that is used to create a room"""
         room_type = room_type.lower()
         message = ""
         for room_name in room_names:
-            if room_name not in [room.room_name \
+            if room_name not in [room.room_name
                for room in itertools.chain(self.offices, self.livingspaces)]:
                 if room_type == "office":
                     new_office = Office(room_name)
@@ -99,8 +99,21 @@ class Amity(object):
 
     def allocate_living_space(self, new_person):
         """A method that allocates a living space"""
-        print(new_person)
-        pass
+        livingspace_with_space = []
+        livingspace_with_space = []
+        for livingspace in self.livingspaces:
+            if len(livingspace.occupants) < livingspace.room_capacity:
+                livingspace_with_space.append(livingspace)
+        if livingspace_with_space:
+            random_livingspace = choice(livingspace_with_space)
+            random_livingspace.occupants.append(new_person.person_name)
+            new_person.livingspace = random_livingspace
+            return "Allocated livingspace: {} \n". \
+                format(random_livingspace.room_name)
+        else:
+            self.waiting_list.append(new_person)
+            return "No available livingspaces. " + \
+                "Added to the livingspaces waiting list\n"
 
     def reallocate_person(self, person_id, room_name):
         pass
