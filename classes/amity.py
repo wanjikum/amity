@@ -1,6 +1,7 @@
 """
 A class Amity that contains all the functionality of the app.
 """
+import itertools
 from classes.room import LivingSpace, Office
 from classes.person import Staff, Fellow
 
@@ -9,7 +10,6 @@ class Amity(object):
     """Contains all functionalities of class Amity """
     offices = []
     livingspaces = []
-    existing_rooms = []
     fellows = []
     staffs = []
     people = []
@@ -19,16 +19,14 @@ class Amity(object):
         room_type = room_type.lower()
         message = ""
         for room_name in room_names:
-            if room_name not in self.existing_rooms:
+            if room_name not in [room.room_name for room in itertools.chain(self.offices, self.livingspaces)]:
                 if room_type == "office":
                     new_office = Office(room_name)
                     self.offices.append(new_office)
-                    self.existing_rooms.append(room_name)
                     message += "{} added successfully!\n".format(room_name)
                 elif room_type in ["living_space", "livingspace"]:
                     new_living_space = LivingSpace(room_name)
                     self.livingspaces.append(new_living_space)
-                    self.existing_rooms.append(room_name)
                     message += "{} added successfully!\n".format(room_name)
                 else:
                     message += "Invalid room type. " + \
@@ -66,12 +64,12 @@ class Amity(object):
             else:
                 new_staff = Staff(person_name)
                 self.staffs.append(new_staff)
-                print(" {} added successfully!".format(person_name))
+                print(" {} added successfully!\n".format(person_name))
                 return self.allocate_office(person_name)
         else:
             new_fellow = Fellow(person_name, wants_accommodation)
             self.fellows.append(new_fellow)
-            print(" {} added successfully!".format(person_name))
+            print(" {} added successfully!\n".format(person_name))
             if wants_accommodation in ["no", "n"]:
                 return self.allocate_office(person_name)
             else:
