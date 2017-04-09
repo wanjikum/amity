@@ -9,6 +9,7 @@ class Room(object):
         """Class room constructor"""
         self.room_type = None
         self.room_name = room_name
+        self.occupants = []
 
 
 class Office(Room):

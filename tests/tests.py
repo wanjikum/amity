@@ -34,7 +34,7 @@ class CreateRoomTestCases(unittest.TestCase):
         bootcamp = self.amity.create_room("office", ["Bootcamp"])
         self.assertEqual(bootcamp, "Room Bootcamp already exists!\n")
 
-    def test_invalid_room_type(self):
+    def test_create_invalid_room_type(self):
         """Test create invalid room type """
         kitchen = self.amity.create_room("kitchen", ["hog_centre"])
         self.assertEqual(kitchen, "Invalid room type. A room can either be of"
@@ -52,13 +52,19 @@ class AddPersonTestCases(unittest.TestCase):
 
     def test_add_staff_successfully_and_there_are_no_vacant_rooms(self):
         """Test add staff successfully"""
-        felistas = self.amity.add_person("felistas", "staff", "no")
-        self.assertEqual(felistas, "Felistas added successfully!")
+        response = self.amity.add_person("felistas", "staff", "no")
+        self.assertEqual(response, "Felistas added successfully!")
 
-    def test_add_staff_successfully_who_requires_accommodation(self):
+    def test_add_staff_who_requires_accommodation(self):
         """Test reject accommodation for staff"""
-        felistas = self.amity.add_person("felistas", "staff", "yes")
-        self.assertEqual(felistas, "Staff cannot be accomodated!")
+        response = self.amity.add_person("felistas", "staff", "yes")
+        self.assertEqual(response, "Staff cannot be accomodated!")
+
+    def test_add_person_who_inputs_a_wrong_accomodation_value(self):
+        """Test reject accommodation if option is neither yes/no"""
+        felistas = self.amity.add_person("felistas", "staff", "who")
+        self.assertEqual(felistas, "Invalid accomodate option. "
+                         + "It can either be yes or no.")
 
     def test_reject_invalid_role(self):
         """Rejects adding a person whose person type is not fellow/staff"""
@@ -70,11 +76,6 @@ class AddPersonTestCases(unittest.TestCase):
         """Tests if it rejects names with numbers"""
         tina = self.amity.add_person("ti67ji#", "staff", "no")
         self.assertEqual(tina, "Invalid name. Use letters only")
-
-    def test_if_it_accepts_an_existing_person(self):
-        """Tests if it rejects an existing person"""
-        george = self.amity.add_person("george kiarie", "fellow", "no")
-        self.assertEqual(george, "The person already exists!")
 
     def test_add_fellow_successfully_who_requires_accomodation(self):
         """Adds fellow successfully and is allocated room and livingspace"""
@@ -152,7 +153,7 @@ class AllocateReallocatePersonTestCases(unittest.TestCase):
         """Tests rejects reallocation of staff from office to livingspace"""
         charity_kiambu = self.amity.reallocate_person(1, "kiambu")
         self.assertEqual(charity_kiambu,
-                         "Reallocation room mismatch!")
+                         "Staff cannot be accomodated!")
 
     def test_reallocate_rejects_reallocation_to_the_same_room(self):
         """Test rejects reallocation to the same room"""
@@ -215,6 +216,7 @@ class PrintAllocatedUnallocated(unittest.TestCase):
     def test_print_allocated_successfully_to_text_file(self):
         """Tests if it prints allocated people to the specified file"""
         allocated_people = self.amity.print_allocated("allocated")
+        # check if the file exists
         self.assertEqual(allocated_people,
                          "Data saved in allocated.txt successfully")
 

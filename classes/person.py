@@ -10,21 +10,25 @@ class Person(object):
         person or not.
     """
 
-    def __init__(self, person_name, person_type="none"):
+    def __init__(self, person_name):
         """Class person constructor"""
         self.person_name = person_name
-        self.person_type = person_type
+        self.person_type = None
         self.person_id = ""
+        self.office = None
 
 
 class Staff(Person):
     """A class Staff that inherits from class Person"""
-    def __init__(self, person_name, person_type="staff"):
-        Person.__init__(self, person_name, person_type)
+    def __init__(self, person_name):
+        Person.__init__(self, person_name)
+        self.person_type = "staff"
 
 
 class Fellow(Person):
     """A class Fellow that inherit from class Person"""
-    def __init__(self, person_name, person_type="fellow", accommodate='no'):
-        Person.__init__(self, person_name, person_type)
+    def __init__(self, person_name, accommodate='no'):
+        Person.__init__(self, person_name)
+        self.person_type = "fellow"
         self.accommodate = accommodate
+        self.living_space = None

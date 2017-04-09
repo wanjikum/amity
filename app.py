@@ -84,8 +84,8 @@ class MyInteractiveAmity (cmd.Cmd):
         # join first name and second name inorder to fit in my persons name arg
         person_name = arg["<first_name>"] + " " + arg["<last_name>"]
         person_type = arg["<role>"]
-        accommodate = arg["<accommodate>"]
-        amity.add_person(person_name, person_type, accommodate)
+        wants_accommodation = arg["<accommodate>"]
+        print(amity.add_person(person_name, person_type, wants_accommodation))
 
     @docopt_cmd
     def do_reallocate_person(self, arg):
