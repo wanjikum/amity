@@ -17,7 +17,8 @@ class CreateRoomTestCases(unittest.TestCase):
 
     def tearDown(self):
         del self.amity
-        del self.bootcamp
+        Amity.offices = []
+        Amity.livingspaces = []
 
     def test_create_room_type_office_successfully(self):
         """Test create a room_type office successfully"""
@@ -87,38 +88,34 @@ class AllocateReallocatePersonTestCases(unittest.TestCase):
     def setUp(self):
         """Keeps our code dry"""
         self.amity = Amity()
-        self.amity.create_room("office", "kakamega")
-        self.amity.create_room("living_space", "kiambu")
-        self.charity = self.amity.add_person("charity", "staff", "no")
-        self.vannidiah = self.amity.add_person("vannidiah", "fellow", "yes")
-        self.amity.add_person("vannidia", "fellow", "yes")
-        self.amity.add_person("vannidi", "fellow", "yes")
-        self.amity.add_person("vannid", "fellow", "yes")
-        self.vanni = self.amity.add_person("vanni", "fellow", "yes")
 
     def tearDown(self):
         del self.amity
 
-    def test_allocate_an_office_successfully(self):
-        """Tests if a person is successfully allocated"""
-        self.assertEqual(self.charity,
-                         "Charity has been allocated office Kakamega")
+    def test_allocate_office_successfully(self):
+        """Tests if a person is successfully allocated an office"""
+        self.amity.create_room("office", ["accra"])
+        response = self.amity.add_person("oliver", "staff", "no")
+        self.assertEqual(response, "Allocated office: accra\n")
 
-    def test_allocate_an_livingspace_successfully(self):
+    def test_allocate_livingspace_successfully(self):
         """Tests if a person is successfully allocated to a livingspace"""
-        self.assertEqual(self.vannidiah,
-                         "Vannidiah has been accomodated to \
-                          livingspace Kiambu")
+        self.amity.create_room("livingspace", ["left_wing"])
+        response = self.amity.add_person("oliver", "fellow", "yes")
+        self.assertEqual(response, "Allocated livingspace: left_wing \n")
 
-    def test_allocate_person_if_are_livingspaces_are_full(self):
+    def test_allocate_livingspace_if_no_available_livingspaces(self):
+        """Test reject livingspace allocation if no livingspace available"""
+        response = self.amity.add_person("oliver", "fellow", "yes")
+        self.assertEqual(response, "No available livingspaces. "
+                         "Added to the livingspaces waiting list\n")
+
+    def test_allocate_office_if_no_available_offices(self):
         """Test reject allocation if room is full"""
-        self.assertEqual(self.vanni, "Added to accomodation waiting list!")
-
-    def test_allocate_person_if_are_offices_are_full(self):
-        """Test reject allocation if room is full"""
-        vann = self.amity.add_person("vann", "fellow", "yes")
-        self.assertEqual(vann, "Added to offices waiting list!")
-
+        response = self.amity.add_person("Alex", "staff", "no")
+        self.assertEqual(response, "No available offices. "
+                         "Added to the office waiting list\n")
+#
     def test_reallocate_a_person_successfully(self):
         """Tests if a person is successfully reallocated"""
         self.amity.create_room("office", "kisii")

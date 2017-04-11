@@ -81,8 +81,8 @@ class Amity(object):
             if wants_accommodation in ["no", "n"]:
                 return self.allocate_office(new_person)
             else:
-                return self.allocate_office(new_person) + \
-                   self.allocate_living_space(new_person)
+                print(self.allocate_office(new_person))
+                return self.allocate_living_space(new_person)
 
     def allocate_office(self, new_person):
         """A method that allocates an office"""
