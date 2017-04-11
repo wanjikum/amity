@@ -116,6 +116,19 @@ class Amity(object):
             return "No available livingspaces. " + \
                 "Added to the livingspaces waiting list\n"
 
+    def print_room(self, room_name):
+        """A method that prints room occupants in a room"""
+        for room in (self.offices + self.livingspaces):
+            if room_name == room.room_name:
+                if len(room.occupants) < 0:
+                    return "The room is empty!\n"
+                else:
+                    for occupant in room.occupants:
+                        print(occupant)
+                    return "Room occupants printed successfully!\n"
+            else:
+                return "The room does not exist!\n"
+
     def reallocate_person(self, person_id, room_name):
         pass
 
@@ -130,10 +143,6 @@ class Amity(object):
     def print_unallocated(self, file_name=None):
         """A method that prints unallocated people"""
         print(file_name)
-
-    def print_room(self, room_name):
-        """A method that prints room occupants in a room"""
-        print(room_name)
 
     def save_state(self, database_name):
         """A method that saves changes to the database"""
