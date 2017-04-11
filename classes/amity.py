@@ -118,16 +118,19 @@ class Amity(object):
 
     def print_room(self, room_name):
         """A method that prints room occupants in a room"""
+        found = False
         for room in (self.offices + self.livingspaces):
             if room_name == room.room_name:
-                if len(room.occupants) < 0:
-                    return "The room is empty!\n"
-                else:
-                    for occupant in room.occupants:
-                        print(occupant)
-                    return "Room occupants printed successfully!\n"
+                found = True
+        if found:
+            if len(room.occupants) < 0:
+                return "The room is empty!\n"
             else:
-                return "The room does not exist!\n"
+                for occupant in room.occupants:
+                    print(occupant)
+                return "Room occupants printed successfully!\n"
+        else:
+            return "The room does not exist!\n"
 
     def reallocate_person(self, person_id, room_name):
         pass
