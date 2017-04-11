@@ -123,7 +123,7 @@ class Amity(object):
             if room_name == room.room_name:
                 found = True
         if found:
-            if len(room.occupants) < 0:
+            if len(room.occupants) == 0:
                 return "The room is empty!\n"
             else:
                 for occupant in room.occupants:
