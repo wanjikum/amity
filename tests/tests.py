@@ -136,12 +136,12 @@ class PrintRoomTestCases(unittest.TestCase):
         self.assertEqual(response, "Room occupants printed successfully!\n")
 
     def test_print_room_reject_if_room_name_does_not_exist(self):
-        """Test if rejects printing occupants in a non existing room"""
+        """Test if rejects printing occupants in a unexisting room"""
         occupants = self.amity.print_room("kiki")
         self.assertEqual(occupants, "The room does not exist!\n")
 
-    def test_if_room_is_empty(self):
-        """Test if it prints room empty in an empty room"""
+    def test_print_room_if_empty(self):
+        """Test response in print room empty if empty"""
         self.amity.create_room("living_space", ["right_wing"])
         response = self.amity.print_room("right_wing")
         self.assertEqual(response, "The room is empty!\n")
