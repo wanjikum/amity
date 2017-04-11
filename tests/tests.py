@@ -1,5 +1,8 @@
 import unittest
 import os
+from io import StringIO
+import sys
+
 from classes.room import Room, Office, LivingSpace
 from classes.person import Person, Fellow, Staff
 from classes.amity import Amity
@@ -41,7 +44,7 @@ class CreateRoomTestCases(unittest.TestCase):
                          + " type office or living_space!\n")
 
 
-class AddPersonTestCases(unittest.TestCase):
+class SavePersonTestCases(unittest.TestCase):
     """A class CreateRoom that has a collection of create_room testcases"""
     def setUp(self):
         """Keeps our code dry"""
@@ -50,39 +53,33 @@ class AddPersonTestCases(unittest.TestCase):
     def tearDown(self):
         del self.amity
 
-    def test_add_staff_successfully_and_there_are_no_vacant_rooms(self):
+    def test_add_person_staff_successfully(self):
         """Test add staff successfully"""
-        response = self.amity.add_person("felistas", "staff", "no")
-        self.assertEqual(response, "Felistas added successfully!")
+        self.amity.add_person("felistas", "staff", "no")
+        response = sys.stdout.getvalue().strip()
+        self.assertIn(response, "Felistas added successfully!")
 
-    def test_add_staff_who_requires_accommodation(self):
+    def test_add_person_staff_who_requires_accommodation(self):
         """Test reject accommodation for staff"""
         response = self.amity.add_person("felistas", "staff", "yes")
         self.assertEqual(response, "Staff cannot be accomodated!")
 
     def test_add_person_who_inputs_a_wrong_accomodation_value(self):
         """Test reject accommodation if option is neither yes/no"""
-        felistas = self.amity.add_person("felistas", "staff", "who")
-        self.assertEqual(felistas, "Invalid accomodate option. "
+        response = self.amity.add_person("felistas", "staff", "who")
+        self.assertEqual(response, "Invalid accomodate option. "
                          + "It can either be yes or no.")
 
     def test_reject_invalid_role(self):
         """Rejects adding a person whose person type is not fellow/staff"""
-        alex = self.amity.add_person("alex", "techie", "no")
-        self.assertEqual(alex,
+        response = self.amity.add_person("alex", "techie", "no")
+        self.assertEqual(response,
                          "Invalid role. You can either be a fellow/staff.")
 
     def test_if_it_accepts_string_only_in_person_name(self):
         """Tests if it rejects names with numbers"""
-        tina = self.amity.add_person("ti67ji#", "staff", "no")
-        self.assertEqual(tina, "Invalid name. Use letters only")
-
-    def test_add_fellow_successfully_who_requires_accomodation(self):
-        """Adds fellow successfully and is allocated room and livingspace"""
-        larry = self.amity.add_person("larry", "fellow", "yes")
-        self.assertEqual(larry,
-                         "larry has successfully been added, \
-                           allocated office and accommodated")
+        response = self.amity.add_person("ti67ji#", "staff", "no")
+        self.assertEqual(response, "Invalid name. Use letters only")
 
 
 class AllocateReallocatePersonTestCases(unittest.TestCase):
