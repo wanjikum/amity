@@ -18,8 +18,8 @@ class CreateRoomTestCases(unittest.TestCase):
 
     def test_create_room_type_office_successfully(self):
         """Test create a room_type office successfully"""
-        asmara = self.amity.create_room("office", ["asmara"])
-        self.assertEqual(asmara, "asmara added successfully!\n")
+        response = self.amity.create_room("office", ["asmara"])
+        self.assertEqual(response, "asmara added successfully!\n")
 
     def test_create_multiple_rooms_of_type_livingspace_successfully(self):
         """Test create multiple rooms of type office successfully"""
@@ -31,13 +31,13 @@ class CreateRoomTestCases(unittest.TestCase):
 
     def test_create_duplicate_room(self):
         """Test an existing room is not recreated"""
-        bootcamp = self.amity.create_room("office", ["Bootcamp"])
-        self.assertEqual(bootcamp, "Room Bootcamp already exists!\n")
+        response = self.amity.create_room("office", ["Bootcamp"])
+        self.assertEqual(response, "Room Bootcamp already exists!\n")
 
     def test_create_invalid_room_type(self):
         """Test create invalid room type """
-        kitchen = self.amity.create_room("kitchen", ["hog_centre"])
-        self.assertEqual(kitchen, "Invalid room type. A room can either be of"
+        response = self.amity.create_room("kitchen", ["hog_centre"])
+        self.assertEqual(response, "Invalid room type. A room can either be of"
                          + " type office or living_space!\n")
 
 
