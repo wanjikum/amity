@@ -83,7 +83,7 @@ class SavePersonTestCases(unittest.TestCase):
         self.assertEqual(response, "Invalid name. Use letters only")
 
 
-class AllocateReallocatePersonTestCases(unittest.TestCase):
+class AllocateRoomPersonTestCases(unittest.TestCase):
     """A collection of create_room testcases"""
     def setUp(self):
         """Keeps our code dry"""
@@ -115,10 +115,20 @@ class AllocateReallocatePersonTestCases(unittest.TestCase):
         response = self.amity.add_person("Alex", "staff", "no")
         self.assertEqual(response, "No available offices. "
                          "Added to the office waiting list\n")
-#
+
+
+class RellocateRoomPersonTestCases(unittest.TestCase):
+    """A collection of create_room testcases"""
+    def setUp(self):
+        """Keeps our code dry"""
+        self.amity = Amity()
+
+    def tearDown(self):
+        del self.amity
+
     def test_reallocate_a_person_successfully(self):
         """Tests if a person is successfully reallocated"""
-        self.amity.create_room("office", "kisii")
+        self.amity.create_room("office", ["kisii"])
         charity_kisii = self.amity.reallocate_person(1, "kisii")
         self.assertEqual(charity_kisii,
                          "charity has been reallocated from kakamega to kisii")
