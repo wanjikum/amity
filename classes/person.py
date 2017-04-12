@@ -14,7 +14,7 @@ class Person(object):
         """Class person constructor"""
         self.person_name = person_name
         self.person_type = None
-        self.person_id = id(self)
+        self.person_id = None
         self.office = None
 
 

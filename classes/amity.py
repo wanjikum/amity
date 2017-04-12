@@ -68,9 +68,10 @@ class Amity(object):
                 return "Staff cannot be accomodated!"
             else:
                 new_person = Staff(person_name)
+                new_person.person_id = "SOO" + str(len(self.staffs)+1)
                 self.staffs.append(new_person)
-                print("{} added successfully!".format(person_name))
-                # print("Your ID: {}".format(new_person.person_id))
+                print("{} added successfully! Your ID: {}"
+                      .format(person_name, new_person.person_id))
                 return self.allocate_office(new_person)
 
         else:
