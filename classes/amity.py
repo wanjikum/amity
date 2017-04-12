@@ -76,9 +76,10 @@ class Amity(object):
 
         else:
             new_person = Fellow(person_name, wants_accommodation)
+            new_person.person_id = "FOO" + str(len(self.fellows)+1)
             self.fellows.append(new_person)
-            print("{} added successfully!".format(person_name))
-            # print("Your ID: {}".format(new_person.person_id))
+            print("{} added successfully! Your ID: {}"
+                  .format(person_name, new_person.person_id))
             if wants_accommodation in ["no", "n"]:
                 return self.allocate_office(new_person)
             else:
