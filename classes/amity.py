@@ -14,6 +14,7 @@ class Amity(object):
     all_rooms = []
     fellows = []
     staffs = []
+    all_people = []
     waiting_list = {
         "office": [],
         "livingspace": []
@@ -73,6 +74,7 @@ class Amity(object):
                 new_person = Staff(person_name)
                 new_person.person_id = "SOO" + str(len(self.staffs)+1)
                 self.staffs.append(new_person)
+                self.all_people.append(new_person)
                 print("{} added successfully! Your ID: {}"
                       .format(person_name, new_person.person_id))
                 return self.allocate_office(new_person)
@@ -81,6 +83,7 @@ class Amity(object):
             new_person = Fellow(person_name, wants_accommodation)
             new_person.person_id = "FOO" + str(len(self.fellows)+1)
             self.fellows.append(new_person)
+            self.all_people.append(new_person)
             print("{} added successfully! Your ID: {}"
                   .format(person_name, new_person.person_id))
             if wants_accommodation in ["no", "n"]:
