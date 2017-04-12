@@ -11,7 +11,7 @@ class Amity(object):
     """Contains all functionalities of class Amity """
     offices = []
     livingspaces = []
-    rooms = []
+    all_rooms = []
     fellows = []
     staffs = []
     waiting_list = {
@@ -29,14 +29,13 @@ class Amity(object):
                 if room_type == "office":
                     new_office = Office(room_name)
                     self.offices.append(new_office)
-                    self.rooms.append(new_office)
+                    self.all_rooms.append(new_office)
                     message += "{} added successfully!\n".format(room_name)
                 elif room_type in ["living_space", "livingspace"]:
                     new_living_space = LivingSpace(room_name)
                     self.livingspaces.append(new_living_space)
-                    self.rooms.append(new_living_space)
+                    self.all_rooms.append(new_living_space)
                     message += "{} added successfully!\n".format(room_name)
-                    print(self.rooms)
                 else:
                     message += "Invalid room type. " + \
                       "A room can either be of type office or living_space!\n"
@@ -50,7 +49,7 @@ class Amity(object):
         if is_digit:
             return "Invalid name. Use letters only"
         else:
-            # person_name = person_name.title()
+            person_name = person_name.title()
             person_type = person_type.lower()
             if person_type not in ["fellow", "f", "staff", "s"]:
                 return "Invalid role. You can either be a fellow/staff."
