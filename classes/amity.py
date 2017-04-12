@@ -135,6 +135,7 @@ class Amity(object):
             return "The room does not exist!\n"
 
     def reallocate_person(self, person_id, room_name):
+        """A method that reallocates a person from one room to another"""
         pass
 
     def loads_people(self, file_name):
