@@ -125,14 +125,13 @@ class PrintRoomTestCases(unittest.TestCase):
         self.amity = Amity()
         self.amity.create_room("living_space", ["left_wing"])
         self.amity.add_person("Kenneth", "fellow", "yes")
-        self.amity.add_person("Gideon", "fellow", "yes")
-        self.amity.add_person("Kimokoti", "fellow", "yes")
         self.amity.add_person("Larry", "fellow", "yes")
 
     def tearDown(self):
         self.amity
         Amity.offices = []
         Amity.livingspaces = []
+        Amity.fellows = []
 
     def test_print_room_occupants_successfully(self):
         """Test if it prints the room occupants successfully"""
@@ -156,47 +155,57 @@ class RellocateRoomPersonTestCases(unittest.TestCase):
     def setUp(self):
         """Keeps our code dry"""
         self.amity = Amity()
+        self.amity.create_room("living_space", ["r_wing"])
+        self.amity.add_person("Oliver", "fellow", "yes")
+        self.amity.add_person("MaryAnne", "fellow", "yes")
+        self.amity.add_person("Gideon", "fellow", "yes")
+        self.amity.add_person("Kimokoti", "fellow", "yes")
+        self.amity.create_room("office", ["dakar"])
+        self.amity.create_room("living_space", ["l_wing"])
+        self.amity.add_person("Taracha", "staff", "no")
 
     def tearDown(self):
         del self.amity
+        Amity.offices = []
+        Amity.livingspaces = []
+        Amity.staffs = []
+        Amity.fellows = []
 
-    def test_reallocate_a_person_successfully(self):
+    def test_reallocate_room_reject_if_room_is_full(self):
+        """Tests if rejects reallocate person to a room which is full"""
+        self.amity.add_person("vanni", "fellow", "yes")
+        response = self.amity.reallocate_person("FOO5", "r_wing")
+        self.assertEqual(response,
+                         "Room capacity full!")
+
+    def test_reallocate_room_successfully(self):
         """Tests if a person is successfully reallocated"""
-        self.amity.create_room("office", ["kisii"])
-        charity_kisii = self.amity.reallocate_person(1, "kisii")
-        self.assertEqual(charity_kisii,
-                         "charity has been reallocated from kakamega to kisii")
+        response = self.amity.reallocate_person("FOO1", "l_wing")
+        self.assertEqual(response,
+                         "Oliver has been reallocated from r_wing to l_wing")
 
-    def test_reallocate_reject_a_person_with_invalid_identifier(self):
-        """Tests if it does not reallocate a person with an invalid personid"""
-        charity_kakamega = self.amity.reallocate_person(78, "kakamega")
-        self.assertEqual(charity_kakamega,
+    def test_reallocate_room_reject_a_person_with_invalid_identifier(self):
+        """Tests if it rejects reallocate a person with an invalid personid"""
+        response = self.amity.reallocate_person("omega", "kakamega")
+        self.assertEqual(response,
                          "The person identifier(id) used does not exist!")
 
-    def test_reallocate_reject_if_room_does_not_exist(self):
+    def test_reallocate_room_reject_if_room_does_not_exist(self):
         """Tests if it rejects reallocation to a room which does not exist"""
-        charity_likoni = self.amity.reallocate_person(1, "likoni")
-        self.assertEqual(charity_likoni,
+        response = self.amity.reallocate_person("FOO3", "likoni")
+        self.assertEqual(response,
                          "The room does not exist!")
-
-    def test_reallocate_reject_if_a_room_is_full(self):
-        """Tests if rejects reallocate person to a room which is full"""
-        self.amity.create_room("living_space", "marsabit")
-        vanni = self.amity.add_person("vanni", "fellow", "yes")
-        vanni_reallocate = self.amity.reallocate_person(6, "kiambu")
-        self.assertEqual(vanni_reallocate,
-                         "Room capacity full!")
 
     def test_reallocate_staff_from_office_to_living_space(self):
         """Tests rejects reallocation of staff from office to livingspace"""
-        charity_kiambu = self.amity.reallocate_person(1, "kiambu")
-        self.assertEqual(charity_kiambu,
+        response = self.amity.reallocate_person("SOO1", "l_wing")
+        self.assertEqual(response,
                          "Staff cannot be accomodated!")
 
     def test_reallocate_rejects_reallocation_to_the_same_room(self):
         """Test rejects reallocation to the same room"""
-        charity_kakamega = self.amity.reallocate_person(1, "kakamega")
-        self.assertEqual(charity_kakamega,
+        response = self.amity.reallocate_person("FOO2", "r_wing")
+        self.assertEqual(response,
                          "A person cannot be reallocated to the same room")
 
 
@@ -263,7 +272,6 @@ class PrintAllocatedUnallocated(unittest.TestCase):
         unallocated_people = self.amity.print_unallocated("unallocated")
         self.assertEqual(unallocated_people,
                          "Data saved in unallocated.txt successfully")
-
 
 
 class SaveStateTestCases(unittest.TestCase):
