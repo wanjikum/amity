@@ -26,7 +26,7 @@ class Amity(object):
         message = ""
         for room_name in room_names:
             if room_name not in [room.room_name
-               for room in itertools.chain(self.offices, self.livingspaces)]:
+               for room in self.all_rooms]:
                 if room_type == "office":
                     new_office = Office(room_name)
                     self.offices.append(new_office)
@@ -127,7 +127,7 @@ class Amity(object):
     def print_room(self, room_name):
         """A method that prints room occupants in a room"""
         found = False
-        for room in (self.offices + self.livingspaces):
+        for room in self.all_rooms:
             if room_name == room.room_name:
                 found = True
         if found:
@@ -142,8 +142,6 @@ class Amity(object):
 
     def reallocate_person(self, person_id, room_name):
         """A method that reallocates a person from one room to another"""
-        room_name = room_name.lower()
-        found = False
         # for person in (self.fellows + self.staffs)
 
     def loads_people(self, file_name):
