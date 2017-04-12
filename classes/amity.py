@@ -11,6 +11,7 @@ class Amity(object):
     """Contains all functionalities of class Amity """
     offices = []
     livingspaces = []
+    rooms = []
     fellows = []
     staffs = []
     waiting_list = {
@@ -28,11 +29,14 @@ class Amity(object):
                 if room_type == "office":
                     new_office = Office(room_name)
                     self.offices.append(new_office)
+                    self.rooms.append(new_office)
                     message += "{} added successfully!\n".format(room_name)
                 elif room_type in ["living_space", "livingspace"]:
                     new_living_space = LivingSpace(room_name)
                     self.livingspaces.append(new_living_space)
+                    self.rooms.append(new_living_space)
                     message += "{} added successfully!\n".format(room_name)
+                    print(self.rooms)
                 else:
                     message += "Invalid room type. " + \
                       "A room can either be of type office or living_space!\n"
@@ -136,7 +140,9 @@ class Amity(object):
 
     def reallocate_person(self, person_id, room_name):
         """A method that reallocates a person from one room to another"""
-        pass
+        room_name = room_name.lower()
+        found = False
+        # for person in (self.fellows + self.staffs)
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
