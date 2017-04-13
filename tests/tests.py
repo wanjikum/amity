@@ -93,6 +93,10 @@ class AllocateRoomPersonTestCases(unittest.TestCase):
 
     def tearDown(self):
         del self.amity
+        Amity.offices = []
+        Amity.livingspaces = []
+        Amity.all_rooms = []
+        Amity.fellows = []
 
     def test_allocate_office_successfully(self):
         """Tests if a person is successfully allocated an office"""
@@ -131,6 +135,7 @@ class PrintRoomTestCases(unittest.TestCase):
         self.amity
         Amity.offices = []
         Amity.livingspaces = []
+        Amity.all_rooms = []
         Amity.fellows = []
 
     def test_print_room_occupants_successfully(self):
