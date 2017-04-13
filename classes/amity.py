@@ -142,10 +142,14 @@ class Amity(object):
 
     def reallocate_person(self, person_id, room_name):
         """A method that reallocates a person from one room to another"""
+        room_name = room_name.lower()
+        person_id = person_id.upper()
         if person_id in [person.person_id for person in self.all_people]:
             if room_name in [room.room_name for room in self.all_rooms]:
-                print(person_id)
-                print(room_name)
+                if person_id[:3] == "FOO":
+                    print("I am a fellow")
+                else:
+                    print("I am a staff")
             else:
                 return "The room does not exist!"
         else:
