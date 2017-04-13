@@ -116,7 +116,7 @@ class Amity(object):
         if livingspace_with_space:
             random_livingspace = choice(livingspace_with_space)
             random_livingspace.occupants.append(new_person.person_name)
-            new_person.livingspace = random_livingspace
+            new_person.living_space = random_livingspace
             return "Allocated livingspace: {} \n". \
                 format(random_livingspace.room_name)
         else:
@@ -157,8 +157,11 @@ class Amity(object):
 
     def reallocate_fellow(self, person_id, room_name):
         """A method that reallocates fellows"""
-        print(person_id)
-        print(room_name)
+        fellow_object = [fellow for fellow in self.fellows
+                         if fellow.person_id == person_id]
+        print(fellow_object[0].person_id)
+        print(fellow_object[0].office.room_name)
+        print(fellow_object[0].living_space.room_name)
 
     def reallocate_staff(self, person_id, room_name):
         """A method that reallocates staffs"""
