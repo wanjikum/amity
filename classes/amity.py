@@ -142,7 +142,14 @@ class Amity(object):
 
     def reallocate_person(self, person_id, room_name):
         """A method that reallocates a person from one room to another"""
-        # for person in (self.fellows + self.staffs)
+        if person_id in [person.person_id for person in self.all_people]:
+            if room_name in [room.room_name for room in self.all_rooms]:
+                print(person_id)
+                print(room_name)
+            else:
+                return "The room does not exist!"
+        else:
+            return "The person identifier(id) used does not exist!"
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
