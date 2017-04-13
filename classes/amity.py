@@ -147,13 +147,23 @@ class Amity(object):
         if person_id in [person.person_id for person in self.all_people]:
             if room_name in [room.room_name for room in self.all_rooms]:
                 if person_id[:3] == "FOO":
-                    print("I am a fellow")
+                    return self.reallocate_fellow(person_id, room_name)
                 else:
-                    print("I am a staff")
+                    return self.reallocate_staff(person_id, room_name)
             else:
                 return "The room does not exist!"
         else:
             return "The person identifier(id) used does not exist!"
+
+    def reallocate_fellow(self, person_id, room_name):
+        """A method that reallocates fellows"""
+        print(person_id)
+        print(room_name)
+
+    def reallocate_staff(self, person_id, room_name):
+        """A method that reallocates staffs"""
+        print(person_id)
+        print(room_name)
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
