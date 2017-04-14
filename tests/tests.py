@@ -55,6 +55,7 @@ class AddPersonTestCases(unittest.TestCase):
         del self.amity
         Amity.staffs = []
         Amity.fellows = []
+        Amity.all_rooms = []
 
     def test_add_person_staff_successfully(self):
         """Test add staff successfully"""
@@ -173,6 +174,7 @@ class RellocateRoomPersonTestCases(unittest.TestCase):
         del self.amity
         Amity.offices = []
         Amity.livingspaces = []
+        Amity.all_rooms = []
         Amity.staffs = []
         Amity.fellows = []
 

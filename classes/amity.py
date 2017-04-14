@@ -155,7 +155,7 @@ class Amity(object):
                     if room_name in [room.room_name for room in self.offices]:
                         return self.reallocate_staff(person_id, room_name)
                     else:
-                        return "Staff cannot be accomodated"
+                        return "Staff cannot be accomodated!"
 
             else:
                 return "The room does not exist!"
@@ -192,7 +192,7 @@ class Amity(object):
         fellow_name = fellow_object[0].person_name
 
         if fellow_object[0].living_space.room_name == room_name:
-            return "A person cannot be reallocated to the same livingspace"
+            return "A person cannot be reallocated to the same room"
         else:
             previous_living_space = fellow_object[0].living_space.room_name
             previous_living_space_object = [lspace for lspace in
@@ -222,12 +222,10 @@ class Amity(object):
             previous_office_object = [office for office in self.offices
                                       if office.room_name == previous_office]
             previous_office_object[0].occupants.remove(staff_name)
-            print(previous_office_object[0].occupants)
             office_object = [office for office in self.offices
                              if office.room_name == room_name]
             if len(office_object[0].occupants) < 6:
                 office_object[0].occupants.append(staff_name)
-                print(office_object[0].occupants)
                 staff_object[0].office.room_name == room_name
                 return "{} has been reallocated from {} to {}".format(
                  staff_name, previous_office, room_name)
