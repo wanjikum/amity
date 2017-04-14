@@ -147,7 +147,10 @@ class Amity(object):
         if person_id in [person.person_id for person in self.all_people]:
             if room_name in [room.room_name for room in self.all_rooms]:
                 if person_id[:3] == "FOO":
-                    return self.reallocate_fellow(person_id, room_name)
+                    if room_name in [room.room_name for room in self.offices]:
+                        return self.reallocate_fellow_office(person_id, room_name)
+                    else:
+                        return self.reallocate_fellow_livingspace(person_id, room_name)
                 else:
                     return self.reallocate_staff(person_id, room_name)
             else:
@@ -155,11 +158,12 @@ class Amity(object):
         else:
             return "The person identifier(id) used does not exist!"
 
-    def reallocate_fellow(self, person_id, room_name):
+    def reallocate_fellow_office(self, person_id, room_name):
         """A method that reallocates fellows"""
         fellow_object = [fellow for fellow in self.fellows
                          if fellow.person_id == person_id]
         fellow_name = fellow_object[0].person_name
+
         if fellow_object[0].office.room_name == room_name:
             return "A person cannot be reallocated to the same room"
         else:
@@ -167,15 +171,39 @@ class Amity(object):
             previous_office_object = [office for office in self.offices
                                       if office.room_name == previous_office]
             previous_office_object[0].occupants.remove(fellow_name)
-            print(previous_office_object[0].occupants)
             office_object = [office for office in self.offices
                              if office.room_name == room_name]
             if len(office_object[0].occupants) < 6:
                 office_object[0].occupants.append(fellow_name)
                 fellow_object[0].office.room_name == room_name
-                print(office_object[0].occupants)
-                return "{} has been reallocated from {} to {}"
-                .format(fellow_name, previous_office, room_name)
+                return "{} has been reallocated from {} to {}".format(
+                 fellow_name, previous_office, room_name)
+            else:
+                return "Room capacity full!"
+
+    def reallocate_fellow_livingspace(self, person_id, room_name):
+        """A method that reallocates fellows"""
+        fellow_object = [fellow for fellow in self.fellows
+                         if fellow.person_id == person_id]
+        fellow_name = fellow_object[0].person_name
+
+        if fellow_object[0].living_space.room_name == room_name:
+            return "A person cannot be reallocated to the same livingspace"
+        else:
+            previous_living_space = fellow_object[0].living_space.room_name
+            previous_living_space_object = [lspace for lspace in
+            self.livingspaces if lspace.room_name == previous_living_space]
+            previous_living_space_object[0].occupants.remove(fellow_name)
+            living_space_object = [lspace for lspace in self.livingspaces
+                                   if lspace.room_name == room_name]
+            if len(living_space_object[0].occupants) < 4:
+                living_space_object[0].occupants.append(fellow_name)
+                fellow_object[0].living_space.room_name == room_name
+                return "{} has been reallocated from {} to {}".format(
+                  fellow_name, previous_living_space, room_name)
+            else:
+                return "Room capacity full!"
+
 
     def reallocate_staff(self, person_id, room_name):
         """A method that reallocates staffs"""
