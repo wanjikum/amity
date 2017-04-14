@@ -152,7 +152,11 @@ class Amity(object):
                     else:
                         return self.reallocate_fellow_livingspace(person_id, room_name)
                 else:
-                    return self.reallocate_staff(person_id, room_name)
+                    if room_name in [room.room_name for room in self.offices]:
+                        return self.reallocate_staff(person_id, room_name)
+                    else:
+                        return "Staff cannot be accomodated"
+
             else:
                 return "The room does not exist!"
         else:
@@ -206,9 +210,29 @@ class Amity(object):
 
 
     def reallocate_staff(self, person_id, room_name):
-        """A method that reallocates staffs"""
-        print(person_id)
-        print(room_name)
+        """A method that reallocates staff from one office to another"""
+        staff_object = [staff for staff in self.staffs
+                         if staff.person_id == person_id]
+        staff_name = staff_object[0].person_name
+
+        if staff_object[0].office.room_name == room_name:
+            return "A person cannot be reallocated to the same room"
+        else:
+            previous_office = staff_object[0].office.room_name
+            previous_office_object = [office for office in self.offices
+                                      if office.room_name == previous_office]
+            previous_office_object[0].occupants.remove(staff_name)
+            print(previous_office_object[0].occupants)
+            office_object = [office for office in self.offices
+                             if office.room_name == room_name]
+            if len(office_object[0].occupants) < 6:
+                office_object[0].occupants.append(staff_name)
+                print(office_object[0].occupants)
+                staff_object[0].office.room_name == room_name
+                return "{} has been reallocated from {} to {}".format(
+                 staff_name, previous_office, room_name)
+            else:
+                return "Room capacity full!"
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
