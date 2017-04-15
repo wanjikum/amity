@@ -253,7 +253,7 @@ class Amity(object):
         if file_name == None:
             return "I can do anything"
         else:
-            return "file_name"
+            return file_name
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
