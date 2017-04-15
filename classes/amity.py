@@ -101,6 +101,7 @@ class Amity(object):
         if office_with_space:
             random_office = choice(office_with_space)
             random_office.occupants.append(new_person.person_name)
+            print(random_office.occupants)
             new_person.office = random_office
             return "Allocated office: {}\n".format(random_office.room_name)
         else:
@@ -116,6 +117,7 @@ class Amity(object):
         if livingspace_with_space:
             random_livingspace = choice(livingspace_with_space)
             random_livingspace.occupants.append(new_person.person_name)
+            print(random_livingspace.occupants)
             new_person.living_space = random_livingspace
             return "Allocated livingspace: {} \n". \
                 format(random_livingspace.room_name)
@@ -126,17 +128,31 @@ class Amity(object):
 
     def print_room(self, room_name):
         """A method that prints room occupants in a room"""
+
         found = False
         for room in self.all_rooms:
             if room_name == room.room_name:
                 found = True
         if found:
-            if len(room.occupants) == 0:
-                return "The room is empty!\n"
+            if room.room_type == "office":
+                for office in self.offices:
+                    if office.room_name == room_name:
+                        if len(office.occupants) == 0:
+                            return "The room is empty!\n"
+                        else:
+                            # print(office.occupants)
+                            for occupant in office.occupants:
+                                print(occupant)
+                            return "Room occupants printed successfully!\n"
             else:
-                for occupant in room.occupants:
-                    print(occupant)
-                return "Room occupants printed successfully!\n"
+                for lspace in self.livingspaces:
+                    if lspace.room_name == room_name:
+                        if len(lspace.occupants) == 0:
+                            return "The room is empty!\n"
+                        else:
+                            for occupant in lspace.occupants:
+                                print(occupant)
+                            return "Room occupants printed successfully!\n"
         else:
             return "The room does not exist!\n"
 
@@ -232,12 +248,15 @@ class Amity(object):
             else:
                 return "Room capacity full!"
 
-    def loads_people(self, file_name):
-        """A method that adds people from a text file"""
-        print(file_name)
-
     def print_allocated(self, file_name=None):
         """A method that prints allocated people in rooms"""
+        if file_name == None:
+            return "I can do anything"
+        else:
+            return "file_name"
+
+    def loads_people(self, file_name):
+        """A method that adds people from a text file"""
         print(file_name)
 
     def print_unallocated(self, file_name=None):
