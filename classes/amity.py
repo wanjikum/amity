@@ -164,9 +164,11 @@ class Amity(object):
             if room_name in [room.room_name for room in self.all_rooms]:
                 if person_id[:3] == "FOO":
                     if room_name in [room.room_name for room in self.offices]:
-                        return self.reallocate_fellow_office(person_id, room_name)
+                        return self.reallocate_fellow_office(person_id,
+                                                             room_name)
                     else:
-                        return self.reallocate_fellow_livingspace(person_id, room_name)
+                        return self.reallocate_fellow_livingspace(person_id,
+                                                                  room_name)
                 else:
                     if room_name in [room.room_name for room in self.offices]:
                         return self.reallocate_staff(person_id, room_name)
@@ -224,13 +226,11 @@ class Amity(object):
             else:
                 return "Room capacity full!"
 
-
     def reallocate_staff(self, person_id, room_name):
         """A method that reallocates staff from one office to another"""
         staff_object = [staff for staff in self.staffs
-                         if staff.person_id == person_id]
+                        if staff.person_id == person_id]
         staff_name = staff_object[0].person_name
-
         if staff_object[0].office.room_name == room_name:
             return "A person cannot be reallocated to the same room"
 
@@ -251,8 +251,11 @@ class Amity(object):
 
     def print_allocated(self, file_name=None):
         """A method that prints allocated people in rooms"""
-        office_available = [office for office in self.offices if len(office.occupants) >= 0]
-        lspace_available = [lspace for lspace in self.livingspaces if len(lspace.occupants) >= 0]
+        output = ""
+        office_available = [office for office in self.offices
+                            if len(office.occupants) >= 0]
+        lspace_available = [lspace for lspace in self.livingspaces
+                            if len(lspace.occupants) >= 0]
         if office_available:
             print("*"*50)
             print("OFFICE ALLOCATIONS")
@@ -279,9 +282,13 @@ class Amity(object):
                     for occupant in lspace.occupants:
                         print("{},".format(occupant), end=' ')
                     print("\n")
-            return "\nData printed successfully \n"
-        else:
+            return "\nData printed successfully\n"
+        if not (lspace_available and office_available):
             return "No rooms available"
+        if not office_available:
+            print("No offices available")
+        if not lspace_available:
+            print("No livingspaces available")
         if file_name == None:
             return "I can do anything"
         else:

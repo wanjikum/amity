@@ -104,7 +104,7 @@ class MyInteractiveAmity (cmd.Cmd):
     def do_print_allocations(self, arg):
         """Usage: print_allocations [--o=filename]"""
         file_name = arg["--o"]
-        amity.print_allocated(file_name)
+        print(amity.print_allocated(file_name))
 
     @docopt_cmd
     def do_print_unallocated(self, arg):
@@ -116,7 +116,7 @@ class MyInteractiveAmity (cmd.Cmd):
     def do_print_room(self, arg):
         """Usage: print_room <room_name>"""
         room_name = arg["<room_name>"]
-        amity.print_room(room_name)
+        print(amity.print_room(room_name))
 
     @docopt_cmd
     def do_save_state(self, arg):
