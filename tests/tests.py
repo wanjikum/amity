@@ -246,7 +246,7 @@ class PrintAllocatedUnallocated(unittest.TestCase):
     """A collection of print allocated and unallocated testcases"""
     def setUp(self):
         self.amity = Amity()
-        self.amity.create_room("living_space", "right_wing")
+        self.amity.create_room("living_space", ["right_wing"])
         self.amity.add_person("Kenneth", "fellow", "yes")
         self.amity.add_person("Gideon", "fellow", "yes")
         self.amity.add_person("Kimokoti", "fellow", "yes")
@@ -256,11 +256,16 @@ class PrintAllocatedUnallocated(unittest.TestCase):
 
     def tearDown(self):
         self.amity
+        Amity.offices = []
+        Amity.livingspaces = []
+        Amity.all_rooms = []
+        Amity.staffs = []
+        Amity.fellows = []
 
-    def test_print_allocated_successfully(self):
+    def test_print_allocations_successfully(self):
         """Tests if it prints allocated people successfully"""
-        allocated_people = self.amity.print_allocated()
-        self.assertEqual(allocated_people, "Data printed successfully")
+        response = self.amity.print_allocated(None)
+        self.assertIn(response, "\nData printed successfully\n")
 
     def test_print_unallocated_successfully(self):
         """Tests if it prints unallocated people successfully"""
@@ -272,13 +277,13 @@ class PrintAllocatedUnallocated(unittest.TestCase):
         allocated_people = self.amity.print_allocated("allocated")
         # check if the file exists
         self.assertEqual(allocated_people,
-                         "Data saved in allocated.txt successfully")
+                         "Data saved in allocated successfully")
 
     def test_print_unallocated_successfully_to_text_file(self):
         """Tests if prints unallocated people to the specified file"""
         unallocated_people = self.amity.print_unallocated("unallocated")
         self.assertEqual(unallocated_people,
-                         "Data saved in unallocated.txt successfully")
+                         "Data saved in unallocated successfully")
 
 
 class SaveStateTestCases(unittest.TestCase):
