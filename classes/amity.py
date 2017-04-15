@@ -233,6 +233,7 @@ class Amity(object):
 
         if staff_object[0].office.room_name == room_name:
             return "A person cannot be reallocated to the same room"
+
         else:
             previous_office = staff_object[0].office.room_name
             previous_office_object = [office for office in self.offices
@@ -250,6 +251,21 @@ class Amity(object):
 
     def print_allocated(self, file_name=None):
         """A method that prints allocated people in rooms"""
+        office_available = [office for office in self.offices if len(office.occupants) >= 0]
+        lspace_available = [lspace for lspace in self.livingspaces if len(lspace.occupants) >= 0]
+        if office_available:
+            print("OFFICE ALLOCATIONS")
+            for office in office_available:
+                print("\n\n{}".format(office.room_name.upper()))
+                print("-"*50)
+                if len(office.occupants) == 0:
+                    print("NONE\n")
+                else:
+                    for occupant in office.occupants:
+                        print("{},".format(occupant), end=' ')
+            return "\n\nData printed successfully \n"
+        else:
+            return "No offices available"
         if file_name == None:
             return "I can do anything"
         else:
