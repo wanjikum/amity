@@ -101,7 +101,6 @@ class Amity(object):
         if office_with_space:
             random_office = choice(office_with_space)
             random_office.occupants.append(new_person.person_name)
-            print(random_office.occupants)
             new_person.office = random_office
             return "Allocated office: {}\n".format(random_office.room_name)
         else:
@@ -117,7 +116,6 @@ class Amity(object):
         if livingspace_with_space:
             random_livingspace = choice(livingspace_with_space)
             random_livingspace.occupants.append(new_person.person_name)
-            print(random_livingspace.occupants)
             new_person.living_space = random_livingspace
             return "Allocated livingspace: {} \n". \
                 format(random_livingspace.room_name)
@@ -300,7 +298,27 @@ class Amity(object):
 
     def print_unallocated(self, file_name=None):
         """A method that prints unallocated people"""
-        print(file_name)
+        output = ""
+        unallocated_office = [person for person in self.waiting_list["office"]]
+        unallocated_lspace = [person for person in self.waiting_list["livingspace"]]
+        if unallocated_office:
+            output += ("*"*50 + "\n")
+            output += ("OFFICE UNALLOCATIONS" + "\n")
+            output += ("*"*50 + "\n")
+            output += (" ID   " + "  Person name" + "\n")
+            for name in unallocated_office:
+                output += ("{} -> {} \n".format(name.person_id, name.person_name))
+            output += ("\n")
+        if unallocated_lspace:
+            output += ("\n" + "*"*50 + "\n")
+            output += ("LIVINGSPACE UNALLOCATIONS" + "\n")
+            output += ("*"*50 + "\n")
+            output += (" ID   " + "  Person name" + "\n")
+            for name in unallocated_lspace:
+                output += ("{} -> {} \n".format(name.person_id, name.person_name))
+            output += "\n\nData printed successfully\n"
+            return output
+
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""

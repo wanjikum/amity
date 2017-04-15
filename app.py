@@ -110,7 +110,7 @@ class MyInteractiveAmity (cmd.Cmd):
     def do_print_unallocated(self, arg):
         """Usage: print_unallocated [--o=filename]"""
         file_name = arg["--o"]
-        amity.print_unallocated(file_name)
+        print(amity.print_unallocated(file_name))
 
     @docopt_cmd
     def do_print_room(self, arg):
