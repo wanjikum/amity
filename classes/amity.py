@@ -140,7 +140,6 @@ class Amity(object):
                         if len(office.occupants) == 0:
                             return "The room is empty!\n"
                         else:
-                            # print(office.occupants)
                             for occupant in office.occupants:
                                 print(occupant)
                             return "Room occupants printed successfully!\n"
@@ -257,49 +256,54 @@ class Amity(object):
         lspace_available = [lspace for lspace in self.livingspaces
                             if len(lspace.occupants) >= 0]
         if office_available:
-            print("*"*50)
-            print("OFFICE ALLOCATIONS")
-            print("*"*50)
+            output += ("*"*50 + "\n")
+            output += ("OFFICE ALLOCATIONS" + "\n")
+            output += ("*"*50 + "\n")
             for office in office_available:
-                print("\n{}".format(office.room_name.upper()))
-                print("-"*50)
+                output += ("\n" + "{}".format(office.room_name.upper()))
+                output += ("\n" + "-"*50 + "\n")
                 if len(office.occupants) == 0:
-                    print("NONE\n")
+                    output += ("\n" + "NONE" + "\n")
                 else:
                     for occupant in office.occupants:
-                        print("{},".format(occupant), end=' ')
-                print("\n")
+                        output += ("{}, ".format(occupant))
+                output += ("\n")
         if lspace_available:
-            print("*"*50)
-            print("LIVINGSPACE ALLOCATIONS")
-            print("*"*50)
+            output += ("\n")
+            output += ("*"*50 + "\n")
+            output += ("LIVINGSPACE ALLOCATIONS" + "\n")
+            output += ("*"*50 + "\n")
             for lspace in lspace_available:
-                print("\n{}".format(lspace.room_name.upper()))
-                print("-"*50)
+                output += ("\n" + "{}".format(lspace.room_name.upper()))
+                output += ("\n" + "-"*50 + "\n")
                 if len(lspace.occupants) == 0:
-                    print("NONE\n")
+                    output += ("\n" + "NONE" + "\n")
                 else:
                     for occupant in lspace.occupants:
-                        print("{},".format(occupant), end=' ')
-                    print("\n")
-            return "\nData printed successfully\n"
-        if not (lspace_available and office_available):
-            return "No rooms available"
-        if not office_available:
-            print("No offices available")
-        if not lspace_available:
-            print("No livingspaces available")
-        if file_name == None:
-            return "I can do anything"
-        else:
-            return file_name
+                        output += ("{}, ".format(occupant))
+                    output += ("\n")
+            output += "\nData printed successfully\n"
 
-    def loads_people(self, file_name):
-        """A method that adds people from a text file"""
-        print(file_name)
+        if not (lspace_available and office_available):
+            output += "No rooms available"
+        if not office_available:
+            output += ("No offices available")
+        if not lspace_available:
+            output += ("No livingspaces available")
+        if file_name is None:
+            return output
+        else:
+            files = open(file_name + ".txt", "w")
+            files.write(output)
+            files.close()
+            return "Data saved in {} successfully".format(file_name)
 
     def print_unallocated(self, file_name=None):
         """A method that prints unallocated people"""
+        print(file_name)
+
+    def loads_people(self, file_name):
+        """A method that adds people from a text file"""
         print(file_name)
 
     def save_state(self, database_name):
