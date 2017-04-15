@@ -254,18 +254,34 @@ class Amity(object):
         office_available = [office for office in self.offices if len(office.occupants) >= 0]
         lspace_available = [lspace for lspace in self.livingspaces if len(lspace.occupants) >= 0]
         if office_available:
+            print("*"*50)
             print("OFFICE ALLOCATIONS")
+            print("*"*50)
             for office in office_available:
-                print("\n\n{}".format(office.room_name.upper()))
+                print("\n{}".format(office.room_name.upper()))
                 print("-"*50)
                 if len(office.occupants) == 0:
                     print("NONE\n")
                 else:
                     for occupant in office.occupants:
                         print("{},".format(occupant), end=' ')
-            return "\n\nData printed successfully \n"
+                print("\n")
+        if lspace_available:
+            print("*"*50)
+            print("LIVINGSPACE ALLOCATIONS")
+            print("*"*50)
+            for lspace in lspace_available:
+                print("\n{}".format(lspace.room_name.upper()))
+                print("-"*50)
+                if len(lspace.occupants) == 0:
+                    print("NONE\n")
+                else:
+                    for occupant in lspace.occupants:
+                        print("{},".format(occupant), end=' ')
+                    print("\n")
+            return "\nData printed successfully \n"
         else:
-            return "No offices available"
+            return "No rooms available"
         if file_name == None:
             return "I can do anything"
         else:
