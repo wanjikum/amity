@@ -126,7 +126,6 @@ class Amity(object):
 
     def print_room(self, room_name):
         """A method that prints room occupants in a room"""
-
         found = False
         for room in self.all_rooms:
             if room_name == room.room_name:
@@ -291,9 +290,9 @@ class Amity(object):
         if file_name is None:
             return output
         else:
-            files = open(file_name + ".txt", "w")
-            files.write(output)
-            files.close()
+            save_to = open(file_name + ".txt", "w")
+            save_to.write(output)
+            save_to.close()
             return "Data saved in {} successfully".format(file_name)
 
     def print_unallocated(self, file_name=None):
@@ -317,8 +316,19 @@ class Amity(object):
             for name in unallocated_lspace:
                 output += ("{} -> {} \n".format(name.person_id, name.person_name))
             output += "\n\nData printed successfully\n"
+        if not (unallocated_office and unallocated_lspace):
+            output += "No one in the waiting list"
+        if not unallocated_lspace:
+            output += "No one in the living_space waiting list"
+        if not unallocated_office:
+            output += "No one in the office waiting list"
+        if file_name is None:
             return output
-
+        else:
+            save_to = open(file_name + ".txt", "w")
+            save_to.write(output)
+            save_to.close()
+            return "Data saved in {} successfully".format(file_name)
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
