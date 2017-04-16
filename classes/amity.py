@@ -332,20 +332,23 @@ class Amity(object):
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
-        read_file = open(file_name + ".txt", "r")
-        people = read_file.readlines()
-        if len(people) == 0:
-            return "Empty file. No one has been added."
-        for person in people:
-            splitwords = person.split()
-            if len(splitwords) <= 3:
-                wants_accommodation = "n"
-            else:
-                wants_accommodation = splitwords[3]
-            person_name = splitwords[0] + " " + splitwords[1]
-            person_type = splitwords[2]
-            print(self.add_person(person_name, person_type, wants_accommodation))
-        return "People added successfully"
+        try:
+            read_file = open(file_name + ".txt", "r")
+            people = read_file.readlines()
+            if len(people) == 0:
+                return "Empty file. No one has been added."
+            for person in people:
+                splitwords = person.split()
+                if len(splitwords) <= 3:
+                    wants_accommodation = "n"
+                else:
+                    wants_accommodation = splitwords[3]
+                person_name = splitwords[0] + " " + splitwords[1]
+                person_type = splitwords[2]
+                print(self.add_person(person_name, person_type, wants_accommodation))
+            return "People added successfully"
+        except(FileNotFoundError):
+            return "The file does not exist."
 
     def save_state(self, database_name):
         """A method that saves changes to the database"""

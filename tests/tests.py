@@ -227,7 +227,7 @@ class LoadsPeopleTestCases(unittest.TestCase):
     def test_loads_people_from_a_txt_file_successfully(self):
         """Tests if it loads people from a txt file successfully"""
         # remember to add the exten .txt
-        cohort_15 = self.amity.loads_people("cohort15")
+        cohort_15 = self.amity.loads_people("load")
         self.assertEqual(cohort_15, "People added successfully")
 
     def test_loads_an_empty_file(self):

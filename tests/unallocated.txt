@@ -6,12 +6,19 @@ SOO1 -> Felistas
 FOO1 -> Oliver 
 FOO1 -> Oliver 
 SOO1 -> Alex 
-FOO1 -> Kenneth 
-FOO2 -> Gideon 
-FOO3 -> Kimokoti 
-FOO4 -> Larry 
-FOO5 -> Maryanne 
-FOO6 -> Sarah 
+FOO1 -> Oluwafemi Sule 
+SOO3 -> Dominic Walters 
+FOO2 -> Simon Patterson 
+FOO3 -> Mari Lawrence 
+SOO4 -> Leigh Riley 
+FOO4 -> Tana Lopez 
+SOO5 -> Kelly Mcguire 
+FOO5 -> Kenneth 
+FOO6 -> Gideon 
+FOO7 -> Kimokoti 
+FOO8 -> Larry 
+FOO9 -> Maryanne 
+FOO10 -> Sarah 
 FOO1 -> Kenneth 
 FOO2 -> Gideon 
 FOO3 -> Kimokoti 
@@ -37,8 +44,12 @@ LIVINGSPACE UNALLOCATIONS
 **************************************************
  ID     Person name
 FOO1 -> Oliver 
-FOO5 -> Maryanne 
-FOO6 -> Sarah 
+FOO1 -> Oluwafemi Sule 
+FOO2 -> Simon Patterson 
+FOO3 -> Mari Lawrence 
+FOO4 -> Tana Lopez 
+FOO9 -> Maryanne 
+FOO10 -> Sarah 
 FOO5 -> Maryanne 
 FOO6 -> Sarah 
 FOO5 -> Maryanne 
