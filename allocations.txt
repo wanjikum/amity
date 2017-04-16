@@ -1,0 +1,25 @@
+**************************************************
+OFFICE ALLOCATIONS
+**************************************************
+
+DAKAR
+--------------------------------------------------
+Milly Shiko, Milly Shiko, Milly Shiko, Milly Shiko, Milly Shiko, Milly Shiko, 
+
+ACCRA
+--------------------------------------------------
+Milly Shiko, Milly Shiko, Milly Shiko, Milly Shiko, Milly Shiko, Milly Shiko, 
+
+**************************************************
+LIVINGSPACE ALLOCATIONS
+**************************************************
+
+LEFT
+--------------------------------------------------
+Milly Shiko, Milly Shiko, Milly Shiko, Milly Shiko, 
+
+RIGHT
+--------------------------------------------------
+Milly Shiko, Milly Shiko, Milly Shiko, Milly Shiko, 
+
+Data printed successfully

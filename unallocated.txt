@@ -1,0 +1,23 @@
+**************************************************
+OFFICE UNALLOCATIONS
+**************************************************
+ ID     Person name
+FOO7 -> Milly Shiko 
+FOO8 -> Milly Shiko 
+FOO9 -> Milly Shiko 
+FOO10 -> Milly Shiko 
+
+
+**************************************************
+LIVINGSPACE UNALLOCATIONS
+**************************************************
+ ID     Person name
+FOO5 -> Milly Shiko 
+FOO6 -> Milly Shiko 
+FOO7 -> Milly Shiko 
+FOO8 -> Milly Shiko 
+FOO9 -> Milly Shiko 
+FOO10 -> Milly Shiko 
+
+
+Data printed successfully

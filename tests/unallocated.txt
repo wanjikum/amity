@@ -1,0 +1,50 @@
+**************************************************
+OFFICE UNALLOCATIONS
+**************************************************
+ ID     Person name
+SOO1 -> Felistas 
+FOO1 -> Oliver 
+FOO1 -> Oliver 
+SOO1 -> Alex 
+FOO1 -> Kenneth 
+FOO2 -> Gideon 
+FOO3 -> Kimokoti 
+FOO4 -> Larry 
+FOO5 -> Maryanne 
+FOO6 -> Sarah 
+FOO1 -> Kenneth 
+FOO2 -> Gideon 
+FOO3 -> Kimokoti 
+FOO4 -> Larry 
+FOO5 -> Maryanne 
+FOO6 -> Sarah 
+FOO1 -> Kenneth 
+FOO2 -> Gideon 
+FOO3 -> Kimokoti 
+FOO4 -> Larry 
+FOO5 -> Maryanne 
+FOO6 -> Sarah 
+FOO1 -> Kenneth 
+FOO2 -> Gideon 
+FOO3 -> Kimokoti 
+FOO4 -> Larry 
+FOO5 -> Maryanne 
+FOO6 -> Sarah 
+
+
+**************************************************
+LIVINGSPACE UNALLOCATIONS
+**************************************************
+ ID     Person name
+FOO1 -> Oliver 
+FOO5 -> Maryanne 
+FOO6 -> Sarah 
+FOO5 -> Maryanne 
+FOO6 -> Sarah 
+FOO5 -> Maryanne 
+FOO6 -> Sarah 
+FOO5 -> Maryanne 
+FOO6 -> Sarah 
+
+
+Data printed successfully
