@@ -180,8 +180,10 @@ class Amity(object):
         fellow_object = [fellow for fellow in self.fellows
                          if fellow.person_id == person_id]
         fellow_name = fellow_object[0].person_name
-
-        if fellow_object[0].office.room_name == room_name:
+        if fellow_object[0].office is None:
+            return "{} has not been allocated an office yet\n".format(
+             fellow_name)
+        elif fellow_object[0].office.room_name == room_name:
             return "A person cannot be reallocated to the same room"
         else:
             previous_office = fellow_object[0].office.room_name
@@ -203,8 +205,10 @@ class Amity(object):
         fellow_object = [fellow for fellow in self.fellows
                          if fellow.person_id == person_id]
         fellow_name = fellow_object[0].person_name
-
-        if fellow_object[0].living_space.room_name == room_name:
+        if fellow_object[0].living_space is None:
+            return "{} has not been allocated a livingspace yet\n".format(
+               fellow_name)
+        elif fellow_object[0].living_space.room_name == room_name:
             return "A person cannot be reallocated to the same room"
         else:
             previous_living_space = fellow_object[0].living_space.room_name
@@ -228,9 +232,11 @@ class Amity(object):
         staff_object = [staff for staff in self.staffs
                         if staff.person_id == person_id]
         staff_name = staff_object[0].person_name
-        if staff_object[0].office.room_name == room_name:
+        if staff_object[0].office is None:
+            return "{} has not been allocated an office yet\n".format(
+               staff_name)
+        elif staff_object[0].office.room_name == room_name:
             return "A person cannot be reallocated to the same room"
-
         else:
             previous_office = staff_object[0].office.room_name
             previous_office_object = [office for office in self.offices
@@ -356,7 +362,6 @@ class Amity(object):
 
     def save_state(self, database_name):
         """A method that saves changes to the database"""
-
         print(database_name)
 
     def load_state(self, database_name):
