@@ -253,7 +253,9 @@ class Amity(object):
                             if len(office.occupants) >= 0]
         lspace_available = [lspace for lspace in self.livingspaces
                             if len(lspace.occupants) >= 0]
-        if office_available:
+        if len(office_available) == 0 and len(lspace_available) == 0:
+            return "No rooms allocated"
+        if len(office_available) > 0:
             output += ("*"*50 + "\n")
             output += ("OFFICE ALLOCATIONS" + "\n")
             output += ("*"*50 + "\n")
@@ -266,7 +268,9 @@ class Amity(object):
                     for occupant in office.occupants:
                         output += ("{}, ".format(occupant))
                 output += ("\n")
-        if lspace_available:
+        else:
+            output += "No offices available"
+        if len(lspace_available) > 0:
             output += ("\n")
             output += ("*"*50 + "\n")
             output += ("LIVINGSPACE ALLOCATIONS" + "\n")
@@ -280,16 +284,11 @@ class Amity(object):
                     for occupant in lspace.occupants:
                         output += ("{}, ".format(occupant))
                     output += ("\n")
-            output += "\nData printed successfully\n"
-
-        if not (lspace_available and office_available):
-            output += "No rooms available"
-        if not office_available:
-            output += ("No offices available")
-        if not lspace_available:
-            output += ("No livingspaces available")
+        else:
+            output += "No livingspaces available"
         if file_name is None:
-            return output
+            print(output)
+            return "\nData printed successfully\n"
         else:
             save_to = open(file_name + ".txt", "w")
             save_to.write(output)
