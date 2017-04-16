@@ -1,7 +1,6 @@
 """
 A class Amity that contains all the functionality of the app.
 """
-import itertools
 from random import choice
 from classes.room import LivingSpace, Office
 from classes.person import Staff, Fellow
@@ -210,7 +209,9 @@ class Amity(object):
         else:
             previous_living_space = fellow_object[0].living_space.room_name
             previous_living_space_object = [lspace for lspace in
-            self.livingspaces if lspace.room_name == previous_living_space]
+                                            self.livingspaces if
+                                            lspace.room_name ==
+                                            previous_living_space]
             previous_living_space_object[0].occupants.remove(fellow_name)
             living_space_object = [lspace for lspace in self.livingspaces
                                    if lspace.room_name == room_name]
@@ -299,31 +300,34 @@ class Amity(object):
         """A method that prints unallocated people"""
         output = ""
         unallocated_office = [person for person in self.waiting_list["office"]]
-        unallocated_lspace = [person for person in self.waiting_list["livingspace"]]
-        if unallocated_office:
+        unallocated_lspace = [person
+                              for person in self.waiting_list["livingspace"]]
+        if len(unallocated_office) == 0 and len(unallocated_lspace) == 0:
+            return "No one in the waiting list"
+        if len(unallocated_office) > 0:
             output += ("*"*50 + "\n")
             output += ("OFFICE UNALLOCATIONS" + "\n")
             output += ("*"*50 + "\n")
             output += (" ID   " + "  Person name" + "\n")
             for name in unallocated_office:
-                output += ("{} -> {} \n".format(name.person_id, name.person_name))
+                output += ("{} -> {} \n".format(name.person_id,
+                                                name.person_name))
             output += ("\n")
-        if unallocated_lspace:
+        else:
+            output += "\nNo one in the office waiting list"
+        if len(unallocated_lspace) > 0:
             output += ("\n" + "*"*50 + "\n")
             output += ("LIVINGSPACE UNALLOCATIONS" + "\n")
             output += ("*"*50 + "\n")
             output += (" ID   " + "  Person name" + "\n")
             for name in unallocated_lspace:
-                output += ("{} -> {} \n".format(name.person_id, name.person_name))
-            output += "\n\nData printed successfully\n"
-        if not (unallocated_office and unallocated_lspace):
-            output += "No one in the waiting list"
-        if not unallocated_lspace:
-            output += "No one in the living_space waiting list"
-        if not unallocated_office:
-            output += "No one in the office waiting list"
+                output += ("{} -> {} \n".format(name.person_id,
+                           name.person_name))
+        else:
+            output += "\nNo one in the living_space waiting list"
         if file_name is None:
-            return output
+            print(output)
+            return "Data printed successfully\n"
         else:
             save_to = open(file_name + ".txt", "w")
             save_to.write(output)
@@ -345,13 +349,15 @@ class Amity(object):
                     wants_accommodation = splitwords[3]
                 person_name = splitwords[0] + " " + splitwords[1]
                 person_type = splitwords[2]
-                print(self.add_person(person_name, person_type, wants_accommodation))
+                print(self.add_person(person_name, person_type,
+                      wants_accommodation))
             return "People added successfully"
-        except(FileNotFoundError):
+        except FileNotFoundError:
             return "The file does not exist."
 
     def save_state(self, database_name):
         """A method that saves changes to the database"""
+
         print(database_name)
 
     def load_state(self, database_name):

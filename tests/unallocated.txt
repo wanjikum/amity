@@ -56,6 +56,3 @@ FOO5 -> Maryanne
 FOO6 -> Sarah 
 FOO5 -> Maryanne 
 FOO6 -> Sarah 
-
-
-Data printed successfully
