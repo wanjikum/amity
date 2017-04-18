@@ -10,7 +10,6 @@ class Amity(object):
     """Contains all functionalities of class Amity """
     offices = []
     livingspaces = []
-    all_rooms = []
     fellows = []
     staffs = []
     all_people = []
@@ -26,17 +25,15 @@ class Amity(object):
         for room_name in room_names:
             room_name = room_name.lower()
             if room_name not in [room.room_name
-               for room in self.all_rooms]:
+               for room in (self.offices + self.livingspaces)]:
                 if room_type == "office":
                     new_office = Office(room_name)
                     self.offices.append(new_office)
-                    self.all_rooms.append(new_office)
                     message += "{} added successfully!\n".format(
                      room_name.title())
                 elif room_type in ["living_space", "livingspace"]:
                     new_living_space = LivingSpace(room_name)
                     self.livingspaces.append(new_living_space)
-                    self.all_rooms.append(new_living_space)
                     message += "{} added successfully!\n".format(
                      room_name.title())
                 else:
@@ -150,7 +147,8 @@ class Amity(object):
         room_name = room_name.lower()
         person_id = person_id.upper()
         if person_id in [person.person_id for person in self.all_people]:
-            if room_name in [room.room_name for room in self.all_rooms]:
+            if room_name in [room.room_name for room in
+               (self.offices + self.livingspaces)]:
                 if person_id[:3] == "FOO":
                     if room_name in [room.room_name for room in self.offices]:
                         return self.reallocate_fellow_office(person_id,
