@@ -11,7 +11,7 @@ class RoomModel(Base):
     room_name = Column(String(50), unique=True, nullable=False)
     room_type = Column(String(50), nullable=False)
     room_capacity = Column(Integer(), nullable=False)
-    occupants = Column(String)
+    occupants = Column(String(200))
 
 
 class PersonModel(Base):
@@ -22,4 +22,4 @@ class PersonModel(Base):
     person_type = Column(String(50), nullable=False)
     office_allocated = Column(String(50), nullable=True)
     livingspace_allocated = Column(String(50), nullable=True)
-    wants_accomodation = Column(String(50), nullable=True)
+    wants_accomodation = Column(String(50), nullable=False)
