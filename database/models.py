@@ -12,3 +12,14 @@ class RoomModel(Base):
     room_type = Column(String(50), nullable=False)
     room_capacity = Column(Integer(), nullable=False)
     occupants = Column(String)
+
+
+class PersonModel(Base):
+    """Defines the person table"""
+    __tablename__ = "people"
+    person_id = Column(String, primary_key=True)
+    person_name = Column(String, nullable=False)
+    person_type = Column(String(50), nullable=False)
+    office_allocated = Column(String(50), nullable=True)
+    livingspace_allocated = Column(String(50), nullable=True)
+    wants_accomodation = Column(String(50), nullable=True)
