@@ -12,7 +12,6 @@ class Amity(object):
     livingspaces = []
     fellows = []
     staffs = []
-    all_people = []
     waiting_list = {
         "office": [],
         "livingspace": []
@@ -74,7 +73,6 @@ class Amity(object):
                 new_person = Staff(person_name)
                 new_person.person_id = "SOO" + str(len(self.staffs)+1)
                 self.staffs.append(new_person)
-                self.all_people.append(new_person)
                 print("{} added successfully! Your ID: {}"
                       .format(person_name, new_person.person_id))
                 return self.allocate_office(new_person)
@@ -83,7 +81,6 @@ class Amity(object):
             new_person = Fellow(person_name, wants_accommodation)
             new_person.person_id = "FOO" + str(len(self.fellows)+1)
             self.fellows.append(new_person)
-            self.all_people.append(new_person)
             print("{} added successfully! Your ID: {}"
                   .format(person_name, new_person.person_id))
             if wants_accommodation in ["no", "n"]:
@@ -146,7 +143,8 @@ class Amity(object):
         """A method that reallocates a person from one room to another"""
         room_name = room_name.lower()
         person_id = person_id.upper()
-        if person_id in [person.person_id for person in self.all_people]:
+        if person_id in [person.person_id for person in
+           (self.fellows + self.staffs)]:
             if room_name in [room.room_name for room in
                (self.offices + self.livingspaces)]:
                 if person_id[:3] == "FOO":
