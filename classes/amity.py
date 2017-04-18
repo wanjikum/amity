@@ -1,6 +1,7 @@
 """
 A class Amity that contains all the functionality of the app.
 """
+import os
 from random import choice
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -337,29 +338,28 @@ class Amity(object):
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
         try:
-            read_file = open(file_name + ".txt", "r")
+            read_file = open(file_name + '.txt', 'r')
             people = read_file.readlines()
             if len(people) == 0:
-                return "Empty file. No one has been added."
+                return 'Empty file. No one has been added.'
             for person in people:
                 splitwords = person.split()
                 if len(splitwords) <= 3:
-                    wants_accommodation = "n"
+                    wants_accommodation = 'n'
                 else:
                     wants_accommodation = splitwords[3]
-                person_name = splitwords[0] + " " + splitwords[1]
+                person_name = splitwords[0] + ' ' + splitwords[1]
                 person_type = splitwords[2]
                 print(self.add_person(person_name, person_type,
-                      wants_accommodation))
-            return "People added successfully"
+                                      wants_accommodation))
+            return 'People added successfully'
         except FileNotFoundError:
-            return "The file does not exist."
+            return 'The file does not exist.'
 
-    def save_state(self, database_name="amity"):
+    def save_state(self, database_name):
         """A method that saves changes to the database"""
-        # engine = create_engine('sqlite:///{}.db'.format(
-        #  database_name))
-        engine = create_engine('sqlite:///database/' + database_name + '.db')
+        engine = create_engine('sqlite:///database/' + database_name
+                               + '.db')
         Base.metadata.create_all(engine)
         Session = sessionmaker(bind=engine)
         session = Session()
@@ -369,21 +369,36 @@ class Amity(object):
             new_room = RoomModel(room_name=room.room_name,
                                  room_type=room.room_type,
                                  room_capacity=room.room_capacity,
-                                 occupants=",".join(room.occupants))
+                                 occupants=','.join(room.occupants))
             session.add(new_room)
         session.commit()
         for person in all_people:
-            new_person = PersonModel(person_id=person.person_id,
-                                     person_name=person.person_name,
-                                     person_type=person.person_type,
-                                     office_allocated=(None if person.office is None else person.office.room_name),
-                                     livingspace_allocated=(None if person.person_type == 'staff' else None if person.living_space is None else person.living_space.room_name),
-                                     wants_accomodation=('no' if person.person_type == 'staff' else person.accommodate))
+            new_person = PersonModel(
+                person_id=person.person_id,
+                person_name=person.person_name,
+                person_type=person.person_type,
+                office_allocated=(None if person.office
+                                  is None else person.office.room_name),
+                livingspace_allocated=(None if person.person_type == 'staff'
+                                       else (None if person.living_space is
+                                             None else
+                                             person.living_space.room_name)),
+                wants_accomodation=('no' if person.person_type == 'staff'
+                                    else person.accommodate))
             session.add(new_person)
         session.commit()
-        return "The state has been saved successfully!"
-        # print(database_name)
+        session.close()
+        return 'The state has been saved successfully!'
 
     def load_state(self, database_name):
         """A method that loads state of the  database"""
-        print(database_name)
+        if not os.path.isfile("./database/{}.db".format(database_name)):
+            return "The database does not exist!"
+        engine = create_engine('sqlite:///database/{}.db'.format(database_name))
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        rooms = session.query(RoomModel).all()
+        persons = session.query(PersonModel).all()
+        print(rooms)
+        print(persons)
