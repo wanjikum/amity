@@ -397,8 +397,18 @@ class Amity(object):
         engine = create_engine('sqlite:///database/{}.db'.format(database_name))
         Session = sessionmaker(bind=engine)
         session = Session()
-
         rooms = session.query(RoomModel).all()
         persons = session.query(PersonModel).all()
-        print(rooms)
-        print(persons)
+        self.offices = []
+        self.livingspaces = []
+        for room in rooms:
+            if room.room_type == "office":
+                office = Office(room.room_name)
+                office.occupants = room.occupants.split(",")
+                self.offices.append(office)
+            else:
+                living_space = LivingSpace(room.room_name)
+                living_space.occupant = room.occupants.split(",")
+                self.livingspaces.append(living_space)
+        print(self.offices)
+        print(self.livingspaces)
