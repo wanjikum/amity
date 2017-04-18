@@ -23,7 +23,7 @@ class CreateRoomTestCases(unittest.TestCase):
     def test_create_room_type_office_successfully(self):
         """Test create a room_type office successfully"""
         response = self.amity.create_room("office", ["asmara"])
-        self.assertEqual(response, "asmara added successfully!\n")
+        self.assertEqual(response, "Asmara added successfully!\n")
 
     def test_create_multiple_rooms_of_type_livingspace_successfully(self):
         """Test create multiple rooms of type office successfully"""
