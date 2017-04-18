@@ -2,8 +2,13 @@
 A class Amity that contains all the functionality of the app.
 """
 from random import choice
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+
 from classes.room import LivingSpace, Office
 from classes.person import Staff, Fellow
+from database.models import RoomModel, PersonModel, Base
 
 
 class Amity(object):
@@ -350,9 +355,34 @@ class Amity(object):
         except FileNotFoundError:
             return "The file does not exist."
 
-    def save_state(self, database_name):
+    def save_state(self, database_name="amity"):
         """A method that saves changes to the database"""
-        print(database_name)
+        # engine = create_engine('sqlite:///{}.db'.format(
+        #  database_name))
+        engine = create_engine('sqlite:///database/' + database_name + '.db')
+        Base.metadata.create_all(engine)
+        Session = sessionmaker(bind=engine)
+        session = Session()
+        all_rooms = self.offices + self.livingspaces
+        all_people = self.fellows + self.staffs
+        for room in all_rooms:
+            new_room = RoomModel(room_name=room.room_name,
+                                 room_type=room.room_type,
+                                 room_capacity=room.room_capacity,
+                                 occupants=",".join(room.occupants))
+            session.add(new_room)
+        session.commit()
+        for person in all_people:
+            new_person = PersonModel(person_id=person.person_id,
+                                     person_name=person.person_name,
+                                     person_type=person.person_type,
+                                     office_allocated=(None if person.office is None else person.office.room_name),
+                                     livingspace_allocated=(None if person.person_type == 'staff' else None if person.living_space is None else person.living_space.room_name),
+                                     wants_accomodation=('no' if person.person_type == 'staff' else person.accommodate))
+            session.add(new_person)
+        session.commit()
+        return "The state has been saved successfully!"
+        # print(database_name)
 
     def load_state(self, database_name):
         """A method that loads state of the  database"""

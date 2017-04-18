@@ -294,6 +294,7 @@ class SaveStateTestCases(unittest.TestCase):
 
     def tearDown(self):
         self.amity
+        os.remove("database/amity_database.db")
 
     def test_save_state_successfully(self):
         """Test if it saves state successfully"""
@@ -304,7 +305,7 @@ class SaveStateTestCases(unittest.TestCase):
     def test_if_db_exists(self):
         """Tests if the db file exists"""
         self.amity.save_state("amity_database")
-        file_path = os.path.abspath("amity_database.db")
+        file_path = os.path.abspath("database/amity_database.db")
         file_status = os.path.isfile(file_path)
         self.assertTrue(file_status)
 

@@ -122,13 +122,13 @@ class MyInteractiveAmity (cmd.Cmd):
     def do_save_state(self, arg):
         """Usage: save_state [--db=sqlite_database]"""
         database_name = arg["--db"]
-        amity.save_state(database_name)
+        print(amity.save_state(database_name))
 
     @docopt_cmd
     def do_load_state(self, arg):
         """Usage: load_state <sqlite_database>"""
         database_name = arg["<sqlite_database>"]
-        amity.load_state(database_name)
+        print(amity.load_state(database_name))
 
     def do_quit(self, arg):
         """Quits out of Interactive Mode."""
