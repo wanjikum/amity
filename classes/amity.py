@@ -31,17 +31,20 @@ class Amity(object):
                     new_office = Office(room_name)
                     self.offices.append(new_office)
                     self.all_rooms.append(new_office)
-                    message += "{} added successfully!\n".format(room_name.title())
+                    message += "{} added successfully!\n".format(
+                     room_name.title())
                 elif room_type in ["living_space", "livingspace"]:
                     new_living_space = LivingSpace(room_name)
                     self.livingspaces.append(new_living_space)
                     self.all_rooms.append(new_living_space)
-                    message += "{} added successfully!\n".format(room_name.title())
+                    message += "{} added successfully!\n".format(
+                     room_name.title())
                 else:
                     message += "Invalid room type. " + \
                       "A room can either be of type office or living_space!\n"
             else:
-                message += "Room {} already exists!\n".format(room_name.title())
+                message += "Room {} already exists!\n".format(
+                 room_name.title())
         return message
 
     def add_person(self, person_name, person_type, wants_accommodation):
@@ -128,29 +131,17 @@ class Amity(object):
         """A method that prints room occupants in a room"""
         found = False
         room_obj = ""
-        for room in self.all_rooms:
+        for room in (self.offices + self.livingspaces):
             if room_name == room.room_name:
                 found = True
                 room_obj = room
         if found:
-            if room_obj.room_type == "office":
-                for office in self.offices:
-                    if office.room_name == room_name.lower():
-                        if len(office.occupants) == 0:
-                            return "The room is empty!\n"
-                        else:
-                            for occupant in office.occupants:
-                                print(occupant)
-                            return "Room occupants printed successfully!\n"
+            if len(room_obj.occupants) == 0:
+                return "The room is empty!\n"
             else:
-                for lspace in self.livingspaces:
-                    if lspace.room_name == room_name.lower():
-                        if len(lspace.occupants) == 0:
-                            return "The room is empty!\n"
-                        else:
-                            for occupant in lspace.occupants:
-                                print(occupant)
-                            return "Room occupants printed successfully!\n"
+                for occupant in room_obj.occupants:
+                    print(occupant)
+                return "Room occupants printed successfully!\n"
         else:
             return "The room does not exist!\n"
 
