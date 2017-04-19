@@ -400,9 +400,11 @@ class Amity(object):
 
     def load_state(self, database_name):
         """A method that loads state of the  database"""
-        if not os.path.isfile("./database/{}.db".format(database_name)):
-            return "The database does not exist!"
-        engine = create_engine('sqlite:///database/{}.db'.format(database_name))
+
+        if not os.path.isfile('./database/{}.db'.format(database_name)):
+            return 'The database does not exist!'
+        engine = \
+            create_engine('sqlite:///database/{}.db'.format(database_name))
         Session = sessionmaker(bind=engine)
         session = Session()
         rooms = session.query(RoomModel).all()
@@ -410,42 +412,41 @@ class Amity(object):
         self.offices = []
         self.livingspaces = []
         for room in rooms:
-            if room.room_type == "office":
+            if room.room_type == 'office':
                 office = Office(room.room_name)
-                office.occupants = room.occupants.split(",")
+                office.occupants = room.occupants.split(',')
                 self.offices.append(office)
             else:
                 living_space = LivingSpace(room.room_name)
-                living_space.occupants = room.occupants.split(",")
+                living_space.occupants = room.occupants.split(',')
                 self.livingspaces.append(living_space)
         self.fellows = []
         self.staffs = []
-        self.waiting_list = {
-            "office": [],
-            "livingspace": []
-        }
+        self.waiting_list = {'office': [], 'livingspace': []}
         for person in people:
-            if person.person_type == "staff":
+            if person.person_type == 'staff':
                 staff = Staff(person.person_name)
                 staff.person_id = person.person_id
                 staff.person_name = person.person_name
-                staff.office = (None if person.office_allocated is None
-                                else person.office_allocated)
+                staff.office = (None if person.office_allocated
+                                is None else person.office_allocated)
                 self.staffs.append(staff)
                 if staff.office is None:
-                    self.waiting_list["office"].append(staff.person_name)
+                    self.waiting_list['office'].append(staff.person_name)
             else:
                 fellow = Fellow(person.person_name)
                 fellow.person_id = person.person_id
                 fellow.person_name = person.person_name
-                fellow.office = (None if person.office_allocated is None
-                                 else person.office_allocated)
-                fellow.living_space = (None if person.livingspace_allocated is None
-                                       else person.livingspace_allocated)
+                fellow.office = (None if person.office_allocated
+                                 is None else person.office_allocated)
+                fellow.living_space = \
+                    (None if person.livingspace_allocated
+                     is None else person.livingspace_allocated)
                 fellow.accommodate = person.wants_accomodation
                 self.fellows.append(fellow)
                 if fellow.office is None:
-                    self.waiting_list["office"].append(fellow.person_name)
-                elif fellow.living_space is None and fellow.accommodate in ["y", "yes"]:
-                    self.waiting_list["livingspace"].append(fellow.person_name)
-        return "The database has loaded successfully!"
+                    self.waiting_list['office'].append(fellow.person_name)
+                elif fellow.living_space is None and fellow.accommodate \
+                        in ['y', 'yes']:
+                    self.waiting_list['livingspace'].append(fellow.person_name)
+        return 'The database has loaded successfully!'
