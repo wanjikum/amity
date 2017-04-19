@@ -321,7 +321,7 @@ class LoadStateTestCases(unittest.TestCase):
 
     def test_load_state_successfully(self):
         """Tests if load state successfully"""
-        load_database = self.amity.load_state("amity_database")
+        load_database = self.amity.load_state("amity")
         self.assertEqual(load_database,
                          "The database has loaded successfully!")
 
