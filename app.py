@@ -3,7 +3,7 @@
 This example uses docopt with the built in cmd module to demonstrate an
 interactive command application.
 Usage:
-    app.py create_room <OFFICE|LIVING_SPACE> <room_name>...
+    app.py create_room <room_type> <room_name>...
     app.py add_person <first_name> <last_name> <role> [<accommodate>]
     app.py reallocate_person <person_identifier> <new_room_name>
     app.py load_people <file_name>
@@ -22,6 +22,9 @@ Options:
 import os
 import sys
 import cmd
+import re
+from termcolor import colored
+from pyfiglet import Figlet
 from docopt import docopt, DocoptExit
 from classes.amity import Amity
 
@@ -74,15 +77,15 @@ class MyInteractiveAmity (cmd.Cmd):
         """Usage: create_room <room_type> <room_name>..."""
         room_type = arg["<room_type>"]
         room_names = arg["<room_name>"]
+        for room in room_names:
+            if not re.match(r'^[A-Za-z]{1,15}$', room):
+                print("Invalid input {}!".format(room))
+                room_names.remove(room)
         print(amity.create_room(room_type, room_names))
 
     @docopt_cmd
     def do_add_person(self, arg):
         """Usage: add_person <first_name> <last_name> <role> [<accommodate>]"""
-        # the role should either be a fellow or a staff
-        # the accomadation should either be yes or no
-        # hoe to use pipe and how to pass arguments in it
-        # join first name and second name inorder to fit in my persons name arg
         person_name = arg["<first_name>"] + " " + arg["<last_name>"]
         person_type = arg["<role>"]
         wants_accommodation = arg["<accommodate>"]

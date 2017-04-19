@@ -6,7 +6,6 @@ from random import choice
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-
 from classes.room import LivingSpace, Office
 from classes.person import Staff, Fellow
 from database.models import RoomModel, PersonModel, Base
@@ -426,11 +425,13 @@ class Amity(object):
         for room in rooms:
             if room.room_type == 'office':
                 office = Office(room.room_name)
-                office.occupants = (room.occupants.split(',') if room.occupants else [])
+                office.occupants = (room.occupants.split(',')
+                                    if room.occupants else [])
                 self.offices.append(office)
             else:
                 living_space = LivingSpace(room.room_name)
-                living_space.occupants = (room.occupants.split(',') if room.occupants else [])
+                living_space.occupants = (room.occupants.split(',')
+                                          if room.occupants else [])
                 self.livingspaces.append(living_space)
         self.fellows = []
         self.staffs = []
@@ -440,7 +441,8 @@ class Amity(object):
                 staff = Staff(person.person_name)
                 staff.person_id = person.person_id
                 staff.person_name = person.person_name
-                office = [office for office in self.offices if office.room_name == person.office_allocated]
+                office = [office for office in self.offices
+                          if office.room_name == person.office_allocated]
                 staff.office = (office[0] if office else None)
                 self.staffs.append(staff)
                 if staff.office is None:
@@ -449,10 +451,15 @@ class Amity(object):
                 fellow = Fellow(person.person_name)
                 fellow.person_id = person.person_id
                 fellow.person_name = person.person_name
-                office = [office for office in self.offices if office.room_name == person.office_allocated]
+                office = [office for office in self.offices
+                          if office.room_name == person.office_allocated]
                 fellow.office = (office[0] if office else None)
-                living_space = [living_space for living_space in self.livingspaces if living_space.room_name == person.livingspace_allocated]
-                fellow.living_space = (living_space[0] if living_space else None)
+                living_space = [living_space for living_space in
+                                self.livingspaces
+                                if living_space.room_name == person.
+                                livingspace_allocated]
+                fellow.living_space = (living_space[0]
+                                       if living_space else None)
                 fellow.accommodate = person.wants_accomodation
                 self.fellows.append(fellow)
                 if fellow.office is None:

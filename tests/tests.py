@@ -169,6 +169,7 @@ class RellocateRoomPersonTestCases(unittest.TestCase):
         self.amity.create_room("office", ["dakar"])
         self.amity.create_room("living_space", ["l_wing"])
         self.amity.add_person("Taracha", "staff", "no")
+        self.amity.create_room("office", ["accra"])
 
     def tearDown(self):
         del self.amity
@@ -214,6 +215,12 @@ class RellocateRoomPersonTestCases(unittest.TestCase):
         response = self.amity.reallocate_person("FOO2", "r_wing")
         self.assertEqual(response,
                          "A person cannot be reallocated to the same room")
+
+    def test_reallocate_rejects_reallocation_if_not_allocated_yet(self):
+        """Test rejects reallocation to the same room"""
+        response = self.amity.reallocate_person("FOO2", "accra")
+        self.assertEqual(response,
+                         "Maryanne has not been allocated an office yet\n")
 
 
 class LoadsPeopleTestCases(unittest.TestCase):
