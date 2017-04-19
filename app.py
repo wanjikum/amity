@@ -121,7 +121,7 @@ class MyInteractiveAmity (cmd.Cmd):
             cprint("Invalid input! Use letters only in role.", 'red')
         if not re.match(r'^[A-Za-z]{1,5}$', arg["<accommodate>"]):
             cprint("Invalid input! Use letters only in accommodate.", 'red')
-            
+
         person_name = arg["<first_name>"] + " " + arg["<last_name>"]
         person_type = arg["<role>"]
         wants_accommodation = arg["<accommodate>"]
@@ -130,10 +130,21 @@ class MyInteractiveAmity (cmd.Cmd):
 
     @docopt_cmd
     def do_reallocate_person(self, arg):
-        """Usage: reallocate_person <person_identifier> <new_room_name>"""
+        """
+        Reallocates the person with  person_identifier  to  new_room_name.
+
+        Usage: reallocate_person <person_identifier> <new_room_name>
+
+        e.g reallocate_person FOO1 accra
+        """
+        if not re.match(r'^[A-Za-z0-9]{1,10}$', arg["<person_identifier>"]):
+            cprint("Invalid input! Use letters or digits in person identifier",
+                   'red')
+        if not re.match(r'^[A-Za-z0-9]{1,10}$', arg["<new_room_name>"]):
+            cprint("Invalid input! Use letters only in room name.", 'red')
         person_id = arg["<person_identifier>"]
         room_name = arg["<new_room_name>"]
-        print(amity.reallocate_person(person_id, room_name))
+        cprint(amity.reallocate_person(person_id, room_name), 'green')
 
     @docopt_cmd
     def do_load_people(self, arg):
