@@ -417,7 +417,7 @@ class Amity(object):
                 self.offices.append(office)
             else:
                 living_space = LivingSpace(room.room_name)
-                living_space.occupant = room.occupants.split(",")
+                living_space.occupants = room.occupants.split(",")
                 self.livingspaces.append(living_space)
         self.fellows = []
         self.staffs = []
@@ -443,10 +443,10 @@ class Amity(object):
                                  else person.office_allocated)
                 fellow.living_space = (None if person.livingspace_allocated is None
                                        else person.livingspace_allocated)
-                fellow.accommodate = person.accommodate
+                fellow.accommodate = person.wants_accomodation
                 self.fellows.append(fellow)
                 if fellow.office is None:
                     self.waiting_list["office"].append(fellow.person_name)
                 elif fellow.living_space is None and fellow.accommodate in ["y", "yes"]:
                     self.waiting_list["livingspace"].append(fellow.person_name)
-            return "The database has loaded successfully!"
+        return "The database has loaded successfully!"
