@@ -163,18 +163,26 @@ class MyInteractiveAmity (cmd.Cmd):
     @docopt_cmd
     def do_print_allocations(self, arg):
         """
-        Prints a list of allocations onto the screen.
+        Prints a list of allocations onto the screen. Specifying the optional
+         -o  option outputs the registered allocations to a txt file
 
         Usage: print_allocations [--o=filename]
 
-        e.g print_allocations
+        e.g print_allocations --o=allocated
         """
         file_name = arg["--o"]
         cprint(amity.print_allocated(file_name), 'green')
 
     @docopt_cmd
     def do_print_unallocated(self, arg):
-        """Usage: print_unallocated [--o=filename]"""
+        """
+        Prints a list of unallocated people to the screen. Specifying the  -o
+        option outputs the information to the txt file provided.
+
+        Usage: print_unallocated [--o=filename]
+
+        e.g print_unallocated --o=unallocated
+        """
         file_name = arg["--o"]
         print(amity.print_unallocated(file_name))
 
