@@ -155,14 +155,20 @@ class MyInteractiveAmity (cmd.Cmd):
 
         e.g load_people load
         """
-        if not re.match(r'^[A-Za-z0-9]{1,10}$', arg["<file_name>"]):
-            cprint("Invalid input! Use letters only in file name.", 'red')
         file_name = arg["<file_name>"]
+        if not re.match(r'^[A-Za-z0-9]{1,10}$', file_name):
+            cprint("Invalid input! Use letters only in file name.", 'red')
         cprint(amity.loads_people(file_name), 'yellow')
 
     @docopt_cmd
     def do_print_allocations(self, arg):
-        """Usage: print_allocations [--o=filename]"""
+        """
+        Prints a list of allocations onto the screen.
+
+        Usage: print_allocations [--o=filename]
+
+        e.g print_allocations
+        """
         file_name = arg["--o"]
         print(amity.print_allocated(file_name))
 
