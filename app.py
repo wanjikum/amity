@@ -170,7 +170,7 @@ class MyInteractiveAmity (cmd.Cmd):
         e.g print_allocations
         """
         file_name = arg["--o"]
-        print(amity.print_allocated(file_name))
+        cprint(amity.print_allocated(file_name), 'green')
 
     @docopt_cmd
     def do_print_unallocated(self, arg):
