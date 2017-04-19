@@ -14,6 +14,8 @@ from database.models import RoomModel, PersonModel, Base
 
 class Amity(object):
     """Contains all functionalities of class Amity """
+    changes = False
+    loaded_database = ""
     offices = []
     livingspaces = []
     fellows = []
@@ -34,11 +36,13 @@ class Amity(object):
                 if room_type == "office":
                     new_office = Office(room_name)
                     self.offices.append(new_office)
+                    self.changes = True
                     message += "{} added successfully!\n".format(
                      room_name.title())
                 elif room_type in ["living_space", "livingspace"]:
                     new_living_space = LivingSpace(room_name)
                     self.livingspaces.append(new_living_space)
+                    self.changes = True
                     message += "{} added successfully!\n".format(
                      room_name.title())
                 else:
@@ -79,6 +83,7 @@ class Amity(object):
                 new_person = Staff(person_name)
                 new_person.person_id = "SOO" + str(len(self.staffs)+1)
                 self.staffs.append(new_person)
+                self.changes = True
                 print("{} added successfully! Your ID: {}"
                       .format(person_name, new_person.person_id))
                 return self.allocate_office(new_person)
@@ -87,6 +92,7 @@ class Amity(object):
             new_person = Fellow(person_name, wants_accommodation)
             new_person.person_id = "FOO" + str(len(self.fellows)+1)
             self.fellows.append(new_person)
+            self.changes = True
             print("{} added successfully! Your ID: {}"
                   .format(person_name, new_person.person_id))
             if wants_accommodation in ["no", "n"]:
@@ -191,6 +197,7 @@ class Amity(object):
             if len(office_object[0].occupants) < 6:
                 office_object[0].occupants.append(fellow_name)
                 fellow_object[0].office.room_name == room_name
+                self.changes = True
                 return "{} has been reallocated from {} to {}".format(
                  fellow_name, previous_office, room_name)
             else:
@@ -218,6 +225,7 @@ class Amity(object):
             if len(living_space_object[0].occupants) < 4:
                 living_space_object[0].occupants.append(fellow_name)
                 fellow_object[0].living_space.room_name == room_name
+                self.changes = True
                 return "{} has been reallocated from {} to {}".format(
                   fellow_name, previous_living_space, room_name)
             else:
@@ -243,6 +251,7 @@ class Amity(object):
             if len(office_object[0].occupants) < 6:
                 office_object[0].occupants.append(staff_name)
                 staff_object[0].office.room_name == room_name
+                self.changes = True
                 return "{} has been reallocated from {} to {}".format(
                  staff_name, previous_office, room_name)
             else:
@@ -358,6 +367,10 @@ class Amity(object):
 
     def save_state(self, database_name):
         """A method that saves changes to the database"""
+        try:
+            os.remove("database/" + database_name + ".db")
+        except FileNotFoundError:
+            pass
         engine = create_engine('sqlite:///database/' + database_name
                                + '.db')
         Base.metadata.create_all(engine)
@@ -370,36 +383,35 @@ class Amity(object):
                                  room_type=room.room_type,
                                  room_capacity=room.room_capacity,
                                  occupants=','.join(room.occupants))
-            room_exists = session.query(RoomModel).filter(
-             RoomModel.room_name == room.room_name).count()
-            print(room_exists)
-            if room_exists == 0:
-                session.add(new_room)
+            session.add(new_room)
         session.commit()
         for person in all_people:
             new_person = PersonModel(
                 person_id=person.person_id,
                 person_name=person.person_name,
                 person_type=person.person_type,
-                office_allocated=(None if person.office
-                                  is None else person.office.room_name),
+                office_allocated=(None if person.office is None
+                                  else person.office.room_name),
                 livingspace_allocated=(None if person.person_type == 'staff'
                                        else (None if person.living_space is
                                              None else
                                              person.living_space.room_name)),
                 wants_accomodation=('no' if person.person_type == 'staff'
                                     else person.accommodate))
-            person_exists = session.query(PersonModel).filter(
-              PersonModel.person_id == person.person_id).count()
-            print(person_exists)
-            if person_exists == 0:
-                session.add(new_person)
+            session.add(new_person)
         session.commit()
         session.close()
+        self.changes = False
         return 'The state has been saved successfully!'
 
     def load_state(self, database_name):
         """A method that loads state of the  database"""
+        if self.changes:
+            choice = input("Do you want to save the changes?").upper()
+            if choice in ["YES", "Y"]:
+                self.save_state(self.loaded_database)
+            elif choice not in ["NO", "N"]:
+                return "Invalid input"
 
         if not os.path.isfile('./database/{}.db'.format(database_name)):
             return 'The database does not exist!'
@@ -414,11 +426,11 @@ class Amity(object):
         for room in rooms:
             if room.room_type == 'office':
                 office = Office(room.room_name)
-                office.occupants = room.occupants.split(',')
+                office.occupants = (room.occupants.split(',') if room.occupants else [])
                 self.offices.append(office)
             else:
                 living_space = LivingSpace(room.room_name)
-                living_space.occupants = room.occupants.split(',')
+                living_space.occupants = (room.occupants.split(',') if room.occupants else [])
                 self.livingspaces.append(living_space)
         self.fellows = []
         self.staffs = []
@@ -428,25 +440,25 @@ class Amity(object):
                 staff = Staff(person.person_name)
                 staff.person_id = person.person_id
                 staff.person_name = person.person_name
-                staff.office = (None if person.office_allocated
-                                is None else person.office_allocated)
+                office = [office for office in self.offices if office.room_name == person.office_allocated]
+                staff.office = (office[0] if office else None)
                 self.staffs.append(staff)
                 if staff.office is None:
-                    self.waiting_list['office'].append(staff.person_name)
+                    self.waiting_list['office'].append(staff)
             else:
                 fellow = Fellow(person.person_name)
                 fellow.person_id = person.person_id
                 fellow.person_name = person.person_name
-                fellow.office = (None if person.office_allocated
-                                 is None else person.office_allocated)
-                fellow.living_space = \
-                    (None if person.livingspace_allocated
-                     is None else person.livingspace_allocated)
+                office = [office for office in self.offices if office.room_name == person.office_allocated]
+                fellow.office = (office[0] if office else None)
+                living_space = [living_space for living_space in self.livingspaces if living_space.room_name == person.livingspace_allocated]
+                fellow.living_space = (living_space[0] if living_space else None)
                 fellow.accommodate = person.wants_accomodation
                 self.fellows.append(fellow)
                 if fellow.office is None:
-                    self.waiting_list['office'].append(fellow.person_name)
+                    self.waiting_list['office'].append(fellow)
                 elif fellow.living_space is None and fellow.accommodate \
                         in ['y', 'yes']:
-                    self.waiting_list['livingspace'].append(fellow.person_name)
+                    self.waiting_list['livingspace'].append(fellow)
+        self.loaded_database = database_name
         return 'The database has loaded successfully!'
