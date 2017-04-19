@@ -2,7 +2,6 @@
 A class Amity that contains all the functionality of the app.
 """
 import os
-import pdb
 from random import choice
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
