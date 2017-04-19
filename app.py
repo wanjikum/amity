@@ -87,9 +87,9 @@ class MyInteractiveAmity (cmd.Cmd):
         create_room  command. The room type is either of type office or
         livingspace
 
-        e.g create_room office dakar accra
-
         Usage: create_room <room_type> <room_name>...
+
+        e.g create_room office dakar accra
 
         """
 
@@ -103,11 +103,30 @@ class MyInteractiveAmity (cmd.Cmd):
 
     @docopt_cmd
     def do_add_person(self, arg):
-        """Usage: add_person <first_name> <last_name> <role> [<accommodate>]"""
+        """
+         Adds a person to the system and allocates the person to a random room.
+         accommodate here is an optional argument which can be either
+         Y or N . The default value if it is not provided is  N .
+
+        Usage: add_person <first_name> <last_name> <role> [<accommodate>]
+
+        e.g add_person millicent njuguna f y
+
+        """
+        if not re.match(r'^[A-Za-z]{1,15}$', arg["<first_name>"]):
+            cprint("Invalid input! Use letters only in first name.", 'red')
+        if not re.match(r'^[A-Za-z]{1,15}$', arg["<last_name>"]):
+            cprint("Invalid input! Use letters only in last name.", 'red')
+        if not re.match(r'^[A-Za-z]{1,10}$', arg["<role>"]):
+            cprint("Invalid input! Use letters only in role.", 'red')
+        if not re.match(r'^[A-Za-z]{1,5}$', arg["<accommodate>"]):
+            cprint("Invalid input! Use letters only in accommodate.", 'red')
+            
         person_name = arg["<first_name>"] + " " + arg["<last_name>"]
         person_type = arg["<role>"]
         wants_accommodation = arg["<accommodate>"]
-        print(amity.add_person(person_name, person_type, wants_accommodation))
+        cprint(amity.add_person(person_name, person_type, wants_accommodation),
+               'blue', attrs=['bold'])
 
     @docopt_cmd
     def do_reallocate_person(self, arg):
