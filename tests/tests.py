@@ -299,8 +299,8 @@ class SaveStateTestCases(unittest.TestCase):
     def test_save_state_successfully(self):
         """Test if it saves state successfully"""
         # look at this later and db extension
-        save_state = self.amity.save_state("amity_database")
-        self.assertEqual(save_state, "The state has been saved successfully!")
+        response = self.amity.save_state("amity_database")
+        self.assertEqual(response, "The state has been saved successfully!")
 
     def test_if_db_exists(self):
         """Tests if the db file exists"""
@@ -321,13 +321,13 @@ class LoadStateTestCases(unittest.TestCase):
 
     def test_load_state_successfully(self):
         """Tests if load state successfully"""
-        load_database = self.amity.load_state("amity")
-        self.assertEqual(load_database,
+        response = self.amity.load_state("amity")
+        self.assertEqual(response,
                          "The database has loaded successfully!")
 
     def test_load_state_unsuccessfully(self):
         """Test if loads state unsuccessfully"""
         # This may be due to non existing db
-        load_database = self.amity.load_state("dee")
-        self.assertEqual(load_database,
+        response = self.amity.load_state("dee")
+        self.assertEqual(response,
                          "The database does not exist!")
