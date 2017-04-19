@@ -23,7 +23,7 @@ import os
 import sys
 import cmd
 import re
-from termcolor import colored
+from termcolor import cprint, colored
 from pyfiglet import Figlet
 from docopt import docopt, DocoptExit
 from classes.amity import Amity
@@ -64,24 +64,42 @@ def docopt_cmd(func):
 
 
 def start():
+    """Clears the screen and prints the amity user interface"""
     os.system("clear")
-    print(__doc__)
+    font = Figlet(font='cosmic')
+    title = font.renderText(' Amity ')
+    cprint("-" * 100, 'white')
+    cprint(title,  'yellow')
+    cprint("-" * 100, 'white')
+    cprint(__doc__, 'green')
 
 
 class MyInteractiveAmity (cmd.Cmd):
-    intro = 'Welcome to my interactive program!'
-    prompt = 'amity>>>'
+    intro = colored('Welcome to my interactive program!', "yellow")
+    prompt = colored('amity>>>', "yellow")
 
     @docopt_cmd
     def do_create_room(self, arg):
-        """Usage: create_room <room_type> <room_name>..."""
+
+        """
+        Creates rooms in Amity. Using this command you can able to create
+        as many rooms as possible by specifying multiple room names after the
+        create_room  command. The room type is either of type office or
+        livingspace
+
+        e.g create_room office dakar accra
+
+        Usage: create_room <room_type> <room_name>...
+
+        """
+
         room_type = arg["<room_type>"]
         room_names = arg["<room_name>"]
         for room in room_names:
             if not re.match(r'^[A-Za-z]{1,15}$', room):
-                print("Invalid input {}!".format(room))
+                cprint("Invalid input {}!".format(room), 'red')
                 room_names.remove(room)
-        print(amity.create_room(room_type, room_names))
+        cprint(amity.create_room(room_type, room_names), 'green')
 
     @docopt_cmd
     def do_add_person(self, arg):

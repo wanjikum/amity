@@ -12,7 +12,7 @@ from database.models import RoomModel, PersonModel, Base
 
 
 class Amity(object):
-    """Contains all functionalities of class Amity """
+    """ Contains all functionalities of the application """
     changes = False
     loaded_database = ""
     offices = []
