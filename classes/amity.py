@@ -2,6 +2,7 @@
 A class Amity that contains all the functionality of the app.
 """
 import os
+import pdb
 from random import choice
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -370,7 +371,11 @@ class Amity(object):
                                  room_type=room.room_type,
                                  room_capacity=room.room_capacity,
                                  occupants=','.join(room.occupants))
-            session.add(new_room)
+            room_exists = session.query(RoomModel).filter(
+             RoomModel.room_name == room.room_name).count()
+            print(room_exists)
+            if room_exists == 0:
+                session.add(new_room)
         session.commit()
         for person in all_people:
             new_person = PersonModel(
@@ -385,7 +390,11 @@ class Amity(object):
                                              person.living_space.room_name)),
                 wants_accomodation=('no' if person.person_type == 'staff'
                                     else person.accommodate))
-            session.add(new_person)
+            person_exists = session.query(PersonModel).filter(
+              PersonModel.person_id == person.person_id).count()
+            print(person_exists)
+            if person_exists == 0:
+                session.add(new_person)
         session.commit()
         session.close()
         return 'The state has been saved successfully!'
@@ -398,7 +407,7 @@ class Amity(object):
         Session = sessionmaker(bind=engine)
         session = Session()
         rooms = session.query(RoomModel).all()
-        persons = session.query(PersonModel).all()
+        people = session.query(PersonModel).all()
         self.offices = []
         self.livingspaces = []
         for room in rooms:
@@ -410,5 +419,34 @@ class Amity(object):
                 living_space = LivingSpace(room.room_name)
                 living_space.occupant = room.occupants.split(",")
                 self.livingspaces.append(living_space)
-        print(self.offices)
-        print(self.livingspaces)
+        self.fellows = []
+        self.staffs = []
+        self.waiting_list = {
+            "office": [],
+            "livingspace": []
+        }
+        for person in people:
+            if person.person_type == "staff":
+                staff = Staff(person.person_name)
+                staff.person_id = person.person_id
+                staff.person_name = person.person_name
+                staff.office = (None if person.office_allocated is None
+                                else person.office_allocated)
+                self.staffs.append(staff)
+                if staff.office is None:
+                    self.waiting_list["office"].append(staff.person_name)
+            else:
+                fellow = Fellow(person.person_name)
+                fellow.person_id = person.person_id
+                fellow.person_name = person.person_name
+                fellow.office = (None if person.office_allocated is None
+                                 else person.office_allocated)
+                fellow.living_space = (None if person.livingspace_allocated is None
+                                       else person.livingspace_allocated)
+                fellow.accommodate = person.accommodate
+                self.fellows.append(fellow)
+                if fellow.office is None:
+                    self.waiting_list["office"].append(fellow.person_name)
+                elif fellow.living_space is None and fellow.accommodate in ["y", "yes"]:
+                    self.waiting_list["livingspace"].append(fellow.person_name)
+            return "The database has loaded successfully!"
