@@ -148,9 +148,17 @@ class MyInteractiveAmity (cmd.Cmd):
 
     @docopt_cmd
     def do_load_people(self, arg):
-        """Usage: load_people <file_name>"""
+        """
+        Adds people to rooms from a txt file
+
+        Usage: load_people <file_name>
+
+        e.g load_people load
+        """
+        if not re.match(r'^[A-Za-z0-9]{1,10}$', arg["<file_name>"]):
+            cprint("Invalid input! Use letters only in file name.", 'red')
         file_name = arg["<file_name>"]
-        print(amity.loads_people(file_name))
+        cprint(amity.loads_people(file_name), 'yellow')
 
     @docopt_cmd
     def do_print_allocations(self, arg):
