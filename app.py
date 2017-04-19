@@ -184,7 +184,7 @@ class MyInteractiveAmity (cmd.Cmd):
         e.g print_unallocated --o=unallocated
         """
         file_name = arg["--o"]
-        print(amity.print_unallocated(file_name))
+        cprint(amity.print_unallocated(file_name), 'blue')
 
     @docopt_cmd
     def do_print_room(self, arg):
@@ -196,19 +196,33 @@ class MyInteractiveAmity (cmd.Cmd):
         e.g print_room accra
         """
         room_name = arg["<room_name>"]
-        print(amity.print_room(room_name))
+        cprint(amity.print_room(room_name), 'green')
 
     @docopt_cmd
     def do_save_state(self, arg):
-        """Usage: save_state [--db=sqlite_database]"""
+        """
+         Persists all the data stored in the app to a SQLite database.
+         Specifying the --db  parameter explicitly stores the data in the
+         sqlite_database  specified.
+
+         Usage: save_state [--db=sqlite_database]
+
+         e.g save_state --db=amity
+         """
         database_name = arg["--db"]
-        print(amity.save_state(database_name))
+        cprint(amity.save_state(database_name), 'yellow')
 
     @docopt_cmd
     def do_load_state(self, arg):
-        """Usage: load_state <sqlite_database>"""
+        """
+        Loads data from a database into the application.
+
+        Usage: load_state <sqlite_database>
+
+        e.g load_state amity
+        """
         database_name = arg["<sqlite_database>"]
-        print(amity.load_state(database_name))
+        cprint(amity.load_state(database_name), 'blue')
 
     def do_quit(self, arg):
         """Quits out of Interactive Mode."""
