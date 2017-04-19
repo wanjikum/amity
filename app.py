@@ -188,7 +188,13 @@ class MyInteractiveAmity (cmd.Cmd):
 
     @docopt_cmd
     def do_print_room(self, arg):
-        """Usage: print_room <room_name>"""
+        """
+        Prints the names of all the people in  room_name  on the
+        screen.
+        Usage: print_room <room_name>
+
+        e.g print_room accra
+        """
         room_name = arg["<room_name>"]
         print(amity.print_room(room_name))
 
