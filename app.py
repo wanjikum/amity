@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 This example uses docopt with the built in cmd module to demonstrate an
-interactive command application.
+interactive command application called Amity.
 Usage:
     app.py create_room <room_type> <room_name>...
     app.py add_person <first_name> <last_name> <role> [<accommodate>]
@@ -79,7 +79,7 @@ def start():
 
 class MyInteractiveAmity (cmd.Cmd):
     intro = colored('Welcome to my interactive program!', "yellow")
-    prompt = colored('amity>>>', "yellow")
+    prompt = colored('amity>>> ', "yellow")
 
     @docopt_cmd
     def do_create_room(self, arg):
@@ -99,7 +99,7 @@ class MyInteractiveAmity (cmd.Cmd):
         room_type = arg["<room_type>"]
         room_names = arg["<room_name>"]
         for room in room_names:
-            if not re.match(r'^[A-Za-z]{1,15}$', room):
+            if not re.match(r'^[A-Za-z0-9]{1,15}$', room):
                 cprint("Invalid input {}!".format(room), 'red')
                 room_names.remove(room)
         cprint(amity.create_room(room_type, room_names), 'green')
@@ -122,8 +122,6 @@ class MyInteractiveAmity (cmd.Cmd):
             cprint("Invalid input! Use letters only in last name.", 'red')
         elif not re.match(r'^[A-Za-z]{1,10}$', arg["<role>"]):
             cprint("Invalid input! Use letters only in role.", 'red')
-        elif not re.match(r'^[A-Za-z]{1,5}$', arg["<accommodate>"]):
-            cprint("Invalid input! Use letters only in accommodate.", 'red')
         else:
             person_name = arg["<first_name>"] + " " + arg["<last_name>"]
             person_type = arg["<role>"]
@@ -231,7 +229,7 @@ class MyInteractiveAmity (cmd.Cmd):
         e.g print_room accra
         """
         room_name = arg["<room_name>"]
-        if not re.match(r'^[A-Za-z]{1,15}$', room_name):
+        if not re.match(r'^[A-Za-z0-9]{1,15}$', room_name):
             cprint("Invalid input {}!Use letters only!".format(room), 'red')
         cprint(amity.print_room(room_name), 'green')
 
