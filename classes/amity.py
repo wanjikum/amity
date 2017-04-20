@@ -114,6 +114,7 @@ class Amity(object):
             return "Allocated office: {}\n".format(random_office.room_name)
         else:
             self.waiting_list["office"].append(new_person)
+            self.waiting_list["office"] = list(set(self.waiting_list["office"]))
             return "No available offices. Added to the office waiting list\n"
 
     def allocate_living_space(self, new_person):
@@ -346,7 +347,22 @@ class Amity(object):
 
     def allocate_person_office(self, person_id):
         """A method that allocates a person in the waiting list to an office"""
-        print(person_id)
+        person_id = person_id.upper()
+        found = False
+        person_obj = None
+        for person in self.waiting_list["office"]:
+            if person.person_id == person_id:
+                found = True
+                person_obj = person
+                self.allocate_office(person)
+        if not found:
+            return "The person is not in the office waiting list"
+        if person_obj.office is None:
+            return "No available offices!"
+        else:
+            self.waiting_list["office"].remove(person_obj)
+            return "{} has been allocated to office {}".format(
+             person_obj.person_name, person_obj.office.room_name)
 
     def allocate_person_livingspace(self, person_id):
         """A method that allocates a person in the waiting list a livingspace"""
