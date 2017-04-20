@@ -12,7 +12,7 @@ This system is used to automatically allocate spaces to people at random.
 
 **Installation**
 
-`$ git clone https://github.com/wanjikum/amity `
+`$ git clone https://github.com/wanjikum/amity`
 
 `$ cd amity`
 

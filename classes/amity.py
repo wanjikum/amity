@@ -373,7 +373,6 @@ class Amity(object):
         person_id = person_id.upper()
         found = False
         person_obj = None
-        print(self.waiting_list["livingspace"])
         for person in self.waiting_list["livingspace"]:
             if person.person_id == person_id:
                 found = True
@@ -471,11 +470,13 @@ class Amity(object):
         for room in rooms:
             if room.room_type == 'office':
                 office = Office(room.room_name)
-                office.occupants = (room.occupants.split(',') if room.occupants else [])
+                office.occupants = (room.occupants.split(',')
+                                    if room.occupants else [])
                 self.offices.append(office)
             else:
                 living_space = LivingSpace(room.room_name)
-                living_space.occupants = (room.occupants.split(',') if room.occupants else [])
+                living_space.occupants = (room.occupants.split(',')
+                                          if room.occupants else [])
                 self.livingspaces.append(living_space)
         self.fellows = []
         self.staffs = []
