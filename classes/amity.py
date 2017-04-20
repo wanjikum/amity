@@ -132,8 +132,8 @@ class Amity(object):
                 format(random_livingspace.room_name)
         else:
             self.waiting_list["livingspace"].append(new_person)
-            self.waiting_list["office"] = list(
-             set(self.waiting_list["office"]))
+            self.waiting_list["livingspace"] = list(
+             set(self.waiting_list["livingspace"]))
             return "No available livingspaces. " + \
                 "Added to the livingspaces waiting list\n"
 
