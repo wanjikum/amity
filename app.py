@@ -115,18 +115,19 @@ class MyInteractiveAmity (cmd.Cmd):
         """
         if not re.match(r'^[A-Za-z]{1,15}$', arg["<first_name>"]):
             cprint("Invalid input! Use letters only in first name.", 'red')
-        if not re.match(r'^[A-Za-z]{1,15}$', arg["<last_name>"]):
+        elif not re.match(r'^[A-Za-z]{1,15}$', arg["<last_name>"]):
             cprint("Invalid input! Use letters only in last name.", 'red')
-        if not re.match(r'^[A-Za-z]{1,10}$', arg["<role>"]):
+        elif not re.match(r'^[A-Za-z]{1,10}$', arg["<role>"]):
             cprint("Invalid input! Use letters only in role.", 'red')
-        if not re.match(r'^[A-Za-z]{1,5}$', arg["<accommodate>"]):
+        elif not re.match(r'^[A-Za-z]{1,5}$', arg["<accommodate>"]):
             cprint("Invalid input! Use letters only in accommodate.", 'red')
-
-        person_name = arg["<first_name>"] + " " + arg["<last_name>"]
-        person_type = arg["<role>"]
-        wants_accommodation = arg["<accommodate>"]
-        cprint(amity.add_person(person_name, person_type, wants_accommodation),
-               'blue', attrs=['bold'])
+        else:
+            person_name = arg["<first_name>"] + " " + arg["<last_name>"]
+            person_type = arg["<role>"]
+            wants_accommodation = arg["<accommodate>"]
+            cprint(amity.add_person(person_name, person_type,
+                   wants_accommodation),
+                   'blue', attrs=['bold'])
 
     @docopt_cmd
     def do_reallocate_person(self, arg):
