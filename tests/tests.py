@@ -55,7 +55,6 @@ class AddPersonTestCases(unittest.TestCase):
         del self.amity
         Amity.staffs = []
         Amity.fellows = []
-        Amity.all_rooms = []
 
     def test_add_person_staff_successfully(self):
         """Test add staff successfully"""
@@ -96,7 +95,6 @@ class AllocateRoomPersonTestCases(unittest.TestCase):
         del self.amity
         Amity.offices = []
         Amity.livingspaces = []
-        Amity.all_rooms = []
         Amity.fellows = []
 
     def test_allocate_office_successfully(self):
@@ -136,7 +134,6 @@ class PrintRoomTestCases(unittest.TestCase):
         self.amity
         Amity.offices = []
         Amity.livingspaces = []
-        Amity.all_rooms = []
         Amity.fellows = []
 
     def test_print_room_occupants_successfully(self):
@@ -175,7 +172,6 @@ class RellocateRoomPersonTestCases(unittest.TestCase):
         del self.amity
         Amity.offices = []
         Amity.livingspaces = []
-        Amity.all_rooms = []
         Amity.staffs = []
         Amity.fellows = []
 
@@ -265,7 +261,6 @@ class PrintAllocatedUnallocated(unittest.TestCase):
         self.amity
         Amity.offices = []
         Amity.livingspaces = []
-        Amity.all_rooms = []
         Amity.staffs = []
         Amity.fellows = []
 
@@ -291,6 +286,43 @@ class PrintAllocatedUnallocated(unittest.TestCase):
         unallocated_people = self.amity.print_unallocated("unallocated")
         self.assertEqual(unallocated_people,
                          "Data saved in unallocated successfully")
+
+
+class AllocateUnallocated(unittest.TestCase):
+    """A collection of allocate_person room"""
+    def setUp(self):
+        self.amity = Amity()
+        self.amity.add_person("Kenneth", "fellow", "yes")
+        self.amity.create_room("office", ["bootcamp"])
+        self.amity.create_room("living_space", ["left"])
+        self.amity.add_person("Oliver", "fellow", "yes")
+
+    def tearDown(self):
+        self.amity
+        Amity.offices = []
+        Amity.livingspaces = []
+        Amity.staffs = []
+        Amity.fellows = []
+
+    def test_allocate_person_to_a_random_office_from_the_waiting_list(self):
+        """Tests if it allocates a person to a random room"""
+        response = self.amity.allocate_person_office("foo1")
+        self.assertEqual(response,
+                         "Allocated office: Bootcamp")
+
+    def test_allocate_person_to_a_random_living_space_from_waiting_list(self):
+        """Tests if it allocates a person to a random room"""
+        response = self.amity.allocate_person_livingspace("foo1")
+        self.assertEqual(response,
+                         "Allocated livingspace: Left")
+
+    def test_allocate_office_if_allocated(self):
+        response = self.amity.allocate_person_office("foo2")
+        self.assertEqual(response, "Oliver already allocated office")
+
+    def test_allocate_livingspace_if_allocated(self):
+        response = self.amity.allocate_person_office("foo2")
+        self.assertEqual(response, "Oliver already allocated livingspace")
 
 
 class SaveStateTestCases(unittest.TestCase):

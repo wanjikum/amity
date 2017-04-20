@@ -10,6 +10,8 @@ Usage:
     app.py print_allocations [--o=filename]
     app.py print_unallocated [--o=filename]
     app.py print_room <room_name>
+    app.py allocate_office <person_identifier>
+    app.py allocate_livingspace <person_identifier>
     app.py save_state [--db=sqlite_database]
     app.py load_state <sqlite_database>
     app.py (-i | --interactive)
@@ -23,6 +25,7 @@ import os
 import sys
 import cmd
 import re
+import time
 from termcolor import cprint, colored
 from pyfiglet import Figlet
 from docopt import docopt, DocoptExit
@@ -127,7 +130,7 @@ class MyInteractiveAmity (cmd.Cmd):
             wants_accommodation = arg["<accommodate>"]
             cprint(amity.add_person(person_name, person_type,
                    wants_accommodation),
-                   'blue', attrs=['bold'])
+                   'green')
 
     @docopt_cmd
     def do_reallocate_person(self, arg):
@@ -141,11 +144,12 @@ class MyInteractiveAmity (cmd.Cmd):
         if not re.match(r'^[A-Za-z0-9]{1,10}$', arg["<person_identifier>"]):
             cprint("Invalid input! Use letters or digits in person identifier",
                    'red')
-        if not re.match(r'^[A-Za-z0-9]{1,10}$', arg["<new_room_name>"]):
+        elif not re.match(r'^[A-Za-z0-9]{1,10}$', arg["<new_room_name>"]):
             cprint("Invalid input! Use letters only in room name.", 'red')
-        person_id = arg["<person_identifier>"]
-        room_name = arg["<new_room_name>"]
-        cprint(amity.reallocate_person(person_id, room_name), 'green')
+        else:
+            person_id = arg["<person_identifier>"]
+            room_name = arg["<new_room_name>"]
+            cprint(amity.reallocate_person(person_id, room_name), 'green')
 
     @docopt_cmd
     def do_load_people(self, arg):
@@ -160,6 +164,21 @@ class MyInteractiveAmity (cmd.Cmd):
         if not re.match(r'^[A-Za-z0-9]{1,10}$', file_name):
             cprint("Invalid input! Use letters only in file name.", 'red')
         cprint(amity.loads_people(file_name), 'yellow')
+
+    @docopt_cmd
+    def do_allocate_office(self, arg):
+        """
+        Allocates office,if available, to a person with the person_identifier
+        given
+
+        Usage: allocate_office <person_identifier>
+
+        e.g allocate_office foo1
+        """
+        person_id = arg["<person_identifier>"]
+        if not re.match(r'^[A-Za-z0-9]{1,10}$', person_id):
+            cprint("Invalid input! Use letters and digits.", 'red')
+        amity.allocate_person_office(person_id)
 
     @docopt_cmd
     def do_print_allocations(self, arg):
@@ -185,7 +204,7 @@ class MyInteractiveAmity (cmd.Cmd):
         e.g print_unallocated --o=unallocated
         """
         file_name = arg["--o"]
-        cprint(amity.print_unallocated(file_name), 'blue')
+        cprint(amity.print_unallocated(file_name), 'green')
 
     @docopt_cmd
     def do_print_room(self, arg):
@@ -197,6 +216,8 @@ class MyInteractiveAmity (cmd.Cmd):
         e.g print_room accra
         """
         room_name = arg["<room_name>"]
+        if not re.match(r'^[A-Za-z]{1,15}$', room_name):
+            cprint("Invalid input {}!Use letters only!".format(room), 'red')
         cprint(amity.print_room(room_name), 'green')
 
     @docopt_cmd
@@ -211,7 +232,7 @@ class MyInteractiveAmity (cmd.Cmd):
          e.g save_state --db=amity
          """
         database_name = arg["--db"]
-        cprint(amity.save_state(database_name), 'yellow')
+        cprint(amity.save_state(database_name), 'green')
 
     @docopt_cmd
     def do_load_state(self, arg):
@@ -223,12 +244,12 @@ class MyInteractiveAmity (cmd.Cmd):
         e.g load_state amity
         """
         database_name = arg["<sqlite_database>"]
-        cprint(amity.load_state(database_name), 'blue')
+        cprint(amity.load_state(database_name), 'green')
 
     def do_quit(self, arg):
         """Quits out of Interactive Mode."""
-
-        print('Good Bye!')
+        cprint('Good Bye!', 'red')
+        time.sleep(1)
         exit()
 
 
@@ -240,4 +261,4 @@ if __name__ == "__main__":
         MyInteractiveAmity().cmdloop()
     except KeyboardInterrupt:
         os.system("clear")
-        print('Application Exiting')
+        cprint('Application Exiting', 'red')

@@ -344,6 +344,10 @@ class Amity(object):
             save_to.close()
             return "Data saved in {} successfully".format(file_name)
 
+    def allocate_person_office(self, person_id):
+        """A method that allocates a person in the waiting list to an office"""
+        print(person_id)
+
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
         try:
