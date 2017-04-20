@@ -178,7 +178,22 @@ class MyInteractiveAmity (cmd.Cmd):
         person_id = arg["<person_identifier>"]
         if not re.match(r'^[A-Za-z0-9]{1,10}$', person_id):
             cprint("Invalid input! Use letters and digits.", 'red')
-        amity.allocate_person_office(person_id)
+        cprint(amity.allocate_person_office(person_id), 'green')
+
+    @docopt_cmd
+    def do_allocate_livingspace(self, arg):
+        """
+        Allocates livingspace,if available,to a person with the
+        person_identifier given
+
+        Usage: allocate_livingspace <person_identifier>
+
+        e.g allocate_livingspace foo1
+        """
+        person_id = arg["<person_identifier>"]
+        if not re.match(r'^[A-Za-z0-9]{1,10}$', person_id):
+            cprint("Invalid input! Use letters and digits.", 'red')
+        cprint(amity.allocate_person_livingspace(person_id), 'green')
 
     @docopt_cmd
     def do_print_allocations(self, arg):

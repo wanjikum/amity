@@ -348,6 +348,10 @@ class Amity(object):
         """A method that allocates a person in the waiting list to an office"""
         print(person_id)
 
+    def allocate_person_livingspace(self, person_id):
+        """A method that allocates a person in the waiting list a livingspace"""
+        print(person_id)
+
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
         try:
