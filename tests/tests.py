@@ -292,10 +292,15 @@ class AllocateUnallocated(unittest.TestCase):
     """A collection of allocate_person room"""
     def setUp(self):
         self.amity = Amity()
-        self.amity.add_person("Kenneth", "fellow", "yes")
         self.amity.create_room("office", ["bootcamp"])
         self.amity.create_room("living_space", ["left"])
         self.amity.add_person("Oliver", "fellow", "yes")
+        self.amity.add_person("Kenneth", "fellow", "yes")
+        self.amity.add_person("Gideon", "fellow", "yes")
+        self.amity.add_person("Kimokoti", "fellow", "yes")
+        self.amity.add_person("Larry", "fellow", "yes")
+        self.amity.add_person("MaryAnne", "fellow", "yes")
+        self.amity.add_person("Ian", "fellow", "yes")
 
     def tearDown(self):
         self.amity
@@ -305,24 +310,45 @@ class AllocateUnallocated(unittest.TestCase):
         Amity.fellows = []
 
     def test_allocate_person_to_a_random_office_from_the_waiting_list(self):
-        """Tests if it allocates a person to a random room"""
-        response = self.amity.allocate_person_office("foo1")
+        """
+        Tests if it allocates a person to a random office
+        when there are no available rooms
+         """
+        response = self.amity.allocate_person_office("foo7")
         self.assertEqual(response,
-                         "Allocated office: Bootcamp")
+                         "No available offices")
+
+    def test_allocate_person_to_a_random_office_from_the_waiting_list(self):
+        """
+        Tests if it allocates a person to a random livingspace
+        when there are no available rooms
+         """
+        response = self.amity.allocate_person_livingspace("foo7")
+        self.assertEqual(response,
+                         "No available livingspaces")
+
+    def test_allocate_person_to_an_office_successfully_from_waiting_list(self):
+        """Tests if it allocates a person to a random office"""
+        self.amity.create_room("office", ["asmara"])
+        response = self.amity.allocate_person_office("foo7")
+        self.assertEqual(response,
+                         "Ian has been allocated to office asmara")
 
     def test_allocate_person_to_a_random_living_space_from_waiting_list(self):
-        """Tests if it allocates a person to a random room"""
+        """Tests if it allocates a person to a random living_space"""
         response = self.amity.allocate_person_livingspace("foo1")
         self.assertEqual(response,
-                         "Allocated livingspace: Left")
+                         "Kenneth has been allocated to livingspace left")
 
     def test_allocate_office_if_allocated(self):
         response = self.amity.allocate_person_office("foo2")
-        self.assertEqual(response, "Oliver already allocated office")
+        self.assertEqual(response,
+                         "The person is not in the office waiting list")
 
     def test_allocate_livingspace_if_allocated(self):
-        response = self.amity.allocate_person_office("foo2")
-        self.assertEqual(response, "Oliver already allocated livingspace")
+        response = self.amity.allocate_person_livingspace("foo2")
+        self.assertEqual(response,
+                         "The person is not in the livingspace waiting list")
 
 
 class SaveStateTestCases(unittest.TestCase):

@@ -358,7 +358,7 @@ class Amity(object):
         if not found:
             return "The person is not in the office waiting list"
         if person_obj.office is None:
-            return "No available offices!"
+            return "No available offices"
         else:
             self.waiting_list["office"].remove(person_obj)
             return "{} has been allocated to office {}".format(
