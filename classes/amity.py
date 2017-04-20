@@ -132,8 +132,8 @@ class Amity(object):
                 format(random_livingspace.room_name)
         else:
             self.waiting_list["livingspace"].append(new_person)
-            self.waiting_list["office"] = list(set(
-             self.waiting_list["office"]))
+            self.waiting_list["office"] = list(
+             set(self.waiting_list["office"]))
             return "No available livingspaces. " + \
                 "Added to the livingspaces waiting list\n"
 
@@ -397,14 +397,17 @@ class Amity(object):
                 return 'Empty file. No one has been added.'
             for person in people:
                 splitwords = person.split()
-                if len(splitwords) <= 3:
-                    wants_accommodation = 'n'
+                if len(splitwords) in range(3, 5):
+                    if len(splitwords) == 3:
+                        wants_accommodation = 'n'
+                    else:
+                        wants_accommodation = splitwords[3]
+                    person_name = splitwords[0] + ' ' + splitwords[1]
+                    person_type = splitwords[2]
+                    print(self.add_person(person_name, person_type,
+                          wants_accommodation))
                 else:
-                    wants_accommodation = splitwords[3]
-                person_name = splitwords[0] + ' ' + splitwords[1]
-                person_type = splitwords[2]
-                print(self.add_person(person_name, person_type,
-                                      wants_accommodation))
+                    print('Invalid input!\n')
             return 'People added successfully'
         except FileNotFoundError:
             return 'The file does not exist.'
