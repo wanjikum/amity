@@ -114,7 +114,8 @@ class Amity(object):
             return "Allocated office: {}\n".format(random_office.room_name)
         else:
             self.waiting_list["office"].append(new_person)
-            self.waiting_list["office"] = list(set(self.waiting_list["office"]))
+            self.waiting_list["office"] = list(
+             set(self.waiting_list["office"]))
             return "No available offices. Added to the office waiting list\n"
 
     def allocate_living_space(self, new_person):
@@ -131,6 +132,8 @@ class Amity(object):
                 format(random_livingspace.room_name)
         else:
             self.waiting_list["livingspace"].append(new_person)
+            self.waiting_list["office"] = list(set(
+             self.waiting_list["office"]))
             return "No available livingspaces. " + \
                 "Added to the livingspaces waiting list\n"
 
@@ -355,6 +358,7 @@ class Amity(object):
                 found = True
                 person_obj = person
                 self.allocate_office(person)
+                break
         if not found:
             return "The person is not in the office waiting list"
         if person_obj.office is None:
@@ -366,7 +370,24 @@ class Amity(object):
 
     def allocate_person_livingspace(self, person_id):
         """A method that allocates a person in the waiting list a livingspace"""
-        print(person_id)
+        person_id = person_id.upper()
+        found = False
+        person_obj = None
+        print(self.waiting_list["livingspace"])
+        for person in self.waiting_list["livingspace"]:
+            if person.person_id == person_id:
+                found = True
+                person_obj = person
+                self.allocate_living_space(person)
+                break
+        if not found:
+            return "The person is not in the livingspace waiting list"
+        if person_obj.living_space is None:
+            return "No available livingspaces"
+        else:
+            self.waiting_list["livingspace"].remove(person_obj)
+            return "{} has been allocated to livingspace {}".format(
+             person_obj.person_name, person_obj.living_space.room_name)
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""

@@ -310,19 +310,13 @@ class AllocateUnallocated(unittest.TestCase):
         Amity.fellows = []
 
     def test_allocate_person_to_a_random_office_from_the_waiting_list(self):
-        """
-        Tests if it allocates a person to a random office
-        when there are no available rooms
-         """
+        """Tests if it allocates a person if no available offices"""
         response = self.amity.allocate_person_office("foo7")
         self.assertEqual(response,
                          "No available offices")
 
-    def test_allocate_person_to_a_random_office_from_the_waiting_list(self):
-        """
-        Tests if it allocates a person to a random livingspace
-        when there are no available rooms
-         """
+    def test_allocate_person_to_a_random_livingspace(self):
+        """Tests if it allocates a person if no available livingspaces"""
         response = self.amity.allocate_person_livingspace("foo7")
         self.assertEqual(response,
                          "No available livingspaces")
@@ -336,9 +330,10 @@ class AllocateUnallocated(unittest.TestCase):
 
     def test_allocate_person_to_a_random_living_space_from_waiting_list(self):
         """Tests if it allocates a person to a random living_space"""
-        response = self.amity.allocate_person_livingspace("foo1")
+        self.amity.create_room("living_space", ["west"])
+        response = self.amity.allocate_person_livingspace("foo7")
         self.assertEqual(response,
-                         "Kenneth has been allocated to livingspace left")
+                         "Ian has been allocated to livingspace west")
 
     def test_allocate_office_if_allocated(self):
         response = self.amity.allocate_person_office("foo2")
