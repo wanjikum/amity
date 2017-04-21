@@ -65,24 +65,24 @@ class AddPersonTestCases(unittest.TestCase):
     def test_add_person_staff_who_requires_accommodation(self):
         """Test reject accommodation for staff"""
         response = self.amity.add_person("felistas", "staff", "yes")
-        self.assertEqual(response, "Staff cannot be accomodated!")
+        self.assertIn("Staff cannot be accomodated!\n", response)
 
     def test_add_person_who_inputs_a_wrong_accomodation_value(self):
         """Test reject accommodation if option is neither yes/no"""
         response = self.amity.add_person("felistas", "staff", "who")
-        self.assertEqual(response, "Invalid accomodate option. "
-                         + "It can either be yes or no.")
+        self.assertIn("Invalid accomodate option. "
+                      "It can either be yes or no.", response)
 
     def test_reject_invalid_role(self):
         """Rejects adding a person whose person type is not fellow/staff"""
         response = self.amity.add_person("alex", "techie", "no")
-        self.assertEqual(response,
-                         "Invalid role. You can either be a fellow/staff.")
+        self.assertIn("Invalid role. You can either be a fellow/staff.",
+                      response)
 
     def test_if_it_accepts_string_only_in_person_name(self):
         """Tests if it rejects names with numbers"""
         response = self.amity.add_person("ti67ji#", "staff", "no")
-        self.assertEqual(response, "Invalid name. Use letters only")
+        self.assertIn("Invalid name. Use letters only", response)
 
 
 class AllocateRoomPersonTestCases(unittest.TestCase):
@@ -107,19 +107,19 @@ class AllocateRoomPersonTestCases(unittest.TestCase):
         """Tests if a person is successfully allocated to a livingspace"""
         self.amity.create_room("livingspace", ["left_wing"])
         response = self.amity.add_person("oliver", "fellow", "yes")
-        self.assertEqual(response, "Allocated livingspace: left_wing \n")
+        self.assertIn("Allocated livingspace: left_wing \n", response)
 
     def test_allocate_livingspace_if_no_available_livingspaces(self):
         """Test reject livingspace allocation if no livingspace available"""
         response = self.amity.add_person("oliver", "fellow", "yes")
-        self.assertEqual(response, "No available livingspaces. "
-                         "Added to the livingspaces waiting list\n")
+        self.assertIn("No available livingspaces. "
+                      "Added to the livingspaces waiting list\n", response)
 
     def test_allocate_office_if_no_available_offices(self):
         """Test reject allocation if room is full"""
         response = self.amity.add_person("Alex", "staff", "no")
-        self.assertEqual(response, "No available offices. "
-                         "Added to the office waiting list\n")
+        self.assertIn("No available offices. "
+                      "Added to the office waiting list\n", response)
 
 
 class PrintRoomTestCases(unittest.TestCase):
