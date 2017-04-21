@@ -102,7 +102,15 @@ class MyInteractiveAmity (cmd.Cmd):
             if not re.match(r'^[A-Za-z0-9]{1,15}$', room):
                 cprint("Invalid input {}!".format(room), 'red')
                 room_names.remove(room)
-        cprint(amity.create_room(room_type, room_names), 'green')
+        result = amity.create_room(room_type, room_names)
+        if result == "Invalid room type. " + \
+           "A room can either be of type office or living_space!\n":
+            color = "red"
+        elif "already exists!\n" in result:
+            color = "yellow"
+        else:
+            color = "green"
+        cprint(result, color)
 
     @docopt_cmd
     def do_add_person(self, arg):
