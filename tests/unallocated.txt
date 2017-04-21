@@ -2,57 +2,79 @@
 OFFICE UNALLOCATIONS
 **************************************************
  ID     Person name
-SOO1 -> Felistas 
-FOO1 -> Oliver 
-FOO1 -> Oliver 
-SOO1 -> Alex 
-FOO1 -> Oluwafemi Sule 
-SOO3 -> Dominic Walters 
-FOO2 -> Simon Patterson 
-FOO3 -> Mari Lawrence 
-SOO4 -> Leigh Riley 
-FOO4 -> Tana Lopez 
-SOO5 -> Kelly Mcguire 
-FOO5 -> Kenneth 
-FOO6 -> Gideon 
-FOO7 -> Kimokoti 
+FOO2 -> Gideon 
+FOO3 -> Kimokoti 
+FOO6 -> Sarah 
 FOO8 -> Larry 
 FOO9 -> Maryanne 
+SOO1 -> Felistas 
+FOO2 -> Simon Patterson 
+FOO1 -> Oluwafemi Sule 
+FOO7 -> Ian 
+FOO4 -> Larry 
+FOO1 -> Kenneth 
+FOO7 -> Ian 
+FOO5 -> Maryanne 
+SOO3 -> Kelly Mcguire 
+FOO7 -> Kimokoti 
+FOO1 -> Oliver 
+FOO2 -> Gideon 
+FOO3 -> Kimokoti 
+SOO2 -> Leigh Riley 
 FOO10 -> Sarah 
-FOO1 -> Kenneth 
-FOO2 -> Gideon 
-FOO3 -> Kimokoti 
-FOO4 -> Larry 
-FOO5 -> Maryanne 
 FOO6 -> Sarah 
-FOO1 -> Kenneth 
-FOO2 -> Gideon 
-FOO3 -> Kimokoti 
+FOO1 -> Oliver 
 FOO4 -> Larry 
+SOO1 -> Alex 
 FOO5 -> Maryanne 
-FOO6 -> Sarah 
 FOO1 -> Kenneth 
+FOO6 -> Gideon 
+FOO7 -> Ian 
 FOO2 -> Gideon 
+FOO5 -> Kenneth 
 FOO3 -> Kimokoti 
-FOO4 -> Larry 
-FOO5 -> Maryanne 
+FOO7 -> Ian 
 FOO6 -> Sarah 
+FOO7 -> Ian 
+SOO1 -> Dominic Walters 
+FOO4 -> Larry 
+FOO3 -> Mari Lawrence 
+FOO1 -> Kenneth 
+FOO5 -> Maryanne 
+FOO4 -> Tana Lopez 
 
 
 **************************************************
 LIVINGSPACE UNALLOCATIONS
 **************************************************
  ID     Person name
-FOO1 -> Oliver 
-FOO1 -> Oluwafemi Sule 
-FOO2 -> Simon Patterson 
-FOO3 -> Mari Lawrence 
-FOO4 -> Tana Lopez 
+FOO6 -> Maryanne 
+FOO5 -> Larry 
+FOO6 -> Maryanne 
+FOO6 -> Sarah 
 FOO9 -> Maryanne 
+FOO2 -> Simon Patterson 
+FOO1 -> Oluwafemi Sule 
+FOO7 -> Ian 
+FOO7 -> Ian 
+FOO6 -> Maryanne 
+FOO5 -> Maryanne 
+FOO5 -> Larry 
+FOO1 -> Oliver 
+FOO6 -> Maryanne 
 FOO10 -> Sarah 
-FOO5 -> Maryanne 
 FOO6 -> Sarah 
+FOO5 -> Larry 
+FOO6 -> Maryanne 
+FOO5 -> Larry 
+FOO6 -> Maryanne 
 FOO5 -> Maryanne 
+FOO5 -> Larry 
+FOO7 -> Ian 
+FOO7 -> Ian 
 FOO6 -> Sarah 
+FOO7 -> Ian 
+FOO3 -> Mari Lawrence 
 FOO5 -> Maryanne 
-FOO6 -> Sarah 
+FOO4 -> Tana Lopez 
+FOO5 -> Larry 

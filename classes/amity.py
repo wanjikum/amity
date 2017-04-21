@@ -179,12 +179,14 @@ class Amity(object):
                     if room_name in [room.room_name for room in self.offices]:
                         return self.reallocate_staff(person_id, room_name)
                     else:
-                        return "Staff cannot be accomodated!"
+                        return colored("Staff cannot be accomodated!",
+                                       'yellow')
 
             else:
-                return "The room does not exist!"
+                return colored("The room does not exist!", 'yellow')
         else:
-            return "The person identifier(id) used does not exist!"
+            return colored("The person identifier(id) used does not exist!",
+                           'yellow')
 
     def reallocate_fellow_office(self, person_id, room_name):
         """A method that reallocates fellows"""
@@ -192,10 +194,11 @@ class Amity(object):
                          if fellow.person_id == person_id]
         fellow_name = fellow_object[0].person_name
         if fellow_object[0].office is None:
-            return "{} has not been allocated an office yet\n".format(
-             fellow_name)
+            return colored("{} has not been allocated an office yet\n".format(
+             fellow_name), 'yellow')
         elif fellow_object[0].office.room_name == room_name:
-            return "A person cannot be reallocated to the same room"
+            return colored("A person cannot be reallocated to the same room",
+                           'yellow')
         else:
             previous_office = fellow_object[0].office.room_name
             previous_office_object = [office for office in self.offices
@@ -207,10 +210,10 @@ class Amity(object):
                 office_object[0].occupants.append(fellow_name)
                 fellow_object[0].office.room_name == room_name
                 self.changes = True
-                return "{} has been reallocated from {} to {}".format(
-                 fellow_name, previous_office, room_name)
+                return colored("{} has been reallocated from {} to {}".format(
+                 fellow_name, previous_office, room_name), 'green')
             else:
-                return "Room capacity full!"
+                return colored("Room capacity full!", 'yellow')
 
     def reallocate_fellow_livingspace(self, person_id, room_name):
         """A method that reallocates fellows"""
@@ -218,10 +221,10 @@ class Amity(object):
                          if fellow.person_id == person_id]
         fellow_name = fellow_object[0].person_name
         if fellow_object[0].living_space is None:
-            return "{} has not been allocated a livingspace yet\n".format(
-               fellow_name)
+            return colored("{} has not been allocated a livingspace yet\n".format(
+               fellow_name), 'yellow')
         elif fellow_object[0].living_space.room_name == room_name:
-            return "A person cannot be reallocated to the same room"
+            return colored("A person cannot be reallocated to the same room", 'yellow')
         else:
             previous_living_space = fellow_object[0].living_space.room_name
             previous_living_space_object = [lspace for lspace in
@@ -235,10 +238,10 @@ class Amity(object):
                 living_space_object[0].occupants.append(fellow_name)
                 fellow_object[0].living_space.room_name == room_name
                 self.changes = True
-                return "{} has been reallocated from {} to {}".format(
-                  fellow_name, previous_living_space, room_name)
+                return colored("{} has been reallocated from {} to {}".format(
+                  fellow_name, previous_living_space, room_name), 'green')
             else:
-                return "Room capacity full!"
+                return colored("Room capacity full!", 'yellow')
 
     def reallocate_staff(self, person_id, room_name):
         """A method that reallocates staff from one office to another"""
@@ -246,10 +249,11 @@ class Amity(object):
                         if staff.person_id == person_id]
         staff_name = staff_object[0].person_name
         if staff_object[0].office is None:
-            return "{} has not been allocated an office yet\n".format(
-               staff_name)
+            return colored("{} has not been allocated an office yet\n".format(
+               staff_name), 'yellow')
         elif staff_object[0].office.room_name == room_name:
-            return "A person cannot be reallocated to the same room"
+            return colored("A person cannot be reallocated to the same room",
+                           'yellow')
         else:
             previous_office = staff_object[0].office.room_name
             previous_office_object = [office for office in self.offices
@@ -261,10 +265,10 @@ class Amity(object):
                 office_object[0].occupants.append(staff_name)
                 staff_object[0].office.room_name == room_name
                 self.changes = True
-                return "{} has been reallocated from {} to {}".format(
-                 staff_name, previous_office, room_name)
+                return colored("{} has been reallocated from {} to {}".format(
+                 staff_name, previous_office, room_name), 'green')
             else:
-                return "Room capacity full!"
+                return colored("Room capacity full!", 'yellow')
 
     def print_allocated(self, file_name=None):
         """A method that prints allocated people in rooms"""

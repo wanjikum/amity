@@ -2,22 +2,76 @@
 OFFICE UNALLOCATIONS
 **************************************************
  ID     Person name
-FOO7 -> Milly Shiko 
-FOO8 -> Milly Shiko 
-FOO9 -> Milly Shiko 
-FOO10 -> Milly Shiko 
+SOO1 -> Leigh Riley 
+FOO4 -> Larry 
+FOO1 -> Kenneth 
+FOO5 -> Maryanne 
+SOO1 -> Felistas 
+FOO5 -> Gideon 
+FOO2 -> Gideon 
+FOO6 -> Kimokoti 
+FOO3 -> Kimokoti 
+FOO6 -> Sarah 
+FOO4 -> Kenneth 
+FOO6 -> Sarah 
+FOO7 -> Ian 
+FOO1 -> Oliver 
+FOO7 -> Larry 
+FOO4 -> Larry 
+FOO5 -> Maryanne 
+FOO8 -> Maryanne 
+FOO1 -> Kenneth 
+FOO1 -> Oliver 
+FOO2 -> Gideon 
+FOO7 -> Ian 
+SOO1 -> Alex 
+FOO9 -> Sarah 
+FOO3 -> Kimokoti 
+FOO6 -> Sarah 
+FOO7 -> Ian 
+FOO4 -> Larry 
+FOO1 -> Kenneth 
+FOO5 -> Maryanne 
+FOO7 -> Ian 
+FOO1 -> Oluwafemi Sule 
+FOO7 -> Ian 
+FOO2 -> Simon Patterson 
+FOO2 -> Gideon 
+FOO3 -> Kimokoti 
+SOO2 -> Kelly Mcguire 
+FOO3 -> Tana Lopez 
 
 
 **************************************************
 LIVINGSPACE UNALLOCATIONS
 **************************************************
  ID     Person name
-FOO5 -> Milly Shiko 
-FOO6 -> Milly Shiko 
-FOO7 -> Milly Shiko 
-FOO8 -> Milly Shiko 
-FOO9 -> Milly Shiko 
-FOO10 -> Milly Shiko 
-
-
-Data printed successfully
+FOO5 -> Larry 
+FOO6 -> Maryanne 
+FOO5 -> Larry 
+FOO5 -> Maryanne 
+FOO6 -> Maryanne 
+FOO6 -> Sarah 
+FOO7 -> Ian 
+FOO6 -> Sarah 
+FOO6 -> Maryanne 
+FOO1 -> Oliver 
+FOO5 -> Larry 
+FOO6 -> Maryanne 
+FOO5 -> Maryanne 
+FOO8 -> Maryanne 
+FOO5 -> Larry 
+FOO6 -> Maryanne 
+FOO7 -> Ian 
+FOO5 -> Larry 
+FOO9 -> Sarah 
+FOO6 -> Sarah 
+FOO6 -> Maryanne 
+FOO7 -> Ian 
+FOO5 -> Larry 
+FOO5 -> Maryanne 
+FOO7 -> Ian 
+FOO1 -> Oluwafemi Sule 
+FOO7 -> Ian 
+FOO2 -> Simon Patterson 
+FOO3 -> Tana Lopez 
