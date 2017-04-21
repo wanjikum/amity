@@ -2,6 +2,7 @@
 A class Amity that contains all the functionality of the app.
 """
 import os
+from termcolor import cprint, colored
 from random import choice
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -84,8 +85,8 @@ class Amity(object):
                 new_person.person_id = "SOO" + str(len(self.staffs)+1)
                 self.staffs.append(new_person)
                 self.changes = True
-                print("{} added successfully! Your ID: {}"
-                      .format(person_name, new_person.person_id))
+                cprint("{} added successfully! Your ID: {}"
+                       .format(person_name, new_person.person_id), 'green')
                 return self.allocate_office(new_person)
 
         else:
@@ -93,8 +94,8 @@ class Amity(object):
             new_person.person_id = "FOO" + str(len(self.fellows)+1)
             self.fellows.append(new_person)
             self.changes = True
-            print("{} added successfully! Your ID: {}"
-                  .format(person_name, new_person.person_id))
+            cprint("{} added successfully! Your ID: {}"
+                   .format(person_name, new_person.person_id), 'green')
             if wants_accommodation in ["no", "n"]:
                 return self.allocate_office(new_person)
             else:
@@ -111,7 +112,7 @@ class Amity(object):
             random_office = choice(office_with_space)
             random_office.occupants.append(new_person.person_name)
             new_person.office = random_office
-            return "Allocated office: {}\n".format(random_office.room_name)
+            return colored(" Allocated office: {}\n ".format(random_office.room_name), 'green')
         else:
             self.waiting_list["office"].append(new_person)
             self.waiting_list["office"] = list(
@@ -369,7 +370,7 @@ class Amity(object):
              person_obj.person_name, person_obj.office.room_name)
 
     def allocate_person_livingspace(self, person_id):
-        """A method that allocates a person in the waiting list a livingspace"""
+        """A method that allocates person in waiting list a livingspace"""
         person_id = person_id.upper()
         found = False
         person_obj = None
