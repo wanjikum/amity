@@ -221,10 +221,11 @@ class Amity(object):
                          if fellow.person_id == person_id]
         fellow_name = fellow_object[0].person_name
         if fellow_object[0].living_space is None:
-            return colored("{} has not been allocated a livingspace yet\n".format(
-               fellow_name), 'yellow')
+            return colored("{} has not been allocated a livingspace" +
+                           " yet\n".format(fellow_name), 'yellow')
         elif fellow_object[0].living_space.room_name == room_name:
-            return colored("A person cannot be reallocated to the same room", 'yellow')
+            return colored("A person cannot be reallocated to the " +
+                           "same room", 'yellow')
         else:
             previous_living_space = fellow_object[0].living_space.room_name
             previous_living_space_object = [lspace for lspace in
@@ -293,7 +294,7 @@ class Amity(object):
                         output += ("{}, ".format(occupant))
                 output += ("\n")
         else:
-            output += "No offices available"
+            output += colored("No offices available", 'yellow')
         if len(lspace_available) > 0:
             output += ("\n")
             output += ("*"*50 + "\n")
@@ -309,15 +310,16 @@ class Amity(object):
                         output += ("{}, ".format(occupant))
                     output += ("\n")
         else:
-            output += "No livingspaces available"
+            output += colored("No livingspaces available", 'yellow')
         if file_name is None:
             print(output)
-            return "\nData printed successfully\n"
+            return colored("\nData printed successfully\n", 'green')
         else:
             save_to = open(file_name + ".txt", "w")
             save_to.write(output)
             save_to.close()
-            return "Data saved in {} successfully".format(file_name)
+            return colored("Data saved in {} successfully".format(file_name),
+                           'green')
 
     def print_unallocated(self, file_name=None):
         """A method that prints unallocated people"""

@@ -264,25 +264,22 @@ class PrintAllocatedUnallocated(unittest.TestCase):
     def test_print_allocations_successfully(self):
         """Tests if it prints allocated people successfully"""
         response = self.amity.print_allocated(None)
-        self.assertIn(response, "\nData printed successfully\n")
+        self.assertIn("\nData printed successfully\n", response)
 
     def test_print_unallocated_successfully(self):
         """Tests if it prints unallocated people successfully"""
         response = self.amity.print_unallocated()
-        self.assertIn(response, "Data printed successfully\n")
+        self.assertIn("Data printed successfully\n", response)
 
     def test_print_allocated_successfully_to_text_file(self):
         """Tests if it prints allocated people to the specified file"""
-        allocated_people = self.amity.print_allocated("allocated")
-        # check if the file exists
-        self.assertEqual(allocated_people,
-                         "Data saved in allocated successfully")
+        response = self.amity.print_allocated("allocated")
+        self.assertIn("Data saved in allocated successfully", response)
 
     def test_print_unallocated_successfully_to_text_file(self):
         """Tests if prints unallocated people to the specified file"""
-        unallocated_people = self.amity.print_unallocated("unallocated")
-        self.assertEqual(unallocated_people,
-                         "Data saved in unallocated successfully")
+        response = self.amity.print_unallocated("unallocated")
+        self.assertIn("Data saved in unallocated successfully", response)
 
 
 class AllocateUnallocated(unittest.TestCase):
