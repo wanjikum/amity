@@ -226,20 +226,18 @@ class LoadsPeopleTestCases(unittest.TestCase):
 
     def test_loads_people_from_a_txt_file_successfully(self):
         """Tests if it loads people from a txt file successfully"""
-        # remember to add the exten .txt
-        cohort_15 = self.amity.loads_people("load")
-        self.assertEqual(cohort_15, "People added successfully")
+        response = self.amity.loads_people("load")
+        self.assertIn("People added successfully", response)
 
     def test_loads_an_empty_file(self):
         """Test if it loads people in an empty file and adds nothing"""
-        empty_file = self.amity.loads_people("empty")
-        self.assertEqual(empty_file, "Empty file. No one has been added.")
+        response = self.amity.loads_people("empty")
+        self.assertIn("Empty file. No one has been added.", response)
 
     def test_if_file_does_not_exist(self):
         """Tests if the file does not exist"""
-        # Add the file path you said you wanted
-        non_existing_file = self.amity.loads_people("non_existing")
-        self.assertEqual(non_existing_file, "The file does not exist.")
+        response = self.amity.loads_people("non_existing")
+        self.assertIn("The file does not exist.", response)
 
 
 class PrintAllocatedUnallocated(unittest.TestCase):
@@ -336,7 +334,7 @@ class AllocateUnallocated(unittest.TestCase):
         """Test rejects allocated livingspace if already allocated"""
         response = self.amity.allocate_person_livingspace("foo2")
         self.assertIn("The person is not in the livingspace waiting list",
-                         response)
+                      response)
 
 
 class SaveStateTestCases(unittest.TestCase):

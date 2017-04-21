@@ -410,7 +410,7 @@ class Amity(object):
             read_file = open(file_name + '.txt', 'r')
             people = read_file.readlines()
             if len(people) == 0:
-                return 'Empty file. No one has been added.'
+                return colored('Empty file. No one has been added.', 'yellow')
             for person in people:
                 splitwords = person.split()
                 if len(splitwords) in range(3, 5):
@@ -423,10 +423,10 @@ class Amity(object):
                     print(self.add_person(person_name, person_type,
                           wants_accommodation))
                 else:
-                    print('Invalid input!\n')
-            return 'People added successfully'
+                    print(colored('Invalid input!\n'), 'yellow')
+            return colored('People added successfully', 'green')
         except FileNotFoundError:
-            return 'The file does not exist.'
+            return colored('The file does not exist.', 'yellow')
 
     def save_state(self, database_name):
         """A method that saves changes to the database"""

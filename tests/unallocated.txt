@@ -2,13 +2,13 @@
 OFFICE UNALLOCATIONS
 **************************************************
  ID     Person name
-FOO1 -> Oluwafemi Sule 
-FOO2 -> Gideon 
 SOO1 -> Alex 
+FOO2 -> Gideon 
+FOO2 -> Simon Patterson 
 FOO3 -> Kimokoti 
 FOO6 -> Sarah 
-FOO2 -> Simon Patterson 
 FOO7 -> Ian 
+FOO1 -> Oluwafemi Sule 
 FOO7 -> Ian 
 FOO3 -> Mari Lawrence 
 FOO4 -> Larry 
@@ -19,50 +19,49 @@ FOO6 -> Gideon
 FOO2 -> Gideon 
 FOO3 -> Kimokoti 
 FOO6 -> Sarah 
-SOO3 -> Kelly Mcguire 
-FOO9 -> Maryanne 
 SOO1 -> Dominic Walters 
+FOO9 -> Maryanne 
 FOO5 -> Kenneth 
+SOO3 -> Kelly Mcguire 
 FOO4 -> Larry 
-FOO5 -> Maryanne 
 SOO1 -> Felistas 
-FOO1 -> Kenneth 
+FOO5 -> Maryanne 
 FOO4 -> Tana Lopez 
+FOO1 -> Kenneth 
+FOO7 -> Ian 
 FOO7 -> Ian 
 FOO2 -> Gideon 
-FOO7 -> Ian 
-FOO10 -> Sarah 
 FOO3 -> Kimokoti 
+FOO10 -> Sarah 
 FOO6 -> Sarah 
 FOO1 -> Oliver 
 FOO7 -> Kimokoti 
 FOO4 -> Larry 
 FOO1 -> Kenneth 
-FOO8 -> Larry 
-FOO5 -> Maryanne 
 FOO1 -> Oliver 
+FOO5 -> Maryanne 
 FOO7 -> Ian 
+FOO8 -> Larry 
 
 
 **************************************************
 LIVINGSPACE UNALLOCATIONS
 **************************************************
  ID     Person name
-FOO5 -> Larry 
-FOO1 -> Oluwafemi Sule 
 FOO6 -> Maryanne 
 FOO6 -> Maryanne 
-FOO6 -> Sarah 
 FOO2 -> Simon Patterson 
+FOO6 -> Sarah 
 FOO5 -> Larry 
 FOO7 -> Ian 
+FOO1 -> Oluwafemi Sule 
 FOO7 -> Ian 
 FOO3 -> Mari Lawrence 
 FOO5 -> Maryanne 
 FOO6 -> Sarah 
 FOO5 -> Larry 
-FOO9 -> Maryanne 
 FOO6 -> Maryanne 
+FOO9 -> Maryanne 
 FOO5 -> Larry 
 FOO6 -> Maryanne 
 FOO5 -> Maryanne 
@@ -75,6 +74,7 @@ FOO5 -> Larry
 FOO1 -> Oliver 
 FOO6 -> Maryanne 
 FOO5 -> Larry 
-FOO5 -> Maryanne 
 FOO6 -> Maryanne 
+FOO5 -> Maryanne 
 FOO7 -> Ian 
+FOO5 -> Larry 
