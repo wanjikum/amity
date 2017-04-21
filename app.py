@@ -99,7 +99,7 @@ class MyInteractiveAmity (cmd.Cmd):
         room_type = arg["<room_type>"]
         room_names = arg["<room_name>"]
         for room in room_names:
-            if not re.match(r'^[A-Za-z0-9]{1,15}$', room):
+            if not re.match(r'^[A-Za-z0-9]{1,10}$', room):
                 cprint("Invalid input {}!".format(room), 'red')
                 room_names.remove(room)
         result = amity.create_room(room_type, room_names)
@@ -124,19 +124,40 @@ class MyInteractiveAmity (cmd.Cmd):
         e.g add_person millicent njuguna f y
 
         """
-        if not re.match(r'^[A-Za-z]{1,15}$', arg["<first_name>"]):
-            cprint("Invalid input! Use letters only in first name.", 'red')
-        elif not re.match(r'^[A-Za-z]{1,15}$', arg["<last_name>"]):
-            cprint("Invalid input! Use letters only in last name.", 'red')
-        elif not re.match(r'^[A-Za-z]{1,10}$', arg["<role>"]):
-            cprint("Invalid input! Use letters only in role.", 'red')
+        if not re.match(r'^[A-Za-z]{1,10}$', arg["<first_name>"]):
+            if len(arg["<first_name>"]) > 10:
+                cprint("First name too long", 'red')
+            else:
+                cprint("Invalid input! Use letters only in first name.", 'red')
+        elif not re.match(r'^[A-Za-z]{1,10}$', arg["<last_name>"]):
+            if len(arg["<last_name>"]) > 10:
+                cprint("Last name too long", 'red')
+            else:
+                cprint("Invalid input! Use letters only in last name.", 'red')
+        elif not re.match(r'^[A-Za-z]{1,6}$', arg["<role>"]):
+            if len(arg["<role>"]) > 6:
+                cprint("Role too long", 'red')
+            else:
+                cprint("Invalid input! Use letters only in role.", 'red')
         else:
             person_name = arg["<first_name>"] + " " + arg["<last_name>"]
             person_type = arg["<role>"]
             wants_accommodation = arg["<accommodate>"]
-            cprint(amity.add_person(person_name, person_type,
-                   wants_accommodation),
-                   'green')
+            result = amity.add_person(person_name, person_type,
+                                      wants_accommodation)
+
+            if "Invalid name. Use letters only" in result\
+                or "Invalid role. You can either be a fellow/staff" in result\
+                    or "Invalid accomodate option. It can either be yes or no." in\
+                    result:
+                color = "red"
+            elif "No available offices. Added to the office waiting list\n" in\
+                 result or "No available livingspaces. Added to the " + \
+                 "livingspaces waiting list\n" in result or "Staff cannot be accomodated!" in result:
+                color = "yellow"
+            else:
+                color = "green"
+            cprint(result, color)
 
     @docopt_cmd
     def do_reallocate_person(self, arg):
