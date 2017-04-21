@@ -465,7 +465,7 @@ class Amity(object):
         session.commit()
         session.close()
         self.changes = False
-        return 'The state has been saved successfully!'
+        return colored('The state has been saved successfully!', 'green')
 
     def load_state(self, database_name):
         """A method that loads state of the  database"""

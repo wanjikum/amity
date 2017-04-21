@@ -351,7 +351,8 @@ class SaveStateTestCases(unittest.TestCase):
         """Test if it saves state successfully"""
         # look at this later and db extension
         response = self.amity.save_state("amity_database")
-        self.assertEqual(response, "The state has been saved successfully!")
+        self.assertIn("The state has been saved successfully!",
+                      response)
 
     def test_if_db_exists(self):
         """Tests if the db file exists"""
