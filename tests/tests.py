@@ -60,7 +60,7 @@ class AddPersonTestCases(unittest.TestCase):
         """Test add staff successfully"""
         self.amity.add_person("felistas", "staff", "no")
         response = sys.stdout.getvalue().strip()
-        self.assertIn(response, "Felistas added successfully! Your ID: SOO1")
+        self.assertIn("Felistas added successfully! Your ID: SOO1", response)
 
     def test_add_person_staff_who_requires_accommodation(self):
         """Test reject accommodation for staff"""
@@ -101,7 +101,7 @@ class AllocateRoomPersonTestCases(unittest.TestCase):
         """Tests if a person is successfully allocated an office"""
         self.amity.create_room("office", ["accra"])
         response = self.amity.add_person("oliver", "staff", "no")
-        self.assertEqual(response, "Allocated office: accra\n")
+        self.assertIn("Allocated office: accra\n", response)
 
     def test_allocate_livingspace_successfully(self):
         """Tests if a person is successfully allocated to a livingspace"""
