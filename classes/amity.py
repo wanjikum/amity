@@ -474,10 +474,10 @@ class Amity(object):
             if choice in ["YES", "Y"]:
                 self.save_state(self.loaded_database)
             elif choice not in ["NO", "N"]:
-                return "Invalid input"
+                return colored("Invalid input", 'red')
 
         if not os.path.isfile('./database/{}.db'.format(database_name)):
-            return 'The database does not exist!'
+            return colored('The database does not exist!', 'yellow')
         engine = \
             create_engine('sqlite:///database/{}.db'.format(database_name))
         Session = sessionmaker(bind=engine)
@@ -531,4 +531,4 @@ class Amity(object):
                    fellow.accommodate in ['y', 'yes']:
                     self.waiting_list['livingspace'].append(fellow)
         self.loaded_database = database_name
-        return 'The database has loaded successfully!'
+        return colored('The database has loaded successfully!', 'green')

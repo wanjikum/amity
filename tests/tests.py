@@ -374,12 +374,9 @@ class LoadStateTestCases(unittest.TestCase):
     def test_load_state_successfully(self):
         """Tests if load state successfully"""
         response = self.amity.load_state("amity")
-        self.assertEqual(response,
-                         "The database has loaded successfully!")
+        self.assertIn("The database has loaded successfully!", response)
 
     def test_load_state_unsuccessfully(self):
         """Test if loads state unsuccessfully"""
-        # This may be due to non existing db
         response = self.amity.load_state("dee")
-        self.assertEqual(response,
-                         "The database does not exist!")
+        self.assertIn("The database does not exist!", response)
