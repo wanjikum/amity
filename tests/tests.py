@@ -179,44 +179,41 @@ class RellocateRoomPersonTestCases(unittest.TestCase):
         """Tests if rejects reallocate person to a room which is full"""
         self.amity.add_person("vanni", "fellow", "yes")
         response = self.amity.reallocate_person("FOO5", "r_wing")
-        self.assertEqual(response,
-                         "Room capacity full!")
+        self.assertIn("Room capacity full!", response)
 
     def test_reallocate_room_successfully(self):
         """Tests if a person is successfully reallocated"""
         response = self.amity.reallocate_person("FOO1", "l_wing")
-        self.assertEqual(response,
-                         "Oliver has been reallocated from r_wing to l_wing")
+        self.assertIn("Oliver has been reallocated from r_wing to l_wing",
+                      response)
 
     def test_reallocate_room_reject_a_person_with_invalid_identifier(self):
         """Tests if it rejects reallocate a person with an invalid personid"""
         response = self.amity.reallocate_person("omega", "kakamega")
-        self.assertEqual(response,
-                         "The person identifier(id) used does not exist!")
+        self.assertIn("The person identifier(id) used does not exist!",
+                      response)
 
     def test_reallocate_room_reject_if_room_does_not_exist(self):
         """Tests if it rejects reallocation to a room which does not exist"""
         response = self.amity.reallocate_person("FOO3", "likoni")
-        self.assertEqual(response,
-                         "The room does not exist!")
+        self.assertIn("The room does not exist!", response)
 
     def test_reallocate_staff_from_office_to_living_space(self):
         """Tests rejects reallocation of staff from office to livingspace"""
         response = self.amity.reallocate_person("SOO1", "l_wing")
-        self.assertEqual(response,
-                         "Staff cannot be accomodated!")
+        self.assertIn("Staff cannot be accomodated!", response)
 
     def test_reallocate_rejects_reallocation_to_the_same_room(self):
         """Test rejects reallocation to the same room"""
         response = self.amity.reallocate_person("FOO2", "r_wing")
-        self.assertEqual(response,
-                         "A person cannot be reallocated to the same room")
+        self.assertIn("A person cannot be reallocated to the same room",
+                      response)
 
     def test_reallocate_rejects_reallocation_if_not_allocated_yet(self):
         """Test rejects reallocation to the same room"""
         response = self.amity.reallocate_person("FOO2", "accra")
-        self.assertEqual(response,
-                         "Maryanne has not been allocated an office yet\n")
+        self.assertIn("Maryanne has not been allocated an office yet\n",
+                      response)
 
 
 class LoadsPeopleTestCases(unittest.TestCase):

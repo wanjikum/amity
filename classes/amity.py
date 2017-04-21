@@ -151,13 +151,14 @@ class Amity(object):
                 room_obj = room
         if found:
             if len(room_obj.occupants) == 0:
-                return "The room is empty!\n"
+                return colored("The room is empty!\n", 'yellow')
             else:
                 for occupant in room_obj.occupants:
                     print(occupant)
-                return "Room occupants printed successfully!\n"
+                return colored("Room occupants printed successfully!\n",
+                               'green')
         else:
-            return "The room does not exist!\n"
+            return colored("The room does not exist!\n", "yellow")
 
     def reallocate_person(self, person_id, room_name):
         """A method that reallocates a person from one room to another"""
