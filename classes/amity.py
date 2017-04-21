@@ -279,7 +279,7 @@ class Amity(object):
         lspace_available = [lspace for lspace in self.livingspaces
                             if len(lspace.occupants) >= 0]
         if len(office_available) == 0 and len(lspace_available) == 0:
-            return "No rooms allocated"
+            return colored("No rooms allocated\n", 'yellow')
         if len(office_available) > 0:
             output += ("*"*50 + "\n")
             output += ("OFFICE ALLOCATIONS" + "\n")
@@ -328,7 +328,7 @@ class Amity(object):
         unallocated_lspace = [person
                               for person in self.waiting_list["livingspace"]]
         if len(unallocated_office) == 0 and len(unallocated_lspace) == 0:
-            return "No one in the waiting list"
+            return colored("No one in the waiting list", 'yellow')
         if len(unallocated_office) > 0:
             output += ("*"*50 + "\n")
             output += ("OFFICE UNALLOCATIONS" + "\n")
@@ -339,7 +339,7 @@ class Amity(object):
                                                 name.person_name))
             output += ("\n")
         else:
-            output += "\nNo one in the office waiting list"
+            output += colored("\nNo one in the office waiting list", 'yellow')
         if len(unallocated_lspace) > 0:
             output += ("\n" + "*"*50 + "\n")
             output += ("LIVINGSPACE UNALLOCATIONS" + "\n")
@@ -349,15 +349,17 @@ class Amity(object):
                 output += ("{} -> {} \n".format(name.person_id,
                            name.person_name))
         else:
-            output += "\nNo one in the living_space waiting list"
+            output += colored("\nNo one in the living_space waiting list",
+                              'yellow')
         if file_name is None:
             print(output)
-            return "Data printed successfully\n"
+            return colored("Data printed successfully\n", 'green')
         else:
             save_to = open(file_name + ".txt", "w")
             save_to.write(output)
             save_to.close()
-            return "Data saved in {} successfully".format(file_name)
+            return colored("Data saved in {} successfully".format(file_name),
+                           'green')
 
     def allocate_person_office(self, person_id):
         """A method that allocates a person in the waiting list to an office"""
