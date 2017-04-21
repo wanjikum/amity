@@ -58,19 +58,20 @@ class Amity(object):
         """A method that is used to add a person into the system"""
         is_digit = any(char.isdigit() for char in person_name)
         if is_digit:
-            return "Invalid name. Use letters only"
+            return colored("Invalid name. Use letters only", 'red')
         else:
             person_name = person_name.title()
             person_type = person_type.lower()
             if person_type not in ["fellow", "f", "staff", "s"]:
-                return "Invalid role. You can either be a fellow/staff."
+                return colored("Invalid role. You can either be a " +
+                               "fellow/staff.", 'red')
             else:
                 wants_accommodation = (wants_accommodation.lower()
                                        if wants_accommodation is not None
                                        else "no")
                 if wants_accommodation not in ["yes", "y", "n", "no"]:
-                    return "Invalid accomodate option. " + \
-                     "It can either be yes or no."
+                    return colored("Invalid accomodate option. " +
+                                   "It can either be yes or no.", 'red')
                 else:
                     return self.save_person(person_name, person_type,
                                             wants_accommodation)
@@ -79,7 +80,7 @@ class Amity(object):
         person_name = person_name.title()
         if person_type in ["staff", "s"]:
             if wants_accommodation in ["yes", "y"]:
-                return "Staff cannot be accomodated!"
+                return colored("Staff cannot be accomodated!\n", 'yellow')
             else:
                 new_person = Staff(person_name)
                 new_person.person_id = "SOO" + str(len(self.staffs)+1)
@@ -112,12 +113,14 @@ class Amity(object):
             random_office = choice(office_with_space)
             random_office.occupants.append(new_person.person_name)
             new_person.office = random_office
-            return colored(" Allocated office: {}\n ".format(random_office.room_name), 'green')
+            return colored(" Allocated office: {}\n ".format(
+              random_office.room_name), 'green')
         else:
             self.waiting_list["office"].append(new_person)
             self.waiting_list["office"] = list(
              set(self.waiting_list["office"]))
-            return "No available offices. Added to the office waiting list\n"
+            return colored("No available offices. Added to " +
+                           "the office waiting list\n", 'yellow')
 
     def allocate_living_space(self, new_person):
         """A method that allocates a living space"""
@@ -129,14 +132,14 @@ class Amity(object):
             random_livingspace = choice(livingspace_with_space)
             random_livingspace.occupants.append(new_person.person_name)
             new_person.living_space = random_livingspace
-            return "Allocated livingspace: {} \n". \
-                format(random_livingspace.room_name)
+            return colored("Allocated livingspace: {} \n".
+                           format(random_livingspace.room_name), "green")
         else:
             self.waiting_list["livingspace"].append(new_person)
             self.waiting_list["livingspace"] = list(
              set(self.waiting_list["livingspace"]))
-            return "No available livingspaces. " + \
-                "Added to the livingspaces waiting list\n"
+            return colored("No available livingspaces. Added to the "
+                           "livingspaces waiting list\n", 'yellow')
 
     def print_room(self, room_name):
         """A method that prints room occupants in a room"""
