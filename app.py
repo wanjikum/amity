@@ -126,38 +126,25 @@ class MyInteractiveAmity (cmd.Cmd):
         """
         if not re.match(r'^[A-Za-z]{1,10}$', arg["<first_name>"]):
             if len(arg["<first_name>"]) > 10:
-                cprint("First name too long", 'red')
+                cprint("First name too long\n", 'red')
             else:
                 cprint("Invalid input! Use letters only in first name.", 'red')
         elif not re.match(r'^[A-Za-z]{1,10}$', arg["<last_name>"]):
             if len(arg["<last_name>"]) > 10:
-                cprint("Last name too long", 'red')
+                cprint("Last name too long\n", 'red')
             else:
-                cprint("Invalid input! Use letters only in last name.", 'red')
+                cprint("Invalid input! Use letters only in last name.\n", 'red')
         elif not re.match(r'^[A-Za-z]{1,6}$', arg["<role>"]):
             if len(arg["<role>"]) > 6:
-                cprint("Role too long", 'red')
+                cprint("Role too long\n", 'red')
             else:
-                cprint("Invalid input! Use letters only in role.", 'red')
+                cprint("Invalid input! Use letters only in role.\n", 'red')
         else:
             person_name = arg["<first_name>"] + " " + arg["<last_name>"]
             person_type = arg["<role>"]
             wants_accommodation = arg["<accommodate>"]
-            result = amity.add_person(person_name, person_type,
-                                      wants_accommodation)
-
-            if "Invalid name. Use letters only" in result\
-                or "Invalid role. You can either be a fellow/staff" in result\
-                    or "Invalid accomodate option. It can either be yes or no." in\
-                    result:
-                color = "red"
-            elif "No available offices. Added to the office waiting list\n" in\
-                 result or "No available livingspaces. Added to the " + \
-                 "livingspaces waiting list\n" in result or "Staff cannot be accomodated!" in result:
-                color = "yellow"
-            else:
-                color = "green"
-            cprint(result, color)
+            print(amity.add_person(person_name, person_type,
+                                   wants_accommodation))
 
     @docopt_cmd
     def do_reallocate_person(self, arg):
@@ -190,7 +177,7 @@ class MyInteractiveAmity (cmd.Cmd):
         file_name = arg["<file_name>"]
         if not re.match(r'^[A-Za-z0-9]{1,10}$', file_name):
             cprint("Invalid input! Use letters only in file name.", 'red')
-        cprint(amity.loads_people(file_name), 'yellow')
+        print(amity.loads_people(file_name))
 
     @docopt_cmd
     def do_allocate_office(self, arg):
@@ -233,7 +220,7 @@ class MyInteractiveAmity (cmd.Cmd):
         e.g print_allocations --o=allocated
         """
         file_name = arg["--o"]
-        cprint(amity.print_allocated(file_name), 'green')
+        print(amity.print_allocated(file_name))
 
     @docopt_cmd
     def do_print_unallocated(self, arg):
