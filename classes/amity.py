@@ -373,13 +373,14 @@ class Amity(object):
                 self.allocate_office(person)
                 break
         if not found:
-            return "The person is not in the office waiting list"
+            return colored("The person is not in the office waiting list",
+                           'yellow')
         if person_obj.office is None:
-            return "No available offices"
+            return colored("No available offices", 'yellow')
         else:
             self.waiting_list["office"].remove(person_obj)
-            return "{} has been allocated to office {}".format(
-             person_obj.person_name, person_obj.office.room_name)
+            return colored("{} has been allocated to office {}".format(
+             person_obj.person_name, person_obj.office.room_name), 'green')
 
     def allocate_person_livingspace(self, person_id):
         """A method that allocates person in waiting list a livingspace"""
@@ -393,13 +394,15 @@ class Amity(object):
                 self.allocate_living_space(person)
                 break
         if not found:
-            return "The person is not in the livingspace waiting list"
+            return colored("The person is not in the livingspace waiting list",
+                           'yellow')
         if person_obj.living_space is None:
-            return "No available livingspaces"
+            return colored("No available livingspaces", "yellow")
         else:
             self.waiting_list["livingspace"].remove(person_obj)
-            return "{} has been allocated to livingspace {}".format(
-             person_obj.person_name, person_obj.living_space.room_name)
+            return colored("{} has been allocated to livingspace {}".format(
+             person_obj.person_name, person_obj.living_space.room_name),
+             'green')
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""

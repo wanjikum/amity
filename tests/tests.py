@@ -306,38 +306,37 @@ class AllocateUnallocated(unittest.TestCase):
     def test_allocate_person_to_a_random_office_from_the_waiting_list(self):
         """Tests if it allocates a person if no available offices"""
         response = self.amity.allocate_person_office("foo7")
-        self.assertEqual(response,
-                         "No available offices")
+        self.assertIn("No available offices", response)
 
     def test_allocate_person_to_a_random_livingspace(self):
         """Tests if it allocates a person if no available livingspaces"""
         response = self.amity.allocate_person_livingspace("foo7")
-        self.assertEqual(response,
-                         "No available livingspaces")
+        self.assertIn("No available livingspaces", response)
 
     def test_allocate_person_to_an_office_successfully_from_waiting_list(self):
         """Tests if it allocates a person to a random office"""
         self.amity.create_room("office", ["asmara"])
         response = self.amity.allocate_person_office("foo7")
-        self.assertEqual(response,
-                         "Ian has been allocated to office asmara")
+        self.assertIn("Ian has been allocated to office asmara", response)
 
     def test_allocate_person_to_a_random_living_space_from_waiting_list(self):
         """Tests if it allocates a person to a random living_space"""
         self.amity.create_room("living_space", ["west"])
         response = self.amity.allocate_person_livingspace("foo7")
-        self.assertEqual(response,
-                         "Ian has been allocated to livingspace west")
+        self.assertIn("Ian has been allocated to livingspace west",
+                      response)
 
     def test_allocate_office_if_allocated(self):
+        """Test rejects allocate office if allocated"""
         response = self.amity.allocate_person_office("foo2")
-        self.assertEqual(response,
-                         "The person is not in the office waiting list")
+        self.assertIn("The person is not in the office waiting list",
+                      response)
 
     def test_allocate_livingspace_if_allocated(self):
+        """Test rejects allocated livingspace if already allocated"""
         response = self.amity.allocate_person_livingspace("foo2")
-        self.assertEqual(response,
-                         "The person is not in the livingspace waiting list")
+        self.assertIn("The person is not in the livingspace waiting list",
+                         response)
 
 
 class SaveStateTestCases(unittest.TestCase):
