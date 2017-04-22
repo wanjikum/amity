@@ -221,8 +221,8 @@ class Amity(object):
                          if fellow.person_id == person_id]
         fellow_name = fellow_object[0].person_name
         if fellow_object[0].living_space is None:
-            return colored("{} has not been allocated a livingspace" +
-                           " yet\n".format(fellow_name), 'yellow')
+            return colored("{} has not been allocated a" +
+                           "livingspace yet\n".format(fellow_name), 'yellow')
         elif fellow_object[0].living_space.room_name == room_name:
             return colored("A person cannot be reallocated to the " +
                            "same room", 'yellow')
@@ -423,7 +423,7 @@ class Amity(object):
                     print(self.add_person(person_name, person_type,
                           wants_accommodation))
                 else:
-                    print(colored('Invalid input!\n'), 'yellow')
+                    print(colored('Invalid input!\n', 'red'))
             return colored('People added successfully', 'green')
         except FileNotFoundError:
             return colored('The file does not exist.', 'yellow')

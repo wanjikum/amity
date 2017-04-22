@@ -192,7 +192,7 @@ class MyInteractiveAmity (cmd.Cmd):
         person_id = arg["<person_identifier>"]
         if not re.match(r'^[A-Za-z0-9]{1,10}$', person_id):
             cprint("Invalid input! Use letters and digits.", 'red')
-        cprint(amity.allocate_person_office(person_id), 'green')
+        print(amity.allocate_person_office(person_id))
 
     @docopt_cmd
     def do_allocate_livingspace(self, arg):
@@ -207,7 +207,7 @@ class MyInteractiveAmity (cmd.Cmd):
         person_id = arg["<person_identifier>"]
         if not re.match(r'^[A-Za-z0-9]{1,10}$', person_id):
             cprint("Invalid input! Use letters and digits.", 'red')
-        cprint(amity.allocate_person_livingspace(person_id), 'green')
+        print(amity.allocate_person_livingspace(person_id))
 
     @docopt_cmd
     def do_print_allocations(self, arg):
@@ -233,7 +233,7 @@ class MyInteractiveAmity (cmd.Cmd):
         e.g print_unallocated --o=unallocated
         """
         file_name = arg["--o"]
-        cprint(amity.print_unallocated(file_name), 'green')
+        print(amity.print_unallocated(file_name))
 
     @docopt_cmd
     def do_print_room(self, arg):
@@ -247,7 +247,7 @@ class MyInteractiveAmity (cmd.Cmd):
         room_name = arg["<room_name>"]
         if not re.match(r'^[A-Za-z0-9]{1,15}$', room_name):
             cprint("Invalid input {}!Use letters only!".format(room), 'red')
-        cprint(amity.print_room(room_name), 'green')
+        print(amity.print_room(room_name))
 
     @docopt_cmd
     def do_save_state(self, arg):
@@ -261,7 +261,7 @@ class MyInteractiveAmity (cmd.Cmd):
          e.g save_state --db=amity
          """
         database_name = arg["--db"]
-        cprint(amity.save_state(database_name), 'green')
+        print(amity.save_state(database_name))
 
     @docopt_cmd
     def do_load_state(self, arg):
@@ -273,7 +273,7 @@ class MyInteractiveAmity (cmd.Cmd):
         e.g load_state amity
         """
         database_name = arg["<sqlite_database>"]
-        cprint(amity.load_state(database_name), 'green')
+        print(amity.load_state(database_name))
 
     def do_quit(self, arg):
         """Quits out of Interactive Mode."""
