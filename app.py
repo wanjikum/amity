@@ -9,6 +9,7 @@ Usage:
     app.py load_people <file_name>
     app.py print_allocations [--o=filename]
     app.py print_unallocated [--o=filename]
+    app.py print_all_people [--o=filename]
     app.py print_room <room_name>
     app.py allocate_office <person_identifier>
     app.py allocate_livingspace <person_identifier>
@@ -133,7 +134,8 @@ class MyInteractiveAmity (cmd.Cmd):
             if len(arg["<last_name>"]) > 10:
                 cprint("Last name too long\n", 'red')
             else:
-                cprint("Invalid input! Use letters only in last name.\n", 'red')
+                cprint("Invalid input! Use letters only in last name.\n",
+                       'red')
         elif not re.match(r'^[A-Za-z]{1,6}$', arg["<role>"]):
             if len(arg["<role>"]) > 6:
                 cprint("Role too long\n", 'red')
@@ -234,6 +236,19 @@ class MyInteractiveAmity (cmd.Cmd):
         """
         file_name = arg["--o"]
         print(amity.print_unallocated(file_name))
+
+    @docopt_cmd
+    def do_print_all_people(self, arg):
+        """
+        Prints a list of all people to the screen. Specifying the  -o
+        option outputs the information to the txt file provided.
+
+        Usage: print_all_people [--o=filename]
+
+        e.g print_unallocated --o=all_people
+        """
+        file_name = arg["--o"]
+        print(amity.print_all_people(file_name))
 
     @docopt_cmd
     def do_print_room(self, arg):

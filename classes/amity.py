@@ -361,6 +361,11 @@ class Amity(object):
             return colored("Data saved in {} successfully".format(file_name),
                            'green')
 
+    def print_all_people(self, file_name):
+        """A method that prints all people on a text file"""
+        print(file_name)
+        pass
+
     def allocate_person_office(self, person_id):
         """A method that allocates a person in the waiting list to an office"""
         person_id = person_id.upper()

@@ -240,7 +240,7 @@ class LoadsPeopleTestCases(unittest.TestCase):
         self.assertIn("The file does not exist.", response)
 
 
-class PrintAllocatedUnallocated(unittest.TestCase):
+class PrintAllocatedUnallocatedAllIds(unittest.TestCase):
     """A collection of print allocated and unallocated testcases"""
     def setUp(self):
         self.amity = Amity()
@@ -266,7 +266,7 @@ class PrintAllocatedUnallocated(unittest.TestCase):
 
     def test_print_unallocated_successfully(self):
         """Tests if it prints unallocated people successfully"""
-        response = self.amity.print_unallocated()
+        response = self.amity.print_unallocated(None)
         self.assertIn("Data printed successfully\n", response)
 
     def test_print_allocated_successfully_to_text_file(self):
@@ -278,6 +278,17 @@ class PrintAllocatedUnallocated(unittest.TestCase):
         """Tests if prints unallocated people to the specified file"""
         response = self.amity.print_unallocated("unallocated")
         self.assertIn("Data saved in unallocated successfully", response)
+
+    def test_print_all_ids_successfully_on_screen(self):
+        """Tests if it prints all ids successfully"""
+        response = self.amity.print_all_people(None)
+        self.assertEqual("Data printed successfully\n", response)
+
+    def test_print_all_ids_successfully_on_a_text_file(self):
+        """Tests if it prints all ids successfully on a text file"""
+        response = self.amity.print_all_people("all_people")
+        self.assertEqual("Data printed successfully on all people text file",
+                         response)
 
 
 class AllocateUnallocated(unittest.TestCase):
