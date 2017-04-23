@@ -21,6 +21,7 @@ class Amity(object):
     offices = []
     livingspaces = []
     fellows = []
+    deleted_fellows = []
     staffs = []
     waiting_list = {
         "office": [],
@@ -463,10 +464,10 @@ class Amity(object):
                 else:
                     return self.remove_fellow(person_obj)
             elif choice in ["NO", "N"]:
-                return colored("{} has not been deleted".format(
+                return colored("{} has not been deleted\n".format(
                   person_obj.person_name), 'yellow')
             else:
-                return colored("Invalid input", 'red')
+                return colored("Invalid input\n", 'red')
 
         else:
             return colored("The person id {} does not exist!\n".format(
@@ -474,9 +475,22 @@ class Amity(object):
 
     def remove_staff(self, person_obj):
         """A method that deletes a staff"""
+        if person_obj.office is not None:
+            office_allocated = person_obj.office
+            for occupant in office_allocated.occupants:
+                if occupant == person_obj.person_name:
+                    office_allocated.occupants.remove(occupant)
+                    break
+            self.staffs.remove(person_obj)
+            self.deleted_fellows.append(person_obj)
+            return colored("{} deleted successfully\n".format(
+             person_obj.person_name), 'green')
+        else:
+            return "i am here and am in the waiting_list"
+
         print(person_obj.person_name)
-        print(person_obj.person_type)
         print(person_obj.office)
+
         return "I am a staff, and I no longer want to be in andela"
 
     def remove_fellow(self, person_obj):
