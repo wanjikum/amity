@@ -11,6 +11,7 @@ Usage:
     app.py print_unallocated [--o=filename]
     app.py print_all_people [--o=filename]
     app.py print_room <room_name>
+    app.py delete_person <person_identifier>
     app.py allocate_office <person_identifier>
     app.py allocate_livingspace <person_identifier>
     app.py save_state [--db=sqlite_database]
@@ -158,14 +159,15 @@ class MyInteractiveAmity (cmd.Cmd):
         e.g reallocate_person FOO1 accra
         """
         if not re.match(r'^[A-Za-z0-9]{1,10}$', arg["<person_identifier>"]):
-            cprint("Invalid input! Use letters or digits in person identifier",
+            cprint("Invalid input! Use letters or digits in person identifier\n",
                    'red')
         elif not re.match(r'^[A-Za-z0-9]{1,10}$', arg["<new_room_name>"]):
-            cprint("Invalid input! Use letters only in room name.", 'red')
+            cprint("Invalid input! Use letters or digits only in room name.\n",
+                   'red')
         else:
             person_id = arg["<person_identifier>"]
             room_name = arg["<new_room_name>"]
-            cprint(amity.reallocate_person(person_id, room_name), 'green')
+            print(amity.reallocate_person(person_id, room_name))
 
     @docopt_cmd
     def do_load_people(self, arg):
@@ -178,8 +180,10 @@ class MyInteractiveAmity (cmd.Cmd):
         """
         file_name = arg["<file_name>"]
         if not re.match(r'^[A-Za-z0-9]{1,10}$', file_name):
-            cprint("Invalid input! Use letters only in file name.", 'red')
-        print(amity.loads_people(file_name))
+            cprint("Invalid input! Use letters or digits only in file name.",
+                   'red')
+        else:
+            print(amity.loads_people(file_name))
 
     @docopt_cmd
     def do_allocate_office(self, arg):
@@ -194,7 +198,8 @@ class MyInteractiveAmity (cmd.Cmd):
         person_id = arg["<person_identifier>"]
         if not re.match(r'^[A-Za-z0-9]{1,10}$', person_id):
             cprint("Invalid input! Use letters and digits.", 'red')
-        print(amity.allocate_person_office(person_id))
+        else:
+            print(amity.allocate_person_office(person_id))
 
     @docopt_cmd
     def do_allocate_livingspace(self, arg):
@@ -209,7 +214,8 @@ class MyInteractiveAmity (cmd.Cmd):
         person_id = arg["<person_identifier>"]
         if not re.match(r'^[A-Za-z0-9]{1,10}$', person_id):
             cprint("Invalid input! Use letters and digits.", 'red')
-        print(amity.allocate_person_livingspace(person_id))
+        else:
+            print(amity.allocate_person_livingspace(person_id))
 
     @docopt_cmd
     def do_print_allocations(self, arg):
@@ -260,9 +266,14 @@ class MyInteractiveAmity (cmd.Cmd):
         e.g print_room accra
         """
         room_name = arg["<room_name>"]
-        if not re.match(r'^[A-Za-z0-9]{1,15}$', room_name):
-            cprint("Invalid input {}!Use letters only!".format(room), 'red')
-        print(amity.print_room(room_name))
+        if not re.match(r'^[A-Za-z0-9]{1,10}$', room_name):
+            if len(room_name) > 10:
+                cprint("Room name is too long!")
+            else:
+                cprint("Invalid input {}!Use letters only!\n".format(room_name),
+                       'red')
+        else:
+            print(amity.print_room(room_name))
 
     @docopt_cmd
     def do_save_state(self, arg):
@@ -277,6 +288,25 @@ class MyInteractiveAmity (cmd.Cmd):
          """
         database_name = arg["--db"]
         print(amity.save_state(database_name))
+
+    @docopt_cmd
+    def do_delete_person(self, arg):
+        """
+        Deletes a person with the person_identifier.
+
+        Usage: delete_person <person_identifier>
+
+        e.g delete_person foo1
+        """
+        if not re.match(r'^[A-Za-z0-9]{1,15}$', arg["<person_identifier>"]):
+            if len(arg["<person_identifier>"]) > 15:
+                cprint("Person ID is too long.\n", "red")
+            else:
+                cprint("Invalid input {}!Use letters and digits only!\n".format(
+                 arg["<person_identifier>"]), 'red')
+        else:
+            person_id = arg["<person_identifier>"]
+            print(amity.delete_person(person_id))
 
     @docopt_cmd
     def do_load_state(self, arg):

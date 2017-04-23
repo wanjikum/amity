@@ -348,6 +348,30 @@ class AllocateUnallocated(unittest.TestCase):
                       response)
 
 
+class DeletePersonTest(unittest.TestCase):
+    """A collection of delete person and room testcase"""
+
+    def setUp(self):
+        self.amity = Amity()
+        self.amity.create_room("office", ["bootcamp"])
+        self.amity.create_room("living_space", ["left"])
+        self.amity.add_person("Ian", "fellow", "yes")
+        self.amity.add_person("Chuchu", "fellow", "yes")
+        self.amity.add_person("Taracha", "staff", "no")
+
+    def tearDown(self):
+        self.amity
+        Amity.offices = []
+        Amity.livingspaces = []
+        Amity.staffs = []
+        Amity.fellows = []
+
+    def test_if_it_deletes_a_person_successfully(self):
+        """Test if it deletes a person successfully"""
+        response = self.amity.delete_person("soo1")
+        self.assertIn("Taracha has been deleted successfully!", response)
+
+
 class SaveStateTestCases(unittest.TestCase):
     """A collection of loadstate testcases"""
 
@@ -360,7 +384,6 @@ class SaveStateTestCases(unittest.TestCase):
 
     def test_save_state_successfully(self):
         """Test if it saves state successfully"""
-        # look at this later and db extension
         response = self.amity.save_state("amity_database")
         self.assertIn("The state has been saved successfully!",
                       response)
