@@ -150,6 +150,7 @@ class Amity(object):
             if room_name == room.room_name:
                 found = True
                 room_obj = room
+                break
         if found:
             if len(room_obj.occupants) == 0:
                 return colored("The room is empty!\n", 'yellow')
@@ -445,8 +446,19 @@ class Amity(object):
 
     def delete_person(self, person_id):
         """A method that deletes a person with the person id given"""
-        print(person_id)
-        pass
+        person_id = person_id.upper()
+        found = False
+        person_obj = None
+        for person in (self.fellows + self.staffs):
+            if person.person_id == person_id:
+                found = True
+                person_obj = person
+                break
+        if not found:
+            return colored("The person id {} does not exist!\n".format(
+                           person_id), 'yellow')
+        else:
+            print(person_obj)
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""

@@ -371,6 +371,11 @@ class DeletePersonTest(unittest.TestCase):
         response = self.amity.delete_person("soo1")
         self.assertIn("Taracha has been deleted successfully!", response)
 
+    def test_if_it_deletes_a_person_who_does_not_exist(self):
+        """Test if it deletes a person successfully"""
+        response = self.amity.delete_person("koo1")
+        self.assertIn("The person id KOO1 does not exist!\n", response)
+
 
 class SaveStateTestCases(unittest.TestCase):
     """A collection of loadstate testcases"""
