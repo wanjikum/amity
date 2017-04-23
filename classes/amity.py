@@ -454,11 +454,39 @@ class Amity(object):
                 found = True
                 person_obj = person
                 break
-        if not found:
-            return colored("The person id {} does not exist!\n".format(
-                           person_id), 'yellow')
+        if found:
+            choice = input("Do you want to delete {}?\n".format(
+             person_obj.person_name)).upper()
+            if choice in ["YES", "Y"]:
+                if person_obj.person_id[:3] == "SOO":
+                    return self.remove_staff(person_obj)
+                else:
+                    return self.remove_fellow(person_obj)
+            elif choice in ["NO", "N"]:
+                return colored("{} has not been deleted".format(
+                  person_obj.person_name), 'yellow')
+            else:
+                return colored("Invalid input", 'red')
+
         else:
-            print(person_obj)
+            return colored("The person id {} does not exist!\n".format(
+                   person_id), 'yellow')
+
+    def remove_staff(self, person_obj):
+        """A method that deletes a staff"""
+        print(person_obj.person_name)
+        print(person_obj.person_type)
+        print(person_obj.office)
+        return "I am a staff, and I no longer want to be in andela"
+
+    def remove_fellow(self, person_obj):
+        """A method that deletes a fellow"""
+        print(person_obj.person_name)
+        print(person_obj.person_type)
+        print(person_obj.office)
+        print(person_obj.living_space)
+        return "Let's do this!!!"
+
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
