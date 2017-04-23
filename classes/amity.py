@@ -2,8 +2,9 @@
 A class Amity that contains all the functionality of the app.
 """
 import os
-from termcolor import cprint, colored
 from random import choice
+from tabulate import tabulate
+from termcolor import cprint, colored
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -363,8 +364,41 @@ class Amity(object):
 
     def print_all_people(self, file_name):
         """A method that prints all people on a text file"""
-        print(file_name)
-        pass
+        output = ""
+        if len(self.staffs + self.fellows) == 0:
+            output += "\nNo staff or fellow added yet"
+        else:
+            output += ("\n" + "*"*50 + "\n")
+            output += "FELLOW LIST\n"
+            output += ("*"*50 + "\n")
+            output += ("FELLOW ID     " + "   FELLOW NAME" + "\n")
+            output += (("-")*50 + "\n")
+            if len(self.fellows) == 0:
+                output += "No added fellow yet!\n"
+            else:
+                for fellow in self.fellows:
+                    output += ("{}      -->    {}\n".format(fellow.person_id,
+                                                            fellow.person_name))
+            output += ("\n" + "*"*50 + "\n")
+            output += "STAFF LIST\n"
+            output += ("*"*50 + "\n")
+            output += ("STAFF ID     " + "   STAFF NAME" + "\n")
+            output += (("-")*50 + "\n")
+            if len(self.staffs) == 0:
+                output += "No added staff yet\n"
+            else:
+                for staff in self.staffs:
+                    output += ("{}     -->    {} \n".format(staff.person_id,
+                                                            staff.person_name))
+        if file_name is None:
+            print(output)
+            return colored("Data printed successfully\n", 'green')
+        else:
+            save_to = open(file_name + ".txt", "w")
+            save_to.write(output)
+            save_to.close()
+            return colored("Data saved in {} successfully".format(file_name),
+                           'green')
 
     def allocate_person_office(self, person_id):
         """A method that allocates a person in the waiting list to an office"""

@@ -2,95 +2,95 @@
 OFFICE UNALLOCATIONS
 **************************************************
  ID     Person name
-FOO1 -> Kenneth 
-FOO1 -> Kenneth 
-FOO5 -> Maryanne 
-FOO1 -> Oliver 
-FOO10 -> Sarah 
-FOO2 -> Gideon 
-FOO2 -> Gideon 
-FOO7 -> Ian 
-FOO3 -> Kimokoti 
-FOO3 -> Kimokoti 
-FOO7 -> Kimokoti 
-SOO1 -> Alex 
 FOO6 -> Sarah 
-FOO1 -> Kenneth 
-FOO8 -> Larry 
-FOO4 -> Larry 
-FOO4 -> Larry 
-FOO5 -> Maryanne 
-FOO7 -> Ian 
-FOO5 -> Maryanne 
-FOO1 -> Kenneth 
-FOO7 -> Ian 
+FOO6 -> Sarah 
 FOO2 -> Simon Patterson 
 FOO1 -> Oluwafemi Sule 
-FOO2 -> Gideon 
-FOO2 -> Gideon 
-FOO1 -> Oliver 
-FOO3 -> Kimokoti 
-FOO6 -> Sarah 
-FOO3 -> Kimokoti 
-FOO6 -> Sarah 
 FOO3 -> Mari Lawrence 
+SOO1 -> Felistas 
+FOO1 -> Kenneth 
 SOO2 -> Leigh Riley 
 FOO4 -> Larry 
+FOO5 -> Maryanne 
+FOO4 -> Larry 
+FOO5 -> Maryanne 
+FOO7 -> Ian 
+FOO6 -> Gideon 
+FOO2 -> Gideon 
+FOO7 -> Ian 
+FOO3 -> Kimokoti 
+FOO6 -> Sarah 
+FOO6 -> Sarah 
+FOO1 -> Oliver 
+SOO1 -> Dominic Walters 
+FOO9 -> Maryanne 
+SOO3 -> Kelly Mcguire 
+FOO4 -> Larry 
+FOO5 -> Maryanne 
+FOO1 -> Oliver 
+FOO4 -> Tana Lopez 
+FOO1 -> Kenneth 
+FOO1 -> Kenneth 
+FOO5 -> Kenneth 
+FOO7 -> Ian 
+SOO1 -> Alex 
+FOO2 -> Gideon 
+FOO2 -> Gideon 
+FOO3 -> Kimokoti 
+FOO7 -> Ian 
+FOO10 -> Sarah 
+FOO6 -> Sarah 
+FOO3 -> Kimokoti 
+FOO3 -> Kimokoti 
+FOO2 -> Gideon 
+FOO7 -> Kimokoti 
+FOO4 -> Larry 
+FOO7 -> Ian 
+FOO1 -> Kenneth 
+FOO5 -> Maryanne 
 FOO1 -> Kenneth 
 FOO4 -> Larry 
 FOO5 -> Maryanne 
-FOO5 -> Maryanne 
-FOO6 -> Gideon 
-SOO1 -> Felistas 
-FOO7 -> Ian 
+FOO8 -> Larry 
 FOO2 -> Gideon 
 FOO3 -> Kimokoti 
-SOO1 -> Dominic Walters 
-FOO9 -> Maryanne 
-FOO7 -> Ian 
-FOO6 -> Sarah 
-FOO5 -> Kenneth 
-FOO6 -> Sarah 
-SOO3 -> Kelly Mcguire 
-FOO4 -> Tana Lopez 
-FOO4 -> Larry 
 
 
 **************************************************
 LIVINGSPACE UNALLOCATIONS
 **************************************************
  ID     Person name
-FOO5 -> Maryanne 
-FOO5 -> Larry 
-FOO6 -> Maryanne 
-FOO10 -> Sarah 
-FOO7 -> Ian 
-FOO5 -> Larry 
-FOO6 -> Maryanne 
 FOO6 -> Sarah 
-FOO6 -> Maryanne 
-FOO5 -> Larry 
-FOO7 -> Ian 
-FOO7 -> Ian 
-FOO5 -> Maryanne 
-FOO5 -> Maryanne 
-FOO7 -> Ian 
+FOO6 -> Sarah 
 FOO2 -> Simon Patterson 
 FOO1 -> Oluwafemi Sule 
-FOO1 -> Oliver 
-FOO6 -> Sarah 
-FOO6 -> Sarah 
+FOO5 -> Larry 
+FOO6 -> Maryanne 
+FOO5 -> Larry 
+FOO6 -> Maryanne 
 FOO3 -> Mari Lawrence 
-FOO5 -> Larry 
-FOO6 -> Maryanne 
-FOO5 -> Larry 
 FOO5 -> Maryanne 
-FOO6 -> Maryanne 
 FOO5 -> Maryanne 
 FOO7 -> Ian 
-FOO9 -> Maryanne 
 FOO6 -> Sarah 
 FOO6 -> Sarah 
 FOO5 -> Larry 
-FOO4 -> Tana Lopez 
+FOO1 -> Oliver 
 FOO6 -> Maryanne 
+FOO9 -> Maryanne 
+FOO5 -> Larry 
+FOO6 -> Maryanne 
+FOO5 -> Maryanne 
+FOO4 -> Tana Lopez 
+FOO7 -> Ian 
+FOO5 -> Larry 
+FOO6 -> Maryanne 
+FOO6 -> Maryanne 
+FOO5 -> Larry 
+FOO7 -> Ian 
+FOO10 -> Sarah 
+FOO6 -> Sarah 
+FOO7 -> Ian 
+FOO7 -> Ian 
+FOO5 -> Maryanne 
+FOO5 -> Maryanne 

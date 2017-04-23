@@ -282,13 +282,13 @@ class PrintAllocatedUnallocatedAllIds(unittest.TestCase):
     def test_print_all_ids_successfully_on_screen(self):
         """Tests if it prints all ids successfully"""
         response = self.amity.print_all_people(None)
-        self.assertEqual("Data printed successfully\n", response)
+        self.assertIn("Data printed successfully\n", response)
 
     def test_print_all_ids_successfully_on_a_text_file(self):
         """Tests if it prints all ids successfully on a text file"""
         response = self.amity.print_all_people("all_people")
-        self.assertEqual("Data printed successfully on all people text file",
-                         response)
+        self.assertIn("Data saved in all_people successfully",
+                      response)
 
 
 class AllocateUnallocated(unittest.TestCase):
