@@ -21,8 +21,8 @@ class Amity(object):
     offices = []
     livingspaces = []
     fellows = []
-    deleted_fellows = []
     staffs = []
+    deleted_staff = []
     waiting_list = {
         "office": [],
         "livingspace": []
@@ -85,7 +85,7 @@ class Amity(object):
                 return colored("Staff cannot be accomodated!\n", 'yellow')
             else:
                 new_person = Staff(person_name)
-                new_person.person_id = "SOO" + str(len(self.staffs)+1)
+                new_person.person_id = "SOO" + str(len(self.staffs + self.deleted_staff)+1)
                 self.staffs.append(new_person)
                 self.changes = True
                 cprint("{} added successfully! Your ID: {}"
@@ -482,16 +482,17 @@ class Amity(object):
                     office_allocated.occupants.remove(occupant)
                     break
             self.staffs.remove(person_obj)
-            self.deleted_fellows.append(person_obj)
-            return colored("{} deleted successfully\n".format(
+            self.deleted_staff.append(person_obj)
+            return colored("{} deleted successfully.\n".format(
              person_obj.person_name), 'green')
         else:
-            return "i am here and am in the waiting_list"
-
-        print(person_obj.person_name)
-        print(person_obj.office)
-
-        return "I am a staff, and I no longer want to be in andela"
+            for person in self.waiting_list["office"]:
+                if person == person_obj:
+                    self.waiting_list["office"].remove(person_obj)
+                    self.staffs.remove(person_obj)
+                    self.deleted_staff.append(person_obj)
+            return colored("{} deleted successfully.\n".format(
+             person_obj.person_name), 'green')
 
     def remove_fellow(self, person_obj):
         """A method that deletes a fellow"""
