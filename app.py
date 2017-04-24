@@ -12,6 +12,7 @@ Usage:
     app.py print_all_people [--o=filename]
     app.py print_room <room_name>
     app.py delete_person <person_identifier>
+    app.py delete_room <room_name>
     app.py allocate_office <person_identifier>
     app.py allocate_livingspace <person_identifier>
     app.py save_state [--db=sqlite_database]
@@ -307,6 +308,25 @@ class MyInteractiveAmity (cmd.Cmd):
         else:
             person_id = arg["<person_identifier>"]
             print(amity.delete_person(person_id))
+
+    @docopt_cmd
+    def do_delete_room(self, arg):
+        """
+        Delete the specified room.
+
+        Usage: delete_room <room_name>
+
+        e.g delete_room dakar
+        """
+        if not re.match(r'^[A-Za-z0-9]{1,15}$', arg["<room_name>"]):
+            if len(arg["<room_name>"]) > 15:
+                cprint("Room name is too long.\n", "red")
+            else:
+                cprint("Invalid input {}!Use letters and digits only!\n".format(
+                 arg["<room_name>"]), 'red')
+        else:
+            room_name = arg["<room_name>"]
+            print(amity.delete_room(room_name))
 
     @docopt_cmd
     def do_load_state(self, arg):

@@ -553,6 +553,10 @@ class Amity(object):
                 self.waiting_list["livingspace"].remove(person_obj)
                 break
 
+    def delete_room(self, room_name):
+        """Deletes a room"""
+        print(room_name)
+
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
         try:
