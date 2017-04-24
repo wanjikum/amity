@@ -369,7 +369,7 @@ class DeletePersonTest(unittest.TestCase):
     def test_if_it_deletes_a_person_successfully(self):
         """Test if it deletes a person successfully"""
         response = self.amity.delete_person("soo1")
-        self.assertIn("Taracha has been deleted successfully!", response)
+        self.assertIn("Taracha deleted successfully!\n", response)
 
     def test_if_it_deletes_a_person_who_does_not_exist(self):
         """Test if it deletes a person successfully"""

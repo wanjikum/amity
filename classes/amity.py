@@ -95,7 +95,7 @@ class Amity(object):
 
         else:
             new_person = Fellow(person_name, wants_accommodation)
-            new_person.person_id = "FOO" + str(len(self.fellows)+1)
+            new_person.person_id = "FOO" + str(len(self.fellows + self.deleted_fellows)+1)
             self.fellows.append(new_person)
             self.changes = True
             cprint("{} added successfully! Your ID: {}"
@@ -457,8 +457,8 @@ class Amity(object):
                 person_obj = person
                 break
         if found:
-            choice = input("Do you want to delete {}?\n".format(
-             person_obj.person_name)).upper()
+            choice = input(colored("Do you want to delete {}?\n",
+                           "yellow").format(person_obj.person_name)).upper()
             if choice in ["YES", "Y"]:
                 if person_obj.person_id[:3] == "SOO":
                     return self.remove_staff(person_obj)
@@ -502,32 +502,26 @@ class Amity(object):
         if person_obj.accommodate in ["y", "yes"]:
             # Removes fellow in the office and livingspace waiting list
             if person_obj.office is None and person_obj.living_space is None:
-                print(self.waiting_list["office"])
                 self.remove_fellow_from_office_waiting_list(person_obj)
-                print(self.waiting_list["office"])
-                print(self.waiting_list["livingspace"])
                 self.remove_fellow_from_livingspace_waiting_list(person_obj)
-                print(self.waiting_list["livingspace"])
-                print("In both waitinglists  : done")
             elif person_obj.office is not None and person_obj.living_space is None:
-                print("I have been allocated but not accomodated but am in " +
-                      "the waiting_list : done")
+                self.remove_fellow_from_office(person_obj)
+                self.remove_fellow_from_livingspace_waiting_list(person_obj)
             elif person_obj.office is None and person_obj.living_space is not None:
-                print("i am in the office waiting list but I have been accommoadated  : done")
+                self.remove_fellow_from_office_waiting_list(person_obj)
+                self.remove_fellow_from_livingspace(person_obj)
             else:
-                print("I have been allocated and accomodated  : done")
+                self.remove_fellow_from_office(person_obj)
+                self.remove_fellow_from_livingspace(person_obj)
         else:
             if person_obj.office is not None:
-                print("I have been allocated and not accomodated  : done")
+                self.remove_fellow_from_office(person_obj)
             else:
-                print("I am in the office waiting list : done")
-        print(self.fellows)
+                self.remove_fellow_from_office_waiting_list(person_obj)
         self.fellows.remove(person_obj)
-        print(self.fellows)
-        print(self.deleted_fellows)
         self.deleted_fellows.append(person_obj)
-        print(self.deleted_fellows)
-        return "Let's do this!!!"
+        return colored("{} deleted successfully\n".format(
+                       person_obj.person_name), 'green')
 
     def remove_fellow_from_office(self, person_obj):
         """Removes a fellow from an office"""
