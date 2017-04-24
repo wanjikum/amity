@@ -23,3 +23,4 @@ class PersonModel(Base):
     office_allocated = Column(String(50), nullable=True)
     livingspace_allocated = Column(String(50), nullable=True)
     wants_accomodation = Column(String(50), nullable=False)
+    status = Column(String(50), nullable=False)
