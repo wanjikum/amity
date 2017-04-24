@@ -21,6 +21,7 @@ class Amity(object):
     offices = []
     livingspaces = []
     fellows = []
+    deleted_fellows = []
     staffs = []
     deleted_staff = []
     waiting_list = {
@@ -496,12 +497,67 @@ class Amity(object):
 
     def remove_fellow(self, person_obj):
         """A method that deletes a fellow"""
-        print(person_obj.person_name)
-        print(person_obj.person_type)
-        print(person_obj.office)
-        print(person_obj.living_space)
+
+        # If fellow needs accomodation or is accommodated
+        if person_obj.accommodate in ["y", "yes"]:
+            # Removes fellow in the office and livingspace waiting list
+            if person_obj.office is None and person_obj.living_space is None:
+                print(self.waiting_list["office"])
+                self.remove_fellow_from_office_waiting_list(person_obj)
+                print(self.waiting_list["office"])
+                print(self.waiting_list["livingspace"])
+                self.remove_fellow_from_livingspace_waiting_list(person_obj)
+                print(self.waiting_list["livingspace"])
+                print("In both waitinglists  : done")
+            elif person_obj.office is not None and person_obj.living_space is None:
+                print("I have been allocated but not accomodated but am in " +
+                      "the waiting_list : done")
+            elif person_obj.office is None and person_obj.living_space is not None:
+                print("i am in the office waiting list but I have been accommoadated  : done")
+            else:
+                print("I have been allocated and accomodated  : done")
+        else:
+            if person_obj.office is not None:
+                print("I have been allocated and not accomodated  : done")
+            else:
+                print("I am in the office waiting list : done")
+        print(self.fellows)
+        self.fellows.remove(person_obj)
+        print(self.fellows)
+        print(self.deleted_fellows)
+        self.deleted_fellows.append(person_obj)
+        print(self.deleted_fellows)
         return "Let's do this!!!"
 
+    def remove_fellow_from_office(self, person_obj):
+        """Removes a fellow from an office"""
+        office_allocated = person_obj.office
+        for occupant in office_allocated.occupants:
+            if occupant == person_obj.person_name:
+                office_allocated.occupants.remove(occupant)
+                break
+
+    def remove_fellow_from_office_waiting_list(self, person_obj):
+        """Removes a staff/fellow from the office waiting list"""
+        for person in self.waiting_list["office"]:
+            if person == person_obj:
+                self.waiting_list["office"].remove(person_obj)
+                break
+
+    def remove_fellow_from_livingspace(self, person_obj):
+        """Removes a fellow from a livingspace"""
+        livingspace_allocated = person_obj.living_space
+        for occupant in livingspace_allocated.occupants:
+            if occupant == person_obj.person_name:
+                livingspace_allocated.occupants.remove(occupant)
+                break
+
+    def remove_fellow_from_livingspace_waiting_list(self, person_obj):
+        """Remove fellow from livingspace waiting list"""
+        for person in self.waiting_list["livingspace"]:
+            if person == person_obj:
+                self.waiting_list["livingspace"].remove(person_obj)
+                break
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
