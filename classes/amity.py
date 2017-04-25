@@ -3,7 +3,6 @@ A class Amity that contains all the functionality of the app.
 """
 import os
 from random import choice
-# from tabulate import tabulate
 from termcolor import cprint, colored
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -598,7 +597,18 @@ class Amity(object):
 
     def delete_livingspace(self, room_obj):
         """Remove a specific livingspace"""
-        return "am an livingspace"
+        all_people = self.fellows + self.staffs
+        occupants_obj = [person for person in all_people
+                         if person.living_space == room_obj]
+        if len(occupants_obj) > 0:
+            for occupant in occupants_obj:
+                occupant.living_space = None
+                self.waiting_list["livingspace"].append(occupant)
+            self.livingspaces.remove(room_obj)
+        else:
+            self.livingspaces.remove(room_obj)
+        return colored("Living_space {} deleted successfully".format(
+         room_obj.room_name), 'green')
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
