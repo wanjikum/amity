@@ -555,7 +555,50 @@ class Amity(object):
 
     def delete_room(self, room_name):
         """Deletes a room"""
-        print(room_name)
+        found = False
+        room_obj = None
+        room_name = room_name.lower()
+        for room in (self.offices + self.livingspaces):
+            if room.room_name == room_name:
+                found = True
+                room_obj = room
+                break
+        if found:
+            choice = input(colored("Do you want to delete {}?\n",
+                           "yellow").format(room_obj.room_name)).upper()
+            if choice in ["YES", "Y"]:
+                if room_obj.room_type == "office":
+                    return self.delete_office(room_obj)
+                else:
+                    return self.delete_livingspace(room_obj)
+            elif choice in ["NO", "N"]:
+                return colored("{} has not been deleted\n".format(
+                  room_obj.room_name), 'yellow')
+            else:
+                return colored("Invalid input\n", 'red')
+
+        else:
+            return colored("The room {} does not exist!\n".format(
+                   room_name), 'yellow')
+
+    def delete_office(self, room_obj):
+        """Remove a specific office"""
+        all_people = self.fellows + self.staffs
+        occupants_obj = [person for person in all_people
+                         if person.office == room_obj]
+        if len(occupants_obj) > 0:
+            for occupant in occupants_obj:
+                occupant.office = None
+                self.waiting_list["office"].append(occupant)
+            self.offices.remove(room_obj)
+        else:
+            self.offices.remove(room_obj)
+        return colored("Office {} deleted successfully".format(
+         room_obj.room_name), 'green')
+
+    def delete_livingspace(self, room_obj):
+        """Remove a specific livingspace"""
+        return "am an livingspace"
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""

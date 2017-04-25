@@ -35,7 +35,6 @@ from docopt import docopt, DocoptExit
 from classes.amity import Amity
 
 amity = Amity()
-amity.load_state("amity")
 
 
 def docopt_cmd(func):
