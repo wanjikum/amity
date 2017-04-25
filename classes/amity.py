@@ -14,7 +14,7 @@ from database.models import RoomModel, PersonModel, Base
 
 
 class Amity(object):
-    """Contains all functionalities of class Amity """
+    """Contains all functionalities the Amity application"""
     changes = False
     loaded_database = ""
     offices = []
@@ -32,16 +32,24 @@ class Amity(object):
         """A method that is used to create a room"""
         room_type = room_type.lower()
         message = ""
+
+        # check every room name in the room_names list
         for room_name in room_names:
             room_name = room_name.lower()
+
+            # check if room exists
             if room_name not in [room.room_name
                for room in (self.offices + self.livingspaces)]:
+
+                # create an office object
                 if room_type == "office":
                     new_office = Office(room_name)
                     self.offices.append(new_office)
                     self.changes = True
                     message += "{} added successfully!\n".format(
                      room_name.title())
+
+                # create a livingspace object
                 elif room_type in ["living_space", "livingspace"]:
                     new_living_space = LivingSpace(room_name)
                     self.livingspaces.append(new_living_space)
@@ -49,21 +57,27 @@ class Amity(object):
                     message += "{} added successfully!\n".format(
                      room_name.title())
                 else:
+                    # reject message if room type is not office or livingspace
                     message += "Invalid room type. " + \
                       "A room can either be of type office or living_space!\n"
             else:
+                # reject if room exists
                 message += "Room {} already exists!\n".format(
                  room_name.title())
         return message
 
     def add_person(self, person_name, person_type, wants_accommodation):
         """A method that is used to add a person into the system"""
+
+        # check if the name contains digits
         is_digit = any(char.isdigit() for char in person_name)
         if is_digit:
             return colored("Invalid name. Use letters only", 'red')
         else:
             person_name = person_name.title()
             person_type = person_type.lower()
+
+            # check if the person role is fellow or staff
             if person_type not in ["fellow", "f", "staff", "s"]:
                 return colored("Invalid role. You can either be a " +
                                "fellow/staff.", 'red')
@@ -71,6 +85,8 @@ class Amity(object):
                 wants_accommodation = (wants_accommodation.lower()
                                        if wants_accommodation is not None
                                        else "no")
+
+                # check if a person wants accommodation or not
                 if wants_accommodation not in ["yes", "y", "n", "no"]:
                     return colored("Invalid accomodate option. " +
                                    "It can either be yes or no.", 'red')
@@ -79,13 +95,18 @@ class Amity(object):
                                             wants_accommodation)
 
     def save_person(self, person_name, person_type, wants_accommodation):
+        """A method that exactly saves a person in the system"""
         person_name = person_name.title()
+
+        # reject accomodating staff
         if person_type in ["staff", "s"]:
             if wants_accommodation in ["yes", "y"]:
                 return colored("Staff cannot be accomodated!\n", 'yellow')
             else:
+                # create a staff object and assign a person id
                 new_person = Staff(person_name)
-                new_person.person_id = "SOO" + str(len(self.staffs + self.deleted_staff)+1)
+                new_person.person_id = "SOO" + str(len(self.staffs +
+                                                       self.deleted_staff)+1)
                 self.staffs.append(new_person)
                 self.changes = True
                 cprint("{} added successfully! Your ID: {}"
@@ -93,8 +114,10 @@ class Amity(object):
                 return self.allocate_office(new_person)
 
         else:
+            # create a fellow object and assign a person id
             new_person = Fellow(person_name, wants_accommodation)
-            new_person.person_id = "FOO" + str(len(self.fellows + self.deleted_fellows)+1)
+            new_person.person_id = "FOO" + str(len(self.fellows +
+                                                   self.deleted_fellows)+1)
             self.fellows.append(new_person)
             self.changes = True
             cprint("{} added successfully! Your ID: {}"
@@ -107,17 +130,23 @@ class Amity(object):
 
     def allocate_office(self, new_person):
         """A method that allocates an office"""
+        # A list of offices with space
         office_with_space = []
         for office in self.offices:
+
+            # check if the room is full
             if len(office.occupants) < office.room_capacity:
                 office_with_space.append(office)
         if office_with_space:
+            # choose a random office and assign it to the person
             random_office = choice(office_with_space)
             random_office.occupants.append(new_person.person_name)
             new_person.office = random_office
             return colored(" Allocated office: {}\n ".format(
               random_office.room_name), 'green')
         else:
+            # if there are no rooms available, add the person to the waiting
+            # office list
             self.waiting_list["office"].append(new_person)
             self.waiting_list["office"] = list(
              set(self.waiting_list["office"]))
@@ -126,17 +155,22 @@ class Amity(object):
 
     def allocate_living_space(self, new_person):
         """A method that allocates a living space"""
+        # A list that has all livingspaces with spaces
         livingspace_with_space = []
         for livingspace in self.livingspaces:
+
+            # check if the livingspace is full
             if len(livingspace.occupants) < livingspace.room_capacity:
                 livingspace_with_space.append(livingspace)
         if livingspace_with_space:
+            # choose a random livingspace
             random_livingspace = choice(livingspace_with_space)
             random_livingspace.occupants.append(new_person.person_name)
             new_person.living_space = random_livingspace
             return colored("Allocated livingspace: {} \n".
                            format(random_livingspace.room_name), "green")
         else:
+            # add new_person to the livingspace waiting list
             self.waiting_list["livingspace"].append(new_person)
             self.waiting_list["livingspace"] = list(
              set(self.waiting_list["livingspace"]))
@@ -147,12 +181,18 @@ class Amity(object):
         """A method that prints room occupants in a room"""
         found = False
         room_obj = ""
+
+        # check if room is in the office or livingspace list
         for room in (self.offices + self.livingspaces):
             if room_name == room.room_name:
                 found = True
                 room_obj = room
                 break
+
+        # If the room is found
         if found:
+
+            # Checks the number of occupants available
             if len(room_obj.occupants) == 0:
                 return colored("The room is empty!\n", 'yellow')
             else:
@@ -167,10 +207,16 @@ class Amity(object):
         """A method that reallocates a person from one room to another"""
         room_name = room_name.lower()
         person_id = person_id.upper()
+
+        # check if person id is available
         if person_id in [person.person_id for person in
            (self.fellows + self.staffs)]:
+
+            # check if the room name exists
             if room_name in [room.room_name for room in
                (self.offices + self.livingspaces)]:
+
+                # check if person is a fellow
                 if person_id[:3] == "FOO":
                     if room_name in [room.room_name for room in self.offices]:
                         return self.reallocate_fellow_office(person_id,
@@ -192,13 +238,19 @@ class Amity(object):
                            'yellow')
 
     def reallocate_fellow_office(self, person_id, room_name):
-        """A method that reallocates fellows"""
+        """A method that reallocates fellows from one office to another"""
+
+        # A list of a fellow object found
         fellow_object = [fellow for fellow in self.fellows
                          if fellow.person_id == person_id]
         fellow_name = fellow_object[0].person_name
+
+        # Checks if person has not been allocated an office yet
         if fellow_object[0].office is None:
             return colored("{} has not been allocated an office yet\n".format(
              fellow_name), 'yellow')
+
+        # checks if a person wants to be reallocated to the same room
         elif fellow_object[0].office.room_name == room_name:
             return colored("A person cannot be reallocated to the same room",
                            'yellow')
@@ -219,10 +271,12 @@ class Amity(object):
                 return colored("Room capacity full!", 'yellow')
 
     def reallocate_fellow_livingspace(self, person_id, room_name):
-        """A method that reallocates fellows"""
+        """A method that reallocates fellows from one livingspace to another"""
         fellow_object = [fellow for fellow in self.fellows
                          if fellow.person_id == person_id]
         fellow_name = fellow_object[0].person_name
+
+        # check if fellow has been allocated a livingspace yet, if not:
         if fellow_object[0].living_space is None:
             return colored("{} has not been allocated a" +
                            "livingspace yet\n".format(fellow_name), 'yellow')
@@ -252,6 +306,8 @@ class Amity(object):
         staff_object = [staff for staff in self.staffs
                         if staff.person_id == person_id]
         staff_name = staff_object[0].person_name
+
+        # checks if staff has been allocated an office yet
         if staff_object[0].office is None:
             return colored("{} has not been allocated an office yet\n".format(
                staff_name), 'yellow')
@@ -277,12 +333,20 @@ class Amity(object):
     def print_allocated(self, file_name=None):
         """A method that prints allocated people in rooms"""
         output = ""
+
+        # A list containing all available offices
         office_available = [office for office in self.offices
                             if len(office.occupants) >= 0]
+
+        # A list containing all available livingspaces
         lspace_available = [lspace for lspace in self.livingspaces
                             if len(lspace.occupants) >= 0]
+
+        # check if both office and livingspace available have occupants
         if len(office_available) == 0 and len(lspace_available) == 0:
             return colored("No rooms allocated\n", 'yellow')
+
+        # check if the office occupants are greater than zero
         if len(office_available) > 0:
             output += ("*"*50 + "\n")
             output += ("OFFICE ALLOCATIONS" + "\n")
@@ -298,6 +362,8 @@ class Amity(object):
                 output += ("\n")
         else:
             output += colored("No offices available", 'yellow')
+
+        # check if the livingspace occupants are greater than zero
         if len(lspace_available) > 0:
             output += ("\n")
             output += ("*"*50 + "\n")
@@ -314,6 +380,8 @@ class Amity(object):
                     output += ("\n")
         else:
             output += colored("No livingspaces available", 'yellow')
+
+        # check if the user has given a file name
         if file_name is None:
             print(output)
             return colored("\nData printed successfully\n", 'green')
@@ -327,9 +395,15 @@ class Amity(object):
     def print_unallocated(self, file_name=None):
         """A method that prints unallocated people"""
         output = ""
+
+        # A list that contains all people who are in the office waiting list
         unallocated_office = [person for person in self.waiting_list["office"]]
+
+        # A list that contains all people who are in the lspace waiting list
         unallocated_lspace = [person
                               for person in self.waiting_list["livingspace"]]
+
+        # Check the length of the livingspace and office waiting list
         if len(unallocated_office) == 0 and len(unallocated_lspace) == 0:
             return colored("No one in the waiting list", 'yellow')
         if len(unallocated_office) > 0:
@@ -354,6 +428,8 @@ class Amity(object):
         else:
             output += colored("\nNo one in the living_space waiting list",
                               'yellow')
+
+        # check if the user has given a file name
         if file_name is None:
             print(output)
             return colored("Data printed successfully\n", 'green')
@@ -367,6 +443,8 @@ class Amity(object):
     def print_all_people(self, file_name):
         """A method that prints all people on a text file"""
         output = ""
+
+        # check if there are any occupants in the system
         if len(self.staffs + self.fellows) == 0:
             output += "\nNo staff or fellow added yet"
         else:
@@ -392,6 +470,8 @@ class Amity(object):
                 for staff in self.staffs:
                     output += ("{}     -->    {} \n".format(staff.person_id,
                                                             staff.person_name))
+
+        # check if the user has given a file name
         if file_name is None:
             print(output)
             return colored("Data printed successfully\n", 'green')
@@ -407,15 +487,21 @@ class Amity(object):
         person_id = person_id.upper()
         found = False
         person_obj = None
+
+        # check if the person id exists
         for person in self.waiting_list["office"]:
             if person.person_id == person_id:
                 found = True
                 person_obj = person
                 self.allocate_office(person)
                 break
+
+        # check if person id does not exist
         if not found:
             return colored("The person is not in the office waiting list",
                            'yellow')
+
+        # Check if the person has been allocated an office
         if person_obj.office is None:
             return colored("No available offices", 'yellow')
         else:
@@ -428,15 +514,21 @@ class Amity(object):
         person_id = person_id.upper()
         found = False
         person_obj = None
+
+        # check if person exists in the livingspace waiting list
         for person in self.waiting_list["livingspace"]:
             if person.person_id == person_id:
                 found = True
                 person_obj = person
                 self.allocate_living_space(person)
                 break
+
+        # check the person is not found
         if not found:
             return colored("The person is not in the livingspace waiting list",
                            'yellow')
+
+        # check if fellow has not been assigned a livingspace
         if person_obj.living_space is None:
             return colored("No available livingspaces", "yellow")
         else:
@@ -450,14 +542,20 @@ class Amity(object):
         person_id = person_id.upper()
         found = False
         person_obj = None
+
+        # checks if the person id exists
         for person in (self.fellows + self.staffs):
             if person.person_id == person_id:
                 found = True
                 person_obj = person
                 break
+
+        # Checks if the person id is found
         if found:
             choice = input(colored("Do you want to delete {}?\n",
                            "yellow").format(person_obj.person_name)).upper()
+
+            # Validates the deletion of the user
             if choice in ["YES", "Y"]:
                 if person_obj.person_id[:3] == "SOO":
                     return self.remove_staff(person_obj)
@@ -475,9 +573,13 @@ class Amity(object):
 
     def remove_staff(self, person_obj):
         """A method that deletes a staff"""
+
+        # check if the person has been allocated an office
         if person_obj.office is not None:
             office_allocated = person_obj.office
             for occupant in office_allocated.occupants:
+
+                # remove the person in the office allocated
                 if occupant == person_obj.person_name:
                     office_allocated.occupants.remove(occupant)
                     break
@@ -486,6 +588,7 @@ class Amity(object):
             return colored("{} deleted successfully.\n".format(
              person_obj.person_name), 'green')
         else:
+            # check if person is in the office waiting list
             for person in self.waiting_list["office"]:
                 if person == person_obj:
                     self.waiting_list["office"].remove(person_obj)
@@ -497,24 +600,38 @@ class Amity(object):
     def remove_fellow(self, person_obj):
         """A method that deletes a fellow"""
 
-        # If fellow needs accomodation or is accommodated
+        # check if fellow wanted accomodation or was accommodated
         if person_obj.accommodate in ["y", "yes"]:
-            # Removes fellow in the office and livingspace waiting list
+
+            # Remove fellow in the office and livingspace waiting list
             if person_obj.office is None and person_obj.living_space is None:
                 self.remove_fellow_from_office_waiting_list(person_obj)
                 self.remove_fellow_from_livingspace_waiting_list(person_obj)
-            elif person_obj.office is not None and person_obj.living_space is None:
+
+            # remove fellow from the office allocated and livingspace waiting
+            # list
+            elif person_obj.office is not None and person_obj.living_space \
+                    is None:
                 self.remove_fellow_from_office(person_obj)
                 self.remove_fellow_from_livingspace_waiting_list(person_obj)
-            elif person_obj.office is None and person_obj.living_space is not None:
+
+            # remove fellow from the livingspace allocated and office waiting
+            # list
+            elif person_obj.office is None and person_obj.living_space \
+                    is not None:
                 self.remove_fellow_from_office_waiting_list(person_obj)
                 self.remove_fellow_from_livingspace(person_obj)
+
+            # remove fellow from the livingspace and office allocated
             else:
                 self.remove_fellow_from_office(person_obj)
                 self.remove_fellow_from_livingspace(person_obj)
         else:
+            # remove fellow from the office allocated
             if person_obj.office is not None:
                 self.remove_fellow_from_office(person_obj)
+
+            # remove fellow from the office waiting list
             else:
                 self.remove_fellow_from_office_waiting_list(person_obj)
         self.fellows.remove(person_obj)
@@ -525,6 +642,8 @@ class Amity(object):
     def remove_fellow_from_office(self, person_obj):
         """Removes a fellow from an office"""
         office_allocated = person_obj.office
+
+        # remove occupant from the office occupants list
         for occupant in office_allocated.occupants:
             if occupant == person_obj.person_name:
                 office_allocated.occupants.remove(occupant)
@@ -532,6 +651,8 @@ class Amity(object):
 
     def remove_fellow_from_office_waiting_list(self, person_obj):
         """Removes a staff/fellow from the office waiting list"""
+
+        # remove occupant from the office waiting list
         for person in self.waiting_list["office"]:
             if person == person_obj:
                 self.waiting_list["office"].remove(person_obj)
@@ -540,6 +661,8 @@ class Amity(object):
     def remove_fellow_from_livingspace(self, person_obj):
         """Removes a fellow from a livingspace"""
         livingspace_allocated = person_obj.living_space
+
+        # remove occupant from the livingspace occupants list
         for occupant in livingspace_allocated.occupants:
             if occupant == person_obj.person_name:
                 livingspace_allocated.occupants.remove(occupant)
@@ -547,6 +670,8 @@ class Amity(object):
 
     def remove_fellow_from_livingspace_waiting_list(self, person_obj):
         """Remove fellow from livingspace waiting list"""
+
+        # remove occupant from the livingspace waiting list
         for person in self.waiting_list["livingspace"]:
             if person == person_obj:
                 self.waiting_list["livingspace"].remove(person_obj)
@@ -557,14 +682,20 @@ class Amity(object):
         found = False
         room_obj = None
         room_name = room_name.lower()
+
+        # check if the room_name exists
         for room in (self.offices + self.livingspaces):
             if room.room_name == room_name:
                 found = True
                 room_obj = room
                 break
+
+        # check if room is found
         if found:
             choice = input(colored("Do you want to delete {}?\n",
                            "yellow").format(room_obj.room_name)).upper()
+
+            # validates the deletion of the specific room
             if choice in ["YES", "Y"]:
                 if room_obj.room_type == "office":
                     return self.delete_office(room_obj)
@@ -585,6 +716,8 @@ class Amity(object):
         all_people = self.fellows + self.staffs
         occupants_obj = [person for person in all_people
                          if person.office == room_obj]
+
+        # check the number of occupants in the office and deletes them
         if len(occupants_obj) > 0:
             for occupant in occupants_obj:
                 occupant.office = None
@@ -600,6 +733,8 @@ class Amity(object):
         all_people = self.fellows + self.staffs
         occupants_obj = [person for person in all_people
                          if person.living_space == room_obj]
+
+        # check the number of occupants in the livingspace and deletes them
         if len(occupants_obj) > 0:
             for occupant in occupants_obj:
                 occupant.living_space = None
@@ -612,6 +747,8 @@ class Amity(object):
 
     def loads_people(self, file_name):
         """A method that adds people from a text file"""
+
+        # check if file exists and if it does read lines
         try:
             read_file = open(file_name + '.txt', 'r')
             people = read_file.readlines()
@@ -636,12 +773,18 @@ class Amity(object):
 
     def save_state(self, database_name):
         """A method that saves changes to the database"""
+
+        # check if the database name is given
         if database_name is None:
             database_name = "amity"
+
+        # check if the database exists
         try:
             os.remove("database/" + database_name + ".db")
         except FileNotFoundError:
             pass
+
+        # creates an sqlite database
         engine = create_engine('sqlite:///database/' + database_name
                                + '.db')
         Base.metadata.create_all(engine)
@@ -696,6 +839,8 @@ class Amity(object):
 
     def load_state(self, database_name):
         """A method that loads state of the  database"""
+
+        # checks for any changes in the database and validate loading database
         if self.changes:
             choice = input("Do you want to save the changes?").upper()
             if choice in ["YES", "Y"]:
@@ -703,8 +848,11 @@ class Amity(object):
             elif choice not in ["NO", "N"]:
                 return colored("Invalid input", 'red')
 
+        # checks if the database file exists
         if not os.path.isfile('./database/{}.db'.format(database_name)):
             return colored('The database does not exist!', 'yellow')
+
+        # load the database
         engine = \
             create_engine('sqlite:///database/{}.db'.format(database_name))
         Session = sessionmaker(bind=engine)
