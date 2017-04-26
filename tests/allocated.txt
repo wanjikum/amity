@@ -1,4 +1,5 @@
-[33mNo offices available[0m
+[33mNo offices available
+[0m
 **************************************************
 LIVINGSPACE ALLOCATIONS
 **************************************************
