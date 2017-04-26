@@ -1,7 +1,9 @@
-import unittest
 import os
-from io import StringIO
 import sys
+import unittest
+from io import StringIO
+from unittest.mock import patch
+
 
 from classes.room import Room, Office, LivingSpace
 from classes.person import Person, Fellow, Staff
@@ -165,7 +167,6 @@ class RellocateRoomPersonTestCases(unittest.TestCase):
         self.amity.add_person("Kimokoti", "fellow", "yes")
         self.amity.create_room("office", ["dakar"])
         self.amity.create_room("living_space", ["l_wing"])
-        self.amity.add_person("Taracha", "staff", "no")
         self.amity.create_room("office", ["accra"])
 
     def tearDown(self):
@@ -200,6 +201,7 @@ class RellocateRoomPersonTestCases(unittest.TestCase):
 
     def test_reallocate_staff_from_office_to_living_space(self):
         """Tests rejects reallocation of staff from office to livingspace"""
+        print(self.amity.add_person("Taracha", "staff", "no"))
         response = self.amity.reallocate_person("SOO1", "l_wing")
         self.assertIn("Staff cannot be accomodated!", response)
 
@@ -348,14 +350,13 @@ class AllocateUnallocated(unittest.TestCase):
                       response)
 
 
-class DeletePersonTest(unittest.TestCase):
+class DeletePersonRoomTest(unittest.TestCase):
     """A collection of delete person and room testcase"""
 
     def setUp(self):
         self.amity = Amity()
         self.amity.create_room("office", ["bootcamp"])
         self.amity.create_room("living_space", ["left"])
-        self.amity.add_person("Ian", "fellow", "yes")
         self.amity.add_person("Chuchu", "fellow", "yes")
         self.amity.add_person("Taracha", "staff", "no")
 
@@ -365,16 +366,61 @@ class DeletePersonTest(unittest.TestCase):
         Amity.livingspaces = []
         Amity.staffs = []
         Amity.fellows = []
-    #
-    # def test_if_it_deletes_a_person_successfully(self):
-    #     """Test if it deletes a person successfully"""
-    #     response = self.amity.delete_person("soo1")
-    #     self.assertIn("Taracha deleted successfully!\n", response)
+        Amity.deleted_staff = []
+
+    def test_if_it_does_not_delete_person_if_choice_is_no(self):
+        """Test if it does not delete a person if option is no"""
+        with patch('builtins.input', return_value='N'):
+            self.amity.add_person("Ian", "fellow", "yes")
+            response = self.amity.delete_person("foo2")
+            self.assertIn("Ian has not been deleted\n", response)
+
+    def test_if_it_deletes_a_person_successfully(self):
+        """Test if it deletes a person successfully"""
+        with patch('builtins.input', return_value='Y'):
+            response = self.amity.delete_person("soo1")
+            self.assertIn("Taracha deleted successfully.\n", response)
+
+    def test_if_user_gives_an_invalid_choice(self):
+        """Test if it you input a wrong choice"""
+        with patch('builtins.input', return_value='k'):
+            response = self.amity.delete_person("soo1")
+            self.assertIn("Invalid input", response)
 
     def test_if_it_deletes_a_person_who_does_not_exist(self):
-        """Test if it deletes a person successfully"""
+        """Test if it deletes a person who does not exist"""
         response = self.amity.delete_person("koo1")
         self.assertIn("The person id KOO1 does not exist!\n", response)
+
+    def test_if_it_deletes_a_room_which_does_not_exist(self):
+        """Test if it deletes a room which does not exist"""
+        with patch('builtins.input', return_value='k'):
+            response = self.amity.delete_room("accra")
+            self.assertIn("The room accra does not exist!\n", response)
+
+    def test_delete_room_if_user_gives_an_invalid_choice(self):
+        """Test if it you input a wrong choice on delete room"""
+        with patch('builtins.input', return_value='k'):
+            response = self.amity.delete_room("left")
+            self.assertIn("Invalid input", response)
+
+    def test_if_it_deletes_an_office_if_choice_is_no(self):
+        """Test if it deletes an office successfully"""
+        with patch('builtins.input', return_value='n'):
+            response = self.amity.delete_room("bootcamp")
+            self.assertIn("bootcamp has not been deleted\n", response)
+
+    def test_if_it_deletes_an_office_successfully(self):
+        """Test if it deletes an office successfully"""
+        with patch('builtins.input', return_value='Y'):
+            response = self.amity.delete_room("bootcamp")
+            self.assertIn("Office bootcamp deleted successfully", response)
+
+    def test_if_it_deletes_a_livingspace_successfully(self):
+        """Test if it deletes livingspace successfully"""
+        with patch('builtins.input', return_value='Y'):
+            response = self.amity.delete_room("left")
+            self.assertIn("Living_space left deleted successfully", response)
 
 
 class SaveStateTestCases(unittest.TestCase):

@@ -228,13 +228,13 @@ class Amity(object):
                     if room_name in [room.room_name for room in self.offices]:
                         return self.reallocate_staff(person_id, room_name)
                     else:
-                        return colored("Staff cannot be accomodated!",
+                        return colored("Staff cannot be accomodated!\n",
                                        'yellow')
 
             else:
-                return colored("The room does not exist!", 'yellow')
+                return colored("The room does not exist!\n", 'yellow')
         else:
-            return colored("The person identifier(id) used does not exist!",
+            return colored("The person identifier(id) used does not exist!\n",
                            'yellow')
 
     def reallocate_fellow_office(self, person_id, room_name):
@@ -252,7 +252,7 @@ class Amity(object):
 
         # checks if a person wants to be reallocated to the same room
         elif fellow_object[0].office.room_name == room_name:
-            return colored("A person cannot be reallocated to the same room",
+            return colored("A person cannot be reallocated to the same room\n",
                            'yellow')
         else:
             previous_office = fellow_object[0].office.room_name
@@ -265,10 +265,10 @@ class Amity(object):
                 office_object[0].occupants.append(fellow_name)
                 fellow_object[0].office.room_name == room_name
                 self.changes = True
-                return colored("{} has been reallocated from {} to {}".format(
+                return colored("{} has been reallocated from {} to {}\n".format(
                  fellow_name, previous_office, room_name), 'green')
             else:
-                return colored("Room capacity full!", 'yellow')
+                return colored("Room capacity full!\n", 'yellow')
 
     def reallocate_fellow_livingspace(self, person_id, room_name):
         """A method that reallocates fellows from one livingspace to another"""
@@ -282,7 +282,7 @@ class Amity(object):
                            "livingspace yet\n".format(fellow_name), 'yellow')
         elif fellow_object[0].living_space.room_name == room_name:
             return colored("A person cannot be reallocated to the " +
-                           "same room", 'yellow')
+                           "same room\n", 'yellow')
         else:
             previous_living_space = fellow_object[0].living_space.room_name
             previous_living_space_object = [lspace for lspace in
@@ -299,7 +299,7 @@ class Amity(object):
                 return colored("{} has been reallocated from {} to {}".format(
                   fellow_name, previous_living_space, room_name), 'green')
             else:
-                return colored("Room capacity full!", 'yellow')
+                return colored("Room capacity full!\n", 'yellow')
 
     def reallocate_staff(self, person_id, room_name):
         """A method that reallocates staff from one office to another"""
@@ -312,7 +312,7 @@ class Amity(object):
             return colored("{} has not been allocated an office yet\n".format(
                staff_name), 'yellow')
         elif staff_object[0].office.room_name == room_name:
-            return colored("A person cannot be reallocated to the same room",
+            return colored("A person cannot be reallocated to the same room\n",
                            'yellow')
         else:
             previous_office = staff_object[0].office.room_name
@@ -325,10 +325,10 @@ class Amity(object):
                 office_object[0].occupants.append(staff_name)
                 staff_object[0].office.room_name == room_name
                 self.changes = True
-                return colored("{} has been reallocated from {} to {}".format(
+                return colored("{} has been reallocated from {} to {}\n".format(
                  staff_name, previous_office, room_name), 'green')
             else:
-                return colored("Room capacity full!", 'yellow')
+                return colored("Room capacity full!\n", 'yellow')
 
     def print_allocated(self, file_name=None):
         """A method that prints allocated people in rooms"""
@@ -361,7 +361,7 @@ class Amity(object):
                         output += ("{}, ".format(occupant))
                 output += ("\n")
         else:
-            output += colored("No offices available", 'yellow')
+            output += colored("No offices available\n", 'yellow')
 
         # check if the livingspace occupants are greater than zero
         if len(lspace_available) > 0:
@@ -379,7 +379,7 @@ class Amity(object):
                         output += ("{}, ".format(occupant))
                     output += ("\n")
         else:
-            output += colored("No livingspaces available", 'yellow')
+            output += colored("No livingspaces available\n", 'yellow')
 
         # check if the user has given a file name
         if file_name is None:
@@ -389,7 +389,7 @@ class Amity(object):
             save_to = open(file_name + ".txt", "w")
             save_to.write(output)
             save_to.close()
-            return colored("Data saved in {} successfully".format(file_name),
+            return colored("Data saved in {} successfully\n".format(file_name),
                            'green')
 
     def print_unallocated(self, file_name=None):
@@ -426,7 +426,7 @@ class Amity(object):
                 output += ("{} -> {} \n".format(name.person_id,
                            name.person_name))
         else:
-            output += colored("\nNo one in the living_space waiting list",
+            output += colored("\nNo one in the living_space waiting list\n",
                               'yellow')
 
         # check if the user has given a file name
@@ -437,7 +437,7 @@ class Amity(object):
             save_to = open(file_name + ".txt", "w")
             save_to.write(output)
             save_to.close()
-            return colored("Data saved in {} successfully".format(file_name),
+            return colored("Data saved in {} successfully\n".format(file_name),
                            'green')
 
     def print_all_people(self, file_name):
@@ -479,7 +479,7 @@ class Amity(object):
             save_to = open(file_name + ".txt", "w")
             save_to.write(output)
             save_to.close()
-            return colored("Data saved in {} successfully".format(file_name),
+            return colored("Data saved in {} successfully\n".format(file_name),
                            'green')
 
     def allocate_person_office(self, person_id):
@@ -498,7 +498,7 @@ class Amity(object):
 
         # check if person id does not exist
         if not found:
-            return colored("The person is not in the office waiting list",
+            return colored("The person is not in the office waiting list\n",
                            'yellow')
 
         # Check if the person has been allocated an office
@@ -506,7 +506,7 @@ class Amity(object):
             return colored("No available offices", 'yellow')
         else:
             self.waiting_list["office"].remove(person_obj)
-            return colored("{} has been allocated to office {}".format(
+            return colored("{} has been allocated to office {}\n".format(
              person_obj.person_name, person_obj.office.room_name), 'green')
 
     def allocate_person_livingspace(self, person_id):
@@ -525,7 +525,7 @@ class Amity(object):
 
         # check the person is not found
         if not found:
-            return colored("The person is not in the livingspace waiting list",
+            return colored("The person is not in the livingspace waiting list\n",
                            'yellow')
 
         # check if fellow has not been assigned a livingspace
@@ -533,7 +533,7 @@ class Amity(object):
             return colored("No available livingspaces", "yellow")
         else:
             self.waiting_list["livingspace"].remove(person_obj)
-            return colored("{} has been allocated to livingspace {}".format(
+            return colored("{} has been allocated to livingspace {}\n".format(
              person_obj.person_name, person_obj.living_space.room_name),
              'green')
 
@@ -555,7 +555,7 @@ class Amity(object):
             choice = input(colored("Do you want to delete {}?\n",
                            "yellow").format(person_obj.person_name)).upper()
 
-            # Validates the deletion of the user
+            # Validate the deletion of the user
             if choice in ["YES", "Y"]:
                 if person_obj.person_id[:3] == "SOO":
                     return self.remove_staff(person_obj)
@@ -725,13 +725,12 @@ class Amity(object):
             self.offices.remove(room_obj)
         else:
             self.offices.remove(room_obj)
-        return colored("Office {} deleted successfully".format(
+        return colored("Office {} deleted successfully\n".format(
          room_obj.room_name), 'green')
 
     def delete_livingspace(self, room_obj):
         """Remove a specific livingspace"""
-        all_people = self.fellows + self.staffs
-        occupants_obj = [person for person in all_people
+        occupants_obj = [person for person in self.fellows
                          if person.living_space == room_obj]
 
         # check the number of occupants in the livingspace and deletes them
@@ -742,7 +741,7 @@ class Amity(object):
             self.livingspaces.remove(room_obj)
         else:
             self.livingspaces.remove(room_obj)
-        return colored("Living_space {} deleted successfully".format(
+        return colored("Living_space {} deleted successfully\n".format(
          room_obj.room_name), 'green')
 
     def loads_people(self, file_name):
@@ -753,7 +752,7 @@ class Amity(object):
             read_file = open(file_name + '.txt', 'r')
             people = read_file.readlines()
             if len(people) == 0:
-                return colored('Empty file. No one has been added.', 'yellow')
+                return colored('Empty file. No one has been added.\n', 'yellow')
             for person in people:
                 splitwords = person.split()
                 if len(splitwords) in range(3, 5):
@@ -767,9 +766,9 @@ class Amity(object):
                           wants_accommodation))
                 else:
                     print(colored('Invalid input!\n', 'red'))
-            return colored('People added successfully', 'green')
+            return colored('People added successfully\n', 'green')
         except FileNotFoundError:
-            return colored('The file does not exist.', 'yellow')
+            return colored('The file does not exist.\n', 'yellow')
 
     def save_state(self, database_name):
         """A method that saves changes to the database"""
@@ -835,7 +834,7 @@ class Amity(object):
         session.commit()
         session.close()
         self.changes = False
-        return colored('The state has been saved successfully!', 'green')
+        return colored('The state has been saved successfully!\n', 'green')
 
     def load_state(self, database_name):
         """A method that loads state of the  database"""
@@ -850,7 +849,7 @@ class Amity(object):
 
         # checks if the database file exists
         if not os.path.isfile('./database/{}.db'.format(database_name)):
-            return colored('The database does not exist!', 'yellow')
+            return colored('The database does not exist!\n', 'yellow')
 
         # load the database
         engine = \
@@ -932,4 +931,4 @@ class Amity(object):
                     fellow.accommodate = person.wants_accomodation
                     self.deleted_fellows.append(fellow)
         self.loaded_database = database_name
-        return colored('The database has loaded successfully!', 'green')
+        return colored('The database has loaded successfully!\n', 'green')
