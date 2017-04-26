@@ -29,22 +29,24 @@ This system is used to automatically allocate spaces to people at random.
 
  Run the application using the following commands:
  ```
- $ python app.py -i
-   app.py create_room <room_type> <room_name>...
-   app.py add_person <first_name> <last_name> <role> [<accommodate>]
-   app.py reallocate_person <person_identifier> <new_room_name>
-   app.py load_people <file_name>
-   app.py print_allocations [--o=filename]
-   app.py print_unallocated [--o=filename]
-   app.py print_room <room_name>
-   app.py allocate_office <person_identifier>
-   app.py allocate_livingspace <person_identifier>
-   app.py save_state [--db=sqlite_database]
-   app.py load_state <sqlite_database>
-   app.py (-i | --interactive)
-   app.py (-h | --help | --version)
-Options:
-   -i, --interactive  Interactive Mode
-   -h, --help  Show this screen and exit.
-"""
+ Usage:
+     app.py create_room <room_type> <room_name>...
+     app.py add_person <first_name> <last_name> <role> [<accommodate>]
+     app.py reallocate_person <person_identifier> <new_room_name>
+     app.py load_people <file_name>
+     app.py print_allocations [--o=filename]
+     app.py print_unallocated [--o=filename]
+     app.py print_all_people [--o=filename]
+     app.py print_room <room_name>
+     app.py delete_person <person_identifier>
+     app.py delete_room <room_name>
+     app.py allocate_office <person_identifier>
+     app.py allocate_livingspace <person_identifier>
+     app.py save_state [--db=sqlite_database]
+     app.py load_state <sqlite_database>
+     app.py (-i | --interactive)
+     app.py (-h | --help | --version)
+ Options:
+     -i, --interactive  Interactive Mode
+     -h, --help  Show this screen and exit.
  ```
