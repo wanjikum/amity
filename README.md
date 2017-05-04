@@ -50,3 +50,4 @@ This system is used to automatically allocate spaces to people at random.
      -i, --interactive  Interactive Mode
      -h, --help  Show this screen and exit.
  ```
+ Video tutorial link: https://asciinema.org/a/dh2wuoxts8wgjcnwcdqcrpyp2
